@@ -1,4 +1,6 @@
 /**
+ * Creates a new useSuspender for given function.
+ *
  * @param {() => any} suspender
  */
 function createSuspender(suspender) {
@@ -15,12 +17,10 @@ function createSuspender(suspender) {
 
   /**
    * Executes a suspender with given arguments.
-   * Will throw a Promise to notify React.Suspens
+   * Will throw a Promise to notify React.Suspense
    *
    *
-   * @param {string | {[key: string]: any}} id
-   * @param {() => Promise<any>} suspender
-   * @param {Array<any>} [args = []]
+   * @param {any[]} [args = []]
    *
    * @return {any}
    *
