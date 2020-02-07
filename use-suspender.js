@@ -4,7 +4,7 @@ const isObject = value => typeof value === "object" && value !== null
 
 const isFunction = value => typeof value === "function"
 
-// const replacer = value => isFunction(value) ? String(value) : value
+const replacer = (key, value) => String(value)
 
 function createSuspender() {
   const cache = new Map()
@@ -40,9 +40,7 @@ function createSuspender() {
       throw new TypeError("Expected suspender to be a function.")
     }
 
-    id = JSON.stringify({
-      ...isObject(id) ? id : {id: String(id)}, base
-    })
+    id = `${base}::(${isObject(id) ? JSON.stringify(id, replacer) : id})`
 
     // Try to resolve a result of an operation if found in cache
     if (cache.has(id)) {
@@ -105,5 +103,6 @@ function createSuspender() {
 }
 
 module.exports = createSuspender()
+module.exports.default = module.exports
 module.exports.useSuspender = module.exports
 module.exports.createSuspender = createSuspender
