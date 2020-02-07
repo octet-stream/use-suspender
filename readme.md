@@ -20,7 +20,9 @@ Executes given suspender function then throws its Promise
 to await and consume its result with React.Suspense.
 
 - **{any}** id – an unique identifier for useSuspender.
-  This value must be consistent between render function calls.
+  This value must be consistent between render function calls
+- **{Function}** suspender – a function you want to execute;
+- **{Array<any>}** [args = []] – argument to apply to a suspender function call.
 
 ### `createUseSuspender() -> {Function}`
 
