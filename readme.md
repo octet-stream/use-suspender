@@ -24,7 +24,7 @@ to await and consume its result with React.Suspense.
 
 ### `createSuspender() -> {Function}`
 
-Creates a new suspender with separated cache.
+Creates a new useSuspender function with separated cache.
 
 ## Usage
 
