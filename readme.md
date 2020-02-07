@@ -16,8 +16,8 @@ npm i use-suspender
 
 ### `useSuspender(id, suspender[, args]) -> {any}`
 
-Executes given suspender function then throws its Promise
-to await and consume its result with React.Suspense.
+Executes given suspender function then throws a Promise
+to resolve its result with React.Suspense.
 
 - **{any}** id – an unique identifier for useSuspender.
   This value must be consistent between render function calls
