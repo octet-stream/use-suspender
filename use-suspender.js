@@ -1,9 +1,9 @@
 /**
- * Creates a new useSuspender for given function.
+ * Creates a new useSuspender hook for given function.
  *
  * @param {() => any} suspender
  *
- * @return {Function}
+ * @return {Function} useSuspender
  */
 function createSuspender(suspender) {
   if (typeof suspender !== "function") {
