@@ -4,9 +4,13 @@ Execute asynchronous actions with React.Suspense
 
 ## Installation
 
+You can take this package both from Yarn:
+
 ```sh
 yarn add use-suspender
 ```
+
+And NPM:
 
 ```sh
 npm i use-suspender
