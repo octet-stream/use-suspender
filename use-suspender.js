@@ -28,10 +28,6 @@ function createSuspender() {
    * @throws {Error} if suspender's Promise has been rejected with an error
    */
   function useSuspender(id, suspender, args = []) {
-    if (suspender == null) {
-      return undefined
-    }
-
     if (!id) {
       throw new Error("Suspender ID is required.")
     }
