@@ -2,6 +2,8 @@
  * Creates a new useSuspender for given function.
  *
  * @param {() => any} suspender
+ *
+ * @return {Function}
  */
 function createSuspender(suspender) {
   if (typeof suspender !== "function") {
