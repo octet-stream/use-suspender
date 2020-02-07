@@ -6,7 +6,7 @@ const isFunction = value => typeof value === "function"
 
 const replacer = (key, value) => String(value)
 
-function createSuspender() {
+function createUseSuspender() {
   const cache = new Map()
   const base = nanoid()
 
@@ -98,7 +98,7 @@ function createSuspender() {
   return useSuspender
 }
 
-module.exports = createSuspender()
+module.exports = createUseSuspender()
 module.exports.default = module.exports
 module.exports.useSuspender = module.exports
-module.exports.createSuspender = createSuspender
+module.exports.createUseSuspender = createUseSuspender

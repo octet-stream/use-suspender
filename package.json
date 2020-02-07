@@ -2,7 +2,7 @@
   "name": "use-suspender",
   "version": "0.1.0",
   "description": "Execute asynchronous actions with React.Suspense",
-  "main": "use-suspense.js",
+  "main": "use-suspender",
   "repository": "git@github.com:octet-stream/use-suspender.git",
   "author": "octet-stream <io@octetstream.me>",
   "license": "MIT",

@@ -22,7 +22,7 @@ to await and consume its result with React.Suspense.
 - **{any}** id – an unique identifier for useSuspender.
   This value must be consistent between render function calls.
 
-### `createSuspender() -> {Function}`
+### `createUseSuspender() -> {Function}`
 
 Creates a new useSuspender function with separated cache.
 
