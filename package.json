@@ -7,8 +7,12 @@
   "author": "octet-stream <io@octetstream.me>",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "size": "size-limit"
+  },
   "devDependencies": {
     "@octetstream/eslint-config": "4.0.0",
+    "@size-limit/preset-small-lib": "^4.0.1",
     "ava": "3.2.0",
     "codecov": "3.6.4",
     "eslint": "6.8.0",
@@ -17,6 +21,7 @@
     "husky": "4.2.1",
     "lint-staged": "10.0.7",
     "nanoid": "2.1.11",
-    "nyc": "15.0.0"
+    "nyc": "15.0.0",
+    "size-limit": "^4.0.1"
   }
 }
