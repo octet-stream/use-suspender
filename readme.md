@@ -18,19 +18,10 @@ npm i use-suspender
 
 ## API
 
-### `useSuspender(id, suspender[, args]) -> {any}`
+### `createSuspender(suspender: Funcion) -> {Function}`
 
-Executes given suspender function then throws a Promise
-to resolve its result with React.Suspense.
-
-- **{any}** id – an unique identifier for useSuspender.
-  This value must be consistent between render function calls
-- **{Function}** suspender – a function you want to execute;
-- **{Array<any>}** [args = []] – argument to apply to a suspender function call.
-
-### `createUseSuspender() -> {Function}`
-
-Creates a new useSuspender function with separated cache.
+Creates a new useSuspender for given function.
+The returned function will be able to take any arguments.
 
 ## Usage
 
@@ -40,16 +31,16 @@ Minimal example:
 import React, {Suspense} from "react"
 import {render} from "react-dom"
 
-import useSuspender from "use-suspender"
+import createSuspender from "use-suspender"
 
-const getUser = () => (
+const useGetUser = createSuspender(() => (
   fetch("https://randomuser.me/api")
     .then(response => response.json())
     .then(([result]) => result)
-)
+))
 
 function User() {
-  const user = useSuspender(import.meta.url, getUser)
+  const user = useGetUser()
 
   return (
     <div>
@@ -75,12 +66,38 @@ const root = document.querySelector("#root")
 render(<App />, root)
 ```
 
-Note that useSuspender uses simple intermall cache to track which suspender function has a result.
-If you want to create a separate cache, use `createUseSuspender` function:
+The useSuspender hook can take arguments to use in each suspender function call.
+Imagine you have some API method, called `getUserByLogin`. It takes a user login
+as the only argument. Here's an example of how you can apply this argument to the method:
 
 ```js
-import {createUseSuspender} from "use-suspender"
+import createSuspender from "use-suspender"
+import React from "react"
 
-const firstUseSuspender = createUseSuspender()
-const secondUseSuspender = createuseSuspender()
+import {useParams} from "react-router-dom"
+
+import {getUserByLogin} from "./api/user"
+
+const useGetUserByLogin = createSuspender(getUserByLogin)
+
+function User() {
+  const {login} = useParams()
+
+  // Will execute getUserByLogin method with user taken from react-router-dom
+  const user = useGetUserByLogin(login)
+
+  return (
+    <div>
+      <div>
+        Name: {user.name.first} {user.name.last}
+      </div>
+
+      <div>
+        Email: {user.email}
+      </div>
+    </div>
+  )
+}
+
+export default User
 ```
