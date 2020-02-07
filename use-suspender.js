@@ -1,5 +1,3 @@
-const nanoid = require("nanoid")
-
 const isObject = value => typeof value === "object" && value !== null
 
 const isFunction = value => typeof value === "function"
@@ -8,7 +6,6 @@ const replacer = (key, value) => String(value)
 
 function createUseSuspender() {
   const cache = new Map()
-  const base = nanoid()
 
   /**
    * Executes given suspender function then throws its Promise
@@ -36,7 +33,7 @@ function createUseSuspender() {
       throw new TypeError("Expected suspender to be a function.")
     }
 
-    id = `${base}::(${isObject(id) ? JSON.stringify(id, replacer) : id})`
+    id = isObject(id) ? JSON.stringify(id, replacer) : String(id)
 
     // Try to resolve a result of an operation if found in cache
     if (cache.has(id)) {

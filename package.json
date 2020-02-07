@@ -16,9 +16,7 @@
     "eslint-plugin-markdown": "^1.0.1",
     "husky": "4.2.1",
     "lint-staged": "10.0.7",
+    "nanoid": "^2.1.11",
     "nyc": "15.0.0"
-  },
-  "dependencies": {
-    "nanoid": "2.1.11"
   }
 }

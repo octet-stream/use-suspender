@@ -74,3 +74,13 @@ const root = document.querySelector("#root")
 
 render(<App />, root)
 ```
+
+Note that useSuspender uses simple intermall cache to track which suspender function has a result.
+If you want to create a separate cache, use `createUseSuspender` function:
+
+```js
+import {createUseSuspender} from "use-suspender"
+
+const firstUseSuspender = createUseSuspender()
+const secondUseSuspender = createuseSuspender()
+```
