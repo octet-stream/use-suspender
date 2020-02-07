@@ -1,0 +1,20 @@
+{
+  "name": "use-suspender",
+  "version": "0.1.0",
+  "description": "Execute asyncronous actions with React.Suspense",
+  "main": "use-suspense.js",
+  "repository": "git@github.com:octet-stream/use-suspender.git",
+  "author": "octet-stream <nick.kruchinin@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "@octetstream/eslint-config": "4.0.0",
+    "ava": "3.2.0",
+    "eslint": "6.8.0",
+    "husky": "4.2.1",
+    "lint-staged": "10.0.7"
+  },
+  "dependencies": {
+    "nanoid": "^2.1.11"
+  }
+}

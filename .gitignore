@@ -1,0 +1,17 @@
+.DS_Store
+node_modules
+.nyc_output
+coverage
+yarn-error.log
+
+test
+coverage
+.codecov
+
+/.editorconfig
+/.eslintrc.json
+/.huskyrc.json
+/.lintstagedrc
+/.travis.yml
+/yarn.lock
+/test.mjs
