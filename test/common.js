@@ -18,7 +18,7 @@ test("Throws a promise on the first useSuspender call", t => {
   t.true(getPromise(useSuspender) instanceof Promise)
 })
 
-test("Throws a promise on second call if promise is not resolved" t => {
+test("Throws a promise on second call if promise is not resolved", t => {
   const useSuspender = createSuspender(() => Promise.resolve())
 
   const p1 = getPromise(useSuspender)
