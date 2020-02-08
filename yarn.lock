@@ -227,7 +227,7 @@
   dependencies:
     semver "7.1.2"
 
-"@size-limit/preset-small-lib@^4.0.1":
+"@size-limit/preset-small-lib@4.0.1":
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/@size-limit/preset-small-lib/-/preset-small-lib-4.0.1.tgz#e7b68d5e805766ae6df79d81690a71a1e6d6bca9"
   integrity sha512-DPjNMyzYOya/hyAd7WjDTXpKNSN6anQLN6kGYOKdy/hJNS6WDm6/kEiAjv+9D7gbA4gKh+7gElcwUeQh6ul2sA==
@@ -6049,7 +6049,7 @@ sinon@8.1.1:
     nise "^3.0.1"
     supports-color "^7.1.0"
 
-size-limit@^4.0.1:
+size-limit@4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/size-limit/-/size-limit-4.0.1.tgz#7e001ea7f113a25a0d863ac2dac4b3f81269242f"
   integrity sha512-UwXXuMeyoUx3BbCBdsnSEQFg4G4yj0ViItvFCq46LOWbDQOXJU8rx7LwQEbu9lte7fDHQy+BkZS8PxKNXbju9A==

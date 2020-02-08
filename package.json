@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@octetstream/eslint-config": "4.0.0",
-    "@size-limit/preset-small-lib": "^4.0.1",
+    "@size-limit/preset-small-lib": "4.0.1",
     "ava": "3.2.0",
     "codecov": "3.6.4",
     "eslint": "6.8.0",
@@ -24,6 +24,6 @@
     "nanoid": "2.1.11",
     "nyc": "15.0.0",
     "sinon": "8.1.1",
-    "size-limit": "^4.0.1"
+    "size-limit": "4.0.1"
   }
 }

@@ -1,5 +1,7 @@
 const test = require("ava")
 
+const {spy} = require("sinon")
+
 const createSuspender = require("../use-suspender")
 
 function getPromise(fn) {
@@ -16,6 +18,16 @@ test("Throws a promise on the first useSuspender call", t => {
   const useSuspender = createSuspender(() => Promise.resolve())
 
   t.true(getPromise(useSuspender) instanceof Promise)
+})
+
+test("Calls a suspender when useSuspender is called", async t => {
+  const suspender = spy(() => Promise.resolve())
+
+  const useSuspender = createSuspender(suspender)
+
+  await getPromise(useSuspender)
+
+  t.true(suspender.called)
 })
 
 test("Throws a promise on second call if promise is not resolved", t => {
@@ -52,6 +64,20 @@ test("Returns a result on second call when promise is resolved", async t => {
   const actual = useSuspender()
 
   t.is(actual, expected)
+})
+
+test("useSuspender calls a suspender with given arguments", async t => {
+  const expected = ["Rainbow Dash always dresses in style"]
+
+  const suspender = spy(() => Promise.resolve())
+
+  const useSuspender = createSuspender(suspender)
+
+  await getPromise(() => useSuspender(...expected))
+
+  const {args: actual} = suspender.firstCall
+
+  t.deepEqual(actual, expected)
 })
 
 test("Throws an error when given suspender is not a function", t => {
