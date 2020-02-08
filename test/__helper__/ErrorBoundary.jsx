@@ -3,12 +3,12 @@ const {createElement, Component} = require("react")
 const {node} = require("prop-types")
 
 class ErrorHandler extends Component {
-  static propTypes = {
-    children: node.isRequired
-  }
+  constructor() {
+    super()
 
-  state = {
-    error: null
+    this.state = {
+      error: null
+    }
   }
 
   componentDidCatch(error) {
@@ -28,6 +28,10 @@ class ErrorHandler extends Component {
 
     return createElement("div", null, error.message)
   }
+}
+
+ErrorHandler.propTypes = {
+  children: node.isRequired
 }
 
 module.exports = ErrorHandler
