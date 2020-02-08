@@ -22,7 +22,7 @@ npm i use-suspender
 
 Creates a new useSuspender for given function.
 
-### `useSuspender([...args]) -> any`
+### `useSuspender([...args]) -> {any}`
 
 Executes asynchronous action with given arguments.
 This function will throw a Promise to notify React.Suspense
