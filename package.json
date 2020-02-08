@@ -10,7 +10,9 @@
   "scripts": {
     "size": "size-limit",
     "staged": "lint-staged",
-    "coverage": "nyc ava"
+    "coverage": "nyc ava",
+    "test": "ava",
+    "ci": "nyc npm test && nyc report --reporter=lcov && node_modules/.bin/codecov"
   },
   "ava": {
     "files": [
