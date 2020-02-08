@@ -68,4 +68,4 @@ function createSuspender(suspender) {
   return useSuspender
 }
 
-export default createSuspender
+module.exports = createSuspender
