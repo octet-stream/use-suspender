@@ -2,9 +2,9 @@
 
 Execute asynchronous actions with React.Suspense
 
-[![Build Status](https://travis-ci.org/octet-stream/dinky.svg?branch=master)](https://travis-ci.org/octet-stream/dinky)
-[![Code Coverage](https://codecov.io/github/octet-stream/dinky/coverage.svg?branch=master)](https://codecov.io/github/octet-stream/dinky?branch=master)
-[![devDependencies Status](https://david-dm.org/octet-stream/dinky/dev-status.svg)](https://david-dm.org/octet-stream/dinky?type=dev)
+[![Build Status](https://travis-ci.org/octet-stream/use-suspender.svg?branch=master)](https://travis-ci.org/octet-stream/use-suspender)
+[![Code Coverage](https://codecov.io/github/octet-stream/use-suspender/coverage.svg?branch=master)](https://codecov.io/github/octet-stream/use-suspender?branch=master)
+[![devDependencies Status](https://david-dm.org/octet-stream/use-suspender/dev-status.svg)](https://david-dm.org/octet-stream/use-suspender?type=dev)
 
 ## Installation
 
