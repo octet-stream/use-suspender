@@ -21,7 +21,11 @@ npm i use-suspender
 ### `createSuspender(suspender: Funcion) -> {Function}`
 
 Creates a new useSuspender for given function.
-The returned function will be able to take any arguments.
+
+### `useSuspender([...args]) -> any`
+
+Executes asynchronous action with given. This function will throw a Promise
+to notify React.Suspense and resolve a result from suspender.
 
 ## Usage
 
