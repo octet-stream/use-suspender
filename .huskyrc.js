@@ -1,5 +1,6 @@
 module.exports = {
   hooks: {
-    "pre-publish": "npm run coverage && snpm run size"
+    "pre-commit": "npm run staged",
+    "pre-publish": "npm run coverage && npm run size"
   }
 }
