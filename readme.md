@@ -25,7 +25,7 @@ Creates a new useSuspender for given function.
 ### `useSuspender([...args]) -> {any}`
 
 Executes asynchronous action with given arguments.
-This function will throw a Promise to notify React.Suspense
+This function will throw a Promise to notify `React.Suspense`
 and resolve a result from suspender.
 
 ## Usage
@@ -71,7 +71,7 @@ const root = document.querySelector("#root")
 render(<App />, root)
 ```
 
-The useSuspender hook can take arguments to use in each suspender function call.
+The `useSuspender` hook can take arguments to use in each suspender function call.
 Imagine you have some API method, called `getUserByLogin`. It takes a user login
 as the only argument. Here's an example of how you can apply this argument to the method:
 
