@@ -1,7 +1,8 @@
 {
-  "use-suspender.js": "eslint --fix",
   ".eslintrc.js": "eslint --fix",
   ".size-limit.js": "eslint --fix",
   ".huskyrc.js": "eslint --fix",
+  "use-suspender.js": "eslint --fix",
+  "readme.md": "eslint --fix",
   "test/**/*.js": "eslint --fix",
 }

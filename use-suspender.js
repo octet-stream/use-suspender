@@ -1,7 +1,7 @@
 /**
  * Creates a new useSuspender hook for given function.
  *
- * @param {() => any} suspender
+ * @param {Function} suspender
  *
  * @return {Function} useSuspender
  */
@@ -11,7 +11,7 @@ function createSuspender(suspender) {
   }
 
   const operation = {
-    state: "initial",
+    state: "initial", // initial | pending | resolved | rejected
     error: null,
     result: null,
     suspender: null
