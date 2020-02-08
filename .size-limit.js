@@ -1,6 +1,6 @@
 module.exports = [
   {
     path: "use-suspender.js",
-    limit: "197 B"
+    limit: "187 B"
   }
 ]
