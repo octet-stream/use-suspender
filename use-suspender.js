@@ -7,7 +7,7 @@
  */
 function createSuspender(suspender) {
   if (typeof suspender !== "function") {
-    throw new TypeError("Suspender expected to be a function")
+    throw new TypeError("Suspender expected to be a function.")
   }
 
   const operation = {

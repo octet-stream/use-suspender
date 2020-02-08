@@ -53,3 +53,10 @@ test("Returns a result on second call when promise is resolved", async t => {
 
   t.is(actual, expected)
 })
+
+test("Throws an error when given suspender is not a function", t => {
+  const err = t.throws(() => createSuspender())
+
+  t.true(err instanceof TypeError)
+  t.is(err.message, "Suspender expected to be a function.")
+})
