@@ -24,8 +24,9 @@ Creates a new useSuspender for given function.
 
 ### `useSuspender([...args]) -> any`
 
-Executes asynchronous action with given. This function will throw a Promise
-to notify React.Suspense and resolve a result from suspender.
+Executes asynchronous action with given arguments.
+This function will throw a Promise to notify React.Suspense
+and resolve a result from suspender.
 
 ## Usage
 
