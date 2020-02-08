@@ -2,6 +2,10 @@
 
 Execute asynchronous actions with React.Suspense
 
+[![Build Status](https://travis-ci.org/octet-stream/dinky.svg?branch=master)](https://travis-ci.org/octet-stream/dinky)
+[![Code Coverage](https://codecov.io/github/octet-stream/dinky/coverage.svg?branch=master)](https://codecov.io/github/octet-stream/dinky?branch=master)
+[![devDependencies Status](https://david-dm.org/octet-stream/dinky/dev-status.svg)](https://david-dm.org/octet-stream/dinky?type=dev)
+
 ## Installation
 
 You can take this package both from Yarn:
