@@ -13,7 +13,13 @@
     "coverage": "nyc ava"
   },
   "ava": {
-    "require": ["jsdom-global/register"],
+    "files": [
+      "test/**",
+      "!test/**/__helper__/**"
+    ],
+    "require": [
+      "jsdom-global/register"
+    ],
     "babel": {
       "extensions": [
         "js",
@@ -23,7 +29,8 @@
         "presets": [
           "@babel/preset-react"
         ]
-      }
+      },
+      "compileAsTests": ["test/__helper__/**"]
     }
   },
   "devDependencies": {
@@ -44,6 +51,7 @@
     "lint-staged": "10.0.7",
     "nanoid": "2.1.11",
     "nyc": "15.0.0",
+    "prop-types": "^15.7.2",
     "react": "16.12.0",
     "react-dom": "16.12.0",
     "sinon": "8.1.1",
