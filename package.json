@@ -8,7 +8,8 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "size": "size-limit"
+    "size": "size-limit",
+    "staged": "lint-staged"
   },
   "devDependencies": {
     "@octetstream/eslint-config": "4.0.0",
