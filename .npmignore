@@ -10,8 +10,8 @@ coverage
 
 /.size-limit.js
 /.editorconfig
-/.eslintrc.json
-/.huskyrc.json
+/.eslintrc.js
+/.huskyrc.js
 /.lintstagedrc
 /.travis.yml
 /yarn.lock
