@@ -1,6 +1,6 @@
 {
   "name": "use-suspender",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Execute asynchronous actions with React.Suspense",
   "keywords": ["react-suspense", "suspense", "hooks", "react-hooks"],
   "main": "use-suspender",
