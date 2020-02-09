@@ -59,3 +59,41 @@ test("Renders an error thrown by suspender", async t => {
 
   t.is(node.innerHTML, "Error!")
 })
+
+test("Calls useSuspender with different arguments", async t => {
+  const firstExpected = "first"
+  const secondExpected = "second"
+
+  const useSuspender = createSuspender(arg => arg)
+
+  function First() {
+    const result = useSuspender(firstExpected)
+
+    return <div>{result}</div>
+  }
+
+  function Second() {
+    const result = useSuspender(secondExpected)
+
+    return <div>{result}</div>
+  }
+
+  const Main = () => (
+    <Suspense fallback="Loading...">
+      <First />
+
+      <Second />
+    </Suspense>
+  )
+
+  render(<Main />)
+
+  const [firstActual, secondActual] = await Promise.all([
+    screen.findByText(firstExpected),
+
+    screen.findByText(secondExpected)
+  ])
+
+  t.is(firstActual.innerHTML, firstExpected)
+  t.is(secondActual.innerHTML, secondExpected)
+})

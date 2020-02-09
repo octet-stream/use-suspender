@@ -2,7 +2,7 @@ const {createElement, Component} = require("react")
 
 const {node} = require("prop-types")
 
-class ErrorHandler extends Component {
+class ErrorBoundary extends Component {
   constructor() {
     super()
 
@@ -30,8 +30,8 @@ class ErrorHandler extends Component {
   }
 }
 
-ErrorHandler.propTypes = {
+ErrorBoundary.propTypes = {
   children: node.isRequired
 }
 
-module.exports = ErrorHandler
+module.exports = ErrorBoundary
