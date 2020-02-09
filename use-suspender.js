@@ -3,6 +3,8 @@
  *
  * @param {Function} fn
  * @param {any[]} args
+ *
+ * @return {Promise<any>}
  */
 function exec(fn, args) {
   try {
