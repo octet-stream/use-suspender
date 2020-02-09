@@ -44,7 +44,7 @@ test("Throws a promise on second call if promise is not resolved", t => {
   t.is(p1, p2)
 })
 
-test("Throws an error on second call if suspender throws error", async t => {
+test("Throws an error taken from ASYNC suspender", async t => {
   const useSuspender = createSuspender(
     () => Promise.reject(new Error("Error!"))
   )
@@ -56,7 +56,19 @@ test("Throws an error on second call if suspender throws error", async t => {
   t.is(err.message, "Error!")
 })
 
-test("Returns a result on second call when promise is resolved", async t => {
+test("Throws an error taken from SYNC suspender", async t => {
+  const useSuspender = createSuspender(() => {
+    throw new Error("Error!")
+  })
+
+  await getPromise(useSuspender)
+
+  const err = t.throws(useSuspender)
+
+  t.is(err.message, "Error!")
+})
+
+test("Returns a result from ASYNC suspender on a second call", async t => {
   const expected = 451
 
   const useSuspender = createSuspender(() => Promise.resolve(expected))
@@ -66,6 +78,42 @@ test("Returns a result on second call when promise is resolved", async t => {
   const actual = useSuspender()
 
   t.is(actual, expected)
+})
+
+test("Returns a result from SYNC suspender on a second call", async t => {
+  const expected = 451
+
+  const useSuspender = createSuspender(() => expected)
+
+  await getPromise(useSuspender)
+
+  const actual = useSuspender()
+
+  t.is(actual, expected)
+})
+
+test("Calls suspender function once per two useSuspender call", async t => {
+  const suspender = spy()
+
+  const useSuspender = createSuspender(suspender)
+
+  await getPromise(useSuspender)
+  useSuspender()
+
+  t.true(suspender.calledOnce)
+})
+
+test("Calls suspender function again on a third call", async t => {
+  const suspender = spy()
+
+  const useSuspender = createSuspender(suspender)
+
+  await getPromise(useSuspender)
+  useSuspender()
+
+  await getPromise(useSuspender)
+
+  t.true(suspender.calledTwice)
 })
 
 test("Calls a suspender with given arguments", async t => {

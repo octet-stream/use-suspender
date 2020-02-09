@@ -1,4 +1,20 @@
 /**
+ * Calls a function and returns a Promise that resolves a result
+ *
+ * @param {Function} fn
+ * @param {any[]} args
+ */
+function exec(fn, args) {
+  try {
+    const res = fn(...args)
+
+    return res instanceof Promise ? res : Promise.resolve(res)
+  } catch (err) {
+    return Promise.reject(err)
+  }
+}
+
+/**
  * Creates a new useSuspender hook for given function.
  *
  * @param {Function} suspender
@@ -49,7 +65,7 @@ function createSuspender(suspender) {
       throw operation.suspender
     }
 
-    operation.suspender = Promise.resolve(suspender(...args))
+    operation.suspender = exec(suspender, args)
       .then(result => {
         operation.result = result
         operation.state = "resolved"
