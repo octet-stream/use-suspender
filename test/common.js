@@ -51,7 +51,9 @@ test("Throws an error on second call if suspender throws error", async t => {
 
   await getPromise(useSuspender)
 
-  t.throws(useSuspender)
+  const err = t.throws(useSuspender)
+
+  t.is(err.message, "Error!")
 })
 
 test("Returns a result on second call when promise is resolved", async t => {
