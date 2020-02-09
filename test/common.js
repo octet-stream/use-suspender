@@ -68,10 +68,10 @@ test("Returns a result on second call when promise is resolved", async t => {
   t.is(actual, expected)
 })
 
-test("useSuspender calls a suspender with given arguments", async t => {
+test("Calls a suspender with given arguments", async t => {
   const expected = ["Rainbow Dash always dresses in style"]
 
-  const suspender = spy(() => Promise.resolve())
+  const suspender = spy()
 
   const useSuspender = createSuspender(suspender)
 
@@ -80,6 +80,30 @@ test("useSuspender calls a suspender with given arguments", async t => {
   const {args: actual} = suspender.firstCall
 
   t.deepEqual(actual, expected)
+})
+
+test("Calls a suspender with different arguments", async t => {
+  const expectedFirst = ["first"]
+  const expectedSecond = ["second"]
+
+  const suspender = spy()
+
+  const useSuspender = createSuspender(suspender)
+
+  // Note that useSuspender need to be called twice
+  // to reset its internal cache, so you can use the suspender with
+  // different arguments
+  await getPromise(() => useSuspender(...expectedFirst))
+  useSuspender(...expectedFirst)
+
+  await getPromise(() => useSuspender(...expectedSecond))
+  useSuspender(...expectedSecond)
+
+  const {args: actualFirst} = suspender.firstCall
+  const {args: actualSecond} = suspender.lastCall
+
+  t.deepEqual(actualFirst, expectedFirst)
+  t.deepEqual(actualSecond, expectedSecond)
 })
 
 test("Throws an error when given suspender is not a function", t => {
