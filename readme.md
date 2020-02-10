@@ -22,15 +22,20 @@ npm i use-suspender
 
 ## API
 
-### `createSuspender(suspender: Funcion) -> {Function}`
+### `createSuspender(suspender[, ctx]) -> {Function}`
 
 Creates a new useSuspender for given function.
+
+- **{Function}** suspender – a function that will be used for each useSuspender call.
+- **{any}** ctx – thisArg that will be used for each useSuspender call.
 
 ### `useSuspender([...args]) -> {any}`
 
 Executes asynchronous action with given arguments.
 This function will throw a Promise to notify `React.Suspense`
 and resolve a result from suspender.
+
+- **{any[]}** args – arguments to call the suspender with
 
 ## Usage
 

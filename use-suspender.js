@@ -6,9 +6,9 @@
  *
  * @return {Promise<any>}
  */
-function exec(fn, args) {
+function exec(fn, args, ctx) {
   try {
-    const res = fn(...args)
+    const res = fn.apply(ctx, args)
 
     return res instanceof Promise ? res : Promise.resolve(res)
   } catch (err) {
@@ -23,7 +23,7 @@ function exec(fn, args) {
  *
  * @return {Function} useSuspender
  */
-function createSuspender(suspender) {
+function createSuspender(suspender, ctx = null) {
   if (typeof suspender !== "function") {
     throw new TypeError("Suspender expected to be a function.")
   }
@@ -67,7 +67,7 @@ function createSuspender(suspender) {
       throw operation.suspender
     }
 
-    operation.suspender = exec(suspender, args)
+    operation.suspender = exec(suspender, args, this || ctx)
       .then(result => {
         operation.result = result
         operation.state = "resolved"

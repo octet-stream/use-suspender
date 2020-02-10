@@ -1,8 +1,13 @@
+const pq = require("proxyquire")
 const test = require("ava")
 
 const {spy} = require("sinon")
 
-const createSuspender = require("../use-suspender")
+const createSuspender = pq("../use-suspender", {
+  react: {
+    useEffect() { /* this hook is not necessary outside of react */ }
+  }
+})
 
 function getPromise(fn) {
   try {
