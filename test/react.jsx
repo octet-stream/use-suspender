@@ -64,16 +64,17 @@ test("Calls useSuspender with different arguments", async t => {
   const firstExpected = "first"
   const secondExpected = "second"
 
-  const useSuspender = createSuspender(arg => arg)
+  const useSuspender1 = createSuspender(arg => arg)
+  const useSuspender2 = createSuspender(arg => arg)
 
   function First() {
-    const result = useSuspender(firstExpected)
+    const result = useSuspender1(firstExpected)
 
     return <div>{result}</div>
   }
 
   function Second() {
-    const result = useSuspender(secondExpected)
+    const result = useSuspender2(secondExpected)
 
     return <div>{result}</div>
   }
