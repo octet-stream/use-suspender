@@ -78,20 +78,32 @@ test("Calls useSuspender with different arguments", async t => {
     return <div>{result}</div>
   }
 
-  const Main = () => (
-    <Suspense fallback="Loading...">
-      <First />
+  const Main = () => {
+    const [count, setCount] = React.useState(0)
+    React.useEffect(() => {
+      setTimeout(() => {
+        setCount(1)
+      }, 10)
+    }, [])
+    return (
+      <Suspense fallback="Loading...">
+        <First />
 
-      <Second />
-    </Suspense>
-  )
+        <Second />
+
+        <div>{`count=${count}`}</div>
+      </Suspense>
+    )
+  }
 
   render(<Main />)
 
   const [firstActual, secondActual] = await Promise.all([
     screen.findByText(firstExpected),
 
-    screen.findByText(secondExpected)
+    screen.findByText(secondExpected),
+
+    screen.findByText("count=1") // wait for re-render
   ])
 
   t.is(firstActual.innerHTML, firstExpected)
