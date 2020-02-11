@@ -44,13 +44,13 @@
     }
   },
   "devDependencies": {
-    "@ava/babel": "1.0.0",
+    "@ava/babel": "1.0.1",
     "@babel/preset-react": "7.8.3",
     "@octetstream/eslint-config": "4.0.0",
     "@size-limit/preset-small-lib": "4.0.1",
     "@testing-library/react": "9.4.0",
-    "ava": "3.2.0",
-    "codecov": "3.6.4",
+    "ava": "3.3.0",
+    "codecov": "3.6.5",
     "eslint": "6.8.0",
     "eslint-plugin-ava": "10.0.1",
     "eslint-plugin-markdown": "1.0.1",
