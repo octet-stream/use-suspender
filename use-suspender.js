@@ -19,7 +19,7 @@ const isFunction = value => typeof value === "function"
  *
  * @api private
  */
-function exec(fn, args, ctx) {
+function call(fn, args, ctx) {
   try {
     const res = fn.apply(ctx, args)
 
@@ -82,7 +82,7 @@ function createSuspender(suspender, ctx = null) {
       throw operation.suspender
     }
 
-    operation.suspender = exec(suspender, args, this || ctx)
+    operation.suspender = call(suspender, args, this || ctx)
       .then(result => {
         operation.result = result
         operation.state = "resolved"
@@ -98,7 +98,7 @@ function createSuspender(suspender, ctx = null) {
     throw operation.suspender
   }
 
-  useSuspender.prefetch = function prefetch(...args) {
+  useSuspender.exec = function exec(...args) {
     try {
       useSuspender.call(this === useSuspender ? undefined : this, ...args)
     } catch (err) {

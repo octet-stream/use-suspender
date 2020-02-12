@@ -37,6 +37,8 @@ and resolve a result from suspender.
 
 - **{any[]}** args – arguments to call the suspender with
 
+### `useSuspender.exec() -> {any}`
+
 ## Usage
 
 Minimal example:
