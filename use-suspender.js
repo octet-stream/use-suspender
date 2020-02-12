@@ -98,7 +98,10 @@ function createSuspender(suspender, ctx = null) {
     throw operation.suspender
   }
 
-  useSuspender.exec = function exec(...args) {
+  /**
+   * Calls useSuspense early
+   */
+  useSuspender.init = function init(...args) {
     try {
       useSuspender.call(this === useSuspender ? undefined : this, ...args)
     } catch (err) {

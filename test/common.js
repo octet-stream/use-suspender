@@ -159,24 +159,24 @@ test("Calls a suspender with different arguments", async t => {
   t.deepEqual(actualSecond, expectedSecond)
 })
 
-test("Call useSuspender when exec is called", t => {
+test("Call useSuspender when init is called", t => {
   const suspender = spy()
 
-  const {exec} = createSuspender(suspender)
+  const {init} = createSuspender(suspender)
 
-  exec()
+  init()
 
   t.true(suspender.called)
 })
 
-test("The exec function applies arguments to useSuspender call", t => {
+test("The init function applies arguments to useSuspender call", t => {
   const expected = ["Some string"]
 
   const suspender = spy()
 
-  const {exec} = createSuspender(suspender)
+  const {init} = createSuspender(suspender)
 
-  exec(...expected)
+  init(...expected)
 
   const {args: actual} = suspender.firstCall
 
