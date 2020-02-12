@@ -102,7 +102,7 @@ function createSuspender(suspender, ctx = null) {
     try {
       useSuspender.call(this === useSuspender ? undefined : this, ...args)
     } catch (err) {
-      if (!(err instanceof Promise)) {
+      if (!(err instanceof Promise) || !isFunction(err.then)) {
         throw err
       }
     }
