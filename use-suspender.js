@@ -1,10 +1,23 @@
 /**
+ * Check if given value is a function
+ *
+ * @param {any} value – a value to test
+ *
+ * @return {boolean}
+ *
+ * @api private
+ */
+const isFunction = value => typeof value === "function"
+
+/**
  * Calls a function and returns a Promise that resolves a result
  *
  * @param {Function} fn
  * @param {any[]} args
  *
  * @return {Promise<any>}
+ *
+ * @api private
  */
 function exec(fn, args, ctx) {
   try {
@@ -24,7 +37,7 @@ function exec(fn, args, ctx) {
  * @return {Function} useSuspender
  */
 function createSuspender(suspender, ctx = null) {
-  if (typeof suspender !== "function") {
+  if (!isFunction(suspender)) {
     throw new TypeError("Suspender expected to be a function.")
   }
 
@@ -48,6 +61,8 @@ function createSuspender(suspender, ctx = null) {
    *  such ID found in cache.
    *
    * @throws {Error} if suspender's Promise has been rejected with an error
+   *
+   * @api public
    */
   function useSuspender(...args) {
     if (operation.state === "rejected") {
@@ -82,6 +97,19 @@ function createSuspender(suspender, ctx = null) {
 
     throw operation.suspender
   }
+
+  useSuspender.prefetch = function prefetch(...args) {
+    try {
+      useSuspender.call(this === useSuspender ? undefined : this, ...args)
+    } catch (err) {
+      if (!(err instanceof Promise)) {
+        throw err
+      }
+    }
+  }
+
+  // For those who want to use object destructing on createSuspender result.
+  useSuspender.useSuspender = useSuspender
 
   return useSuspender
 }
