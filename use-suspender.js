@@ -36,7 +36,7 @@ function call(fn, args, ctx) {
  *
  * @return {Function} useSuspender
  */
-function createSuspender(suspender, ctx = null) {
+function createSuspender(suspender, ctx = undefined) {
   if (!isFunction(suspender)) {
     throw new TypeError("Suspender expected to be a function.")
   }
@@ -82,7 +82,7 @@ function createSuspender(suspender, ctx = null) {
       throw operation.suspender
     }
 
-    operation.suspender = call(suspender, args, this || ctx)
+    operation.suspender = call(suspender, args, this || ctx || undefined)
       .then(result => {
         operation.result = result
         operation.state = "resolved"
@@ -104,10 +104,8 @@ function createSuspender(suspender, ctx = null) {
   useSuspender.init = function init(...args) {
     try {
       useSuspender.call(this === useSuspender ? undefined : this, ...args)
-    } catch (err) {
-      if (!(err instanceof Promise) || !isFunction(err.then)) {
-        throw err
-      }
+    } catch (_) {
+      // useSuspender call sholdn't throw an error, so just ignore anything
     }
   }
 
