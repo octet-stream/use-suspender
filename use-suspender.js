@@ -1,15 +1,4 @@
 /**
- * Check if given value is a function
- *
- * @param {any} value – a value to test
- *
- * @return {boolean}
- *
- * @api private
- */
-const isFunction = value => typeof value === "function"
-
-/**
  * Calls a function and returns a Promise that resolves a result
  *
  * @param {Function} fn
@@ -37,7 +26,7 @@ function call(fn, args, ctx) {
  * @return {Function} useSuspender
  */
 function createSuspender(suspender, ctx = undefined) {
-  if (!isFunction(suspender)) {
+  if (typeof suspender !== "function") {
     throw new TypeError("Suspender expected to be a function.")
   }
 
