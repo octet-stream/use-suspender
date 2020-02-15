@@ -1,3 +1,10 @@
+const {useEffect} = require("react")
+
+const STATE_INITIAL = "initial"
+const STATE_PENDING = "pending"
+const STATE_RESOLVED = "resolved"
+const STATE_REJECTED = "rejected"
+
 /**
  * Calls a function and returns a Promise that resolves a result
  *
@@ -32,7 +39,7 @@ function createSuspender(suspender, ctx) {
   }
 
   const operation = {
-    state: "initial", // initial | pending | resolved | rejected
+    state: STATE_INITIAL, // initial | pending | resolved | rejected
     error: null,
     result: null,
     suspender: null
@@ -54,35 +61,43 @@ function createSuspender(suspender, ctx) {
    * @api public
    */
   function useSuspender(...args) {
-    if (operation.state === "rejected") {
+    // Cancel the operation if component has been unmounded
+    useEffect(() => () => {
+      if (operation.suspender && operation.state === STATE_PENDING) {
+        operation.state = STATE_INITIAL
+        operation.suspender = null
+      }
+    }, [])
+
+    if (operation.state === STATE_REJECTED) {
       operation.suspender = null
 
       throw operation.error
     }
 
-    if (operation.state === "resolved") {
-      operation.state = "initial"
+    if (operation.state === STATE_RESOLVED) {
+      operation.state = STATE_INITIAL
       operation.suspender = null
 
       return operation.result
     }
 
-    if (operation.state === "pending") {
+    if (operation.state === STATE_PENDING) {
       throw operation.suspender
     }
 
     operation.suspender = call(suspender, args, this || ctx || undefined)
       .then(result => {
         operation.result = result
-        operation.state = "resolved"
+        operation.state = STATE_RESOLVED
       })
 
       .catch(error => {
         operation.error = error
-        operation.state = "rejected"
+        operation.state = STATE_REJECTED
       })
 
-    operation.state = "pending"
+    operation.state = STATE_PENDING
 
     throw operation.suspender
   }
