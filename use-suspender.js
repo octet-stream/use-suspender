@@ -22,10 +22,11 @@ function call(fn, args, ctx) {
  * Creates a new useSuspender hook for given function.
  *
  * @param {Function} suspender
+ * @param {any} [ctx = undefined]
  *
  * @return {Function} useSuspender
  */
-function createSuspender(suspender, ctx = undefined) {
+function createSuspender(suspender, ctx) {
   if (typeof suspender !== "function") {
     throw new TypeError("Suspender expected to be a function.")
   }
@@ -42,12 +43,11 @@ function createSuspender(suspender, ctx = undefined) {
    * Will throw a Promise to notify React.Suspense
    *
    *
-   * @param {any[]} [args = []]
+   * @param {any[]} [args = []] a list of arguments to execute suspender with
    *
-   * @return {any}
+   * @return {any} result
    *
-   * @throws {Promise} A promise will be thrown when no suspender with
-   *  such ID found in cache.
+   * @throws {Promise} if the Promise haven't been fulfilled yet
    *
    * @throws {Error} if suspender's Promise has been rejected with an error
    *
@@ -89,6 +89,10 @@ function createSuspender(suspender, ctx = undefined) {
 
   /**
    * Calls useSuspense early
+   *
+   * @param {any[]} [args = []] a list of arguments to execute suspender with
+   *
+   * @return {void}
    */
   useSuspender.init = function init(...args) {
     try {
