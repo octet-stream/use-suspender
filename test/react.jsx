@@ -1,12 +1,10 @@
-const React = require("react")
 const test = require("ava")
 
+const {createElement, Suspense} = require("react")
 const {render, screen} = require("@testing-library/react")
 
 const ErrorBoundary = require("./__helper__/ErrorBoundary")
 const createSuspender = require("../use-suspender")
-
-const {Suspense} = React
 
 test("Renders a component with suspender's result", async t => {
   const expected = "I beat Twilight Sparkle and all "
