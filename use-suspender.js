@@ -103,7 +103,7 @@ function createSuspender(suspender, ctx) {
     try {
       useSuspender.call(this === useSuspender ? undefined : this, ...args)
     } catch (_) {
-      // useSuspender call sholdn't throw an error, so just ignore anything
+      // useSuspender call shouldn't throw an error, so just ignore anything
     }
   }
 
