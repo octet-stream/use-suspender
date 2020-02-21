@@ -5,7 +5,8 @@ const {spy} = require("sinon")
 
 const createSuspender = pq("../use-suspender", {
   react: {
-    useEffect() { /* this hook is not necessary outside of react */ }
+    useEffect() { /* this hook is not necessary outside of react */ },
+    useRef(ref) { return {current: ref} }
   }
 })
 

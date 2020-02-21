@@ -1,5 +1,3 @@
-const {useEffect} = require("react")
-
 const STATE_INITIAL = "initial"
 const STATE_PENDING = "pending"
 const STATE_RESOLVED = "resolved"
@@ -61,14 +59,6 @@ function createSuspender(suspender, ctx) {
    * @api public
    */
   function useSuspender(...args) {
-    // Cancel the operation if component has been unmounded
-    useEffect(() => () => {
-      if (operation.suspender && operation.state === STATE_PENDING) {
-        operation.state = STATE_INITIAL
-        operation.suspender = null
-      }
-    }, [])
-
     if (operation.state === STATE_REJECTED) {
       operation.suspender = null
 

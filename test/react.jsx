@@ -99,20 +99,21 @@ test("Calls useSuspender with different arguments", async t => {
 // TODO: Figure out how to isolate renders
 /*
 test("Calls useSuspender with different arguments on re-render", async t => {
-  const firstExpected = "first"
-  const secondExpected = "second"
+  const firstExpected = "first call"
+  const secondExpected = "second call"
 
-  const useSuspenderFirst = createSuspender(arg => arg)
-  const useSuspenderSecond = createSuspender(arg => arg)
+  const useSuspender = createSuspender(arg => wait(20).then(() => arg))
+  // const useSuspenderFirst = createSuspender(arg => arg)
+  // const useSuspenderSecond = createSuspender(arg => arg)
 
   function First() {
-    const result = useSuspenderFirst(firstExpected)
+    const result = useSuspender(firstExpected)
 
     return <div>{result}</div>
   }
 
   function Second() {
-    const result = useSuspenderSecond(secondExpected)
+    const result = useSuspender(secondExpected)
 
     return <div>{result}</div>
   }
@@ -146,6 +147,8 @@ test("Calls useSuspender with different arguments on re-render", async t => {
 
     screen.findByText("count=1") // wait for re-render
   ])
+
+  // console.log(firstActual.innerHTML, secondActual.innerHTML)
 
   t.is(firstActual.innerHTML, firstExpected)
   t.is(secondActual.innerHTML, secondExpected)
