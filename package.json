@@ -52,7 +52,7 @@
     "@ava/babel": "1.0.1",
     "@babel/preset-react": "7.8.3",
     "@octetstream/eslint-config": "4.0.0",
-    "@size-limit/preset-small-lib": "4.3.1",
+    "@size-limit/preset-small-lib": "4.4.0",
     "@testing-library/react": "10.0.1",
     "@testing-library/react-hooks": "3.2.1",
     "ava": "3.5.0",
@@ -72,7 +72,7 @@
     "react-dom": "16.13.0",
     "react-test-renderer": "^16.13.0",
     "sinon": "9.0.1",
-    "size-limit": "4.3.1"
+    "size-limit": "4.4.0"
   },
   "peerDependencies": {
     "react": ">= 16.6.x"
