@@ -50,12 +50,12 @@
   },
   "devDependencies": {
     "@ava/babel": "1.0.1",
-    "@babel/preset-react": "7.8.3",
+    "@babel/preset-react": "7.9.1",
     "@octetstream/eslint-config": "4.0.0",
-    "@size-limit/preset-small-lib": "4.4.0",
+    "@size-limit/preset-small-lib": "4.4.1",
     "@testing-library/react": "10.0.1",
     "@testing-library/react-hooks": "3.2.1",
-    "ava": "3.5.0",
+    "ava": "3.5.1",
     "codecov": "3.6.5",
     "eslint": "6.8.0",
     "eslint-plugin-ava": "10.2.0",
@@ -68,11 +68,11 @@
     "nanoid": "2.1.11",
     "nyc": "15.0.0",
     "prop-types": "15.7.2",
-    "react": "16.13.0",
-    "react-dom": "16.13.0",
-    "react-test-renderer": "^16.13.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-test-renderer": "^16.13.1",
     "sinon": "9.0.1",
-    "size-limit": "4.4.0"
+    "size-limit": "4.4.1"
   },
   "peerDependencies": {
     "react": ">= 16.6.x"
