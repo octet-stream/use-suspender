@@ -20,34 +20,6 @@
     "test": "ava",
     "ci": "nyc npm test && nyc report --reporter=lcov && node_modules/.bin/codecov"
   },
-  "ava": {
-    "files": [
-      "test/**",
-      "!test/**/__helper__/**"
-    ],
-    "require": [
-      "jsdom-global/register"
-    ],
-    "babel": {
-      "extensions": [
-        "js",
-        "jsx"
-      ],
-      "testOptions": {
-        "presets": [
-          [
-            "@babel/preset-react",
-            {
-              "pragma": "createElement"
-            }
-          ]
-        ]
-      },
-      "compileAsTests": [
-        "test/__helper__/**"
-      ]
-    }
-  },
   "devDependencies": {
     "@ava/babel": "1.0.1",
     "@babel/preset-react": "7.9.4",
