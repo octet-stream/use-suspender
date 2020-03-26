@@ -14,6 +14,6 @@ coverage
 /.huskyrc.js
 /.lintstagedrc
 /.travis.yml
-/ava.config.js
+/ava.config.cjs
 /yarn.lock
 /test.mjs
