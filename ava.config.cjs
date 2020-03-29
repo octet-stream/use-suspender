@@ -1,7 +1,6 @@
 module.exports = {
   files: [
-    "test/**",
-    "!test/**/__helper__/**"
+    "test.js"
   ],
   require: [
     "jsdom-global/register"
