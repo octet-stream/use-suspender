@@ -128,5 +128,3 @@ test("Throws a Promise rejection", async t => {
   t.true(result.error instanceof Error)
   t.is(result.error.message, "Error!")
 })
-
-// test("", t => {})
