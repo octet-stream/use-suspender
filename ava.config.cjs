@@ -2,9 +2,6 @@ module.exports = {
   files: [
     "test.js"
   ],
-  require: [
-    "jsdom-global/register"
-  ],
   babel: {
     extensions: [
       "js",
@@ -19,9 +16,6 @@ module.exports = {
           }
         ]
       ]
-    },
-    compileAsTests: [
-      "test/__helper__/**"
-    ]
+    }
   }
 }

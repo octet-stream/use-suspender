@@ -30,6 +30,8 @@ function call(fn, args, ctx) {
  * @param {any} [ctx = undefined]
  *
  * @return {Function} useSuspender
+ *
+ * @api public
  */
 function createSuspender(suspender, ctx) {
   if (typeof suspender !== "function") {
@@ -76,7 +78,7 @@ function createSuspender(suspender, ctx) {
       throw operation.suspender
     }
 
-    operation.suspender = call(suspender, args, this || ctx || undefined)
+    operation.suspender = call(suspender, args, ctx)
       .then(result => {
         operation.result = result
         operation.state = STATE_RESOLVED
@@ -100,11 +102,8 @@ function createSuspender(suspender, ctx) {
    * @return {void}
    */
   useSuspender.init = function init(...args) {
-    try {
-      useSuspender.call(this === useSuspender ? undefined : this, ...args)
-    } catch (_) {
-      // useSuspender call shouldn't throw an error, so just ignore anything
-    }
+    operation.suspender = call(suspender, args)
+    operation.state = STATE_PENDING
   }
 
   // For those who want to use object destructing on createSuspender result.

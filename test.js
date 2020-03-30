@@ -14,6 +14,30 @@ test("Executes a function passed to createSuspender", t => {
   t.true(fn.called)
 })
 
+test("Calls a suspender with undefined as thisArg by default", t => {
+  const fn = spy()
+  const useSuspender = createSuspender(fn)
+
+  renderHook(() => useSuspender())
+
+  const {thisValue} = fn.firstCall
+
+  t.is(thisValue, undefined)
+})
+
+test("Calls a suspender with thisArg taken by createSuspender", t => {
+  const expected = new Map()
+
+  const fn = spy(() => {})
+  const useSuspender = createSuspender(fn, expected)
+
+  renderHook(() => useSuspender())
+
+  const {thisValue} = fn.firstCall
+
+  t.is(thisValue, expected)
+})
+
 test("Return a value from a suspender", async t => {
   const expected = "Rainbow Dash always dresses in style"
 
@@ -60,6 +84,16 @@ test("Does not call a suspender again on re-render", t => {
   rerender()
 
   t.false(fn.calledTwice)
+})
+
+test("Calls a suspender when .init() called", t => {
+  const fn = spy()
+
+  const {init} = createSuspender(fn)
+
+  init()
+
+  t.true(fn.called)
 })
 
 test("Throws an error when createSuspender called witout an argument", t => {
