@@ -13,7 +13,7 @@ const STATE_REJECTED = "rejected"
  *
  * @api private
  */
-function call(fn, args, ctx) {
+function getPromise(fn, args, ctx) {
   try {
     const res = fn.apply(ctx, args)
 
@@ -46,6 +46,37 @@ function createSuspender(suspender, ctx) {
   }
 
   /**
+   * Resets operation the operation
+   */
+  function reset() {
+    operation.suspender = null
+    operation.state = STATE_INITIAL
+  }
+
+  /**
+   * Calls a suspender function and sets its Promise on the operation
+   * Takes the same arguments as getPromise function.
+   *
+   * @return {Promise<void>}
+   */
+  function call(...args) {
+    operation.suspender = getPromise(...args)
+      .then(result => {
+        operation.result = result
+        operation.state = STATE_RESOLVED
+      })
+
+      .catch(error => {
+        operation.error = error
+        operation.state = STATE_REJECTED
+      })
+
+    operation.state = STATE_PENDING
+
+    return operation.suspender
+  }
+
+  /**
    * Executes a suspender with given arguments.
    * Will throw a Promise to notify React.Suspense
    *
@@ -68,8 +99,7 @@ function createSuspender(suspender, ctx) {
     }
 
     if (operation.state === STATE_RESOLVED) {
-      operation.state = STATE_INITIAL
-      operation.suspender = null
+      reset()
 
       return operation.result
     }
@@ -78,20 +108,7 @@ function createSuspender(suspender, ctx) {
       throw operation.suspender
     }
 
-    operation.suspender = call(suspender, args, ctx)
-      .then(result => {
-        operation.result = result
-        operation.state = STATE_RESOLVED
-      })
-
-      .catch(error => {
-        operation.error = error
-        operation.state = STATE_REJECTED
-      })
-
-    operation.state = STATE_PENDING
-
-    throw operation.suspender
+    throw call(suspender, args, ctx)
   }
 
   /**
@@ -102,8 +119,7 @@ function createSuspender(suspender, ctx) {
    * @return {void}
    */
   useSuspender.init = function init(...args) {
-    operation.suspender = call(suspender, args)
-    operation.state = STATE_PENDING
+    call(suspender, args)
   }
 
   // For those who want to use object destructing on createSuspender result.
