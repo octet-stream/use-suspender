@@ -10,15 +10,8 @@ module.exports = {
   },
   "plugins": [
     "ava",
-    "markdown",
-    "react"
+    "markdown"
   ],
-  "settings": {
-    react: {
-      version: "detect",
-      pragma: "createElement"
-    }
-  },
   "extends": [
     "@octetstream",
     "plugin:ava/recommended",

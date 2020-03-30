@@ -3,7 +3,7 @@ const test = require("ava")
 const {spy} = require("sinon")
 const {renderHook} = require("@testing-library/react-hooks")
 
-const createSuspender = require("./use-suspender")
+const createSuspender = require(".")
 
 test("Executes a function passed to createSuspender", t => {
   const fn = spy()
