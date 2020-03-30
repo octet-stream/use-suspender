@@ -4,7 +4,6 @@ node_modules
 coverage
 yarn-error.log
 
-test
 coverage
 .codecov
 
@@ -16,4 +15,4 @@ coverage
 /.travis.yml
 /ava.config.cjs
 /yarn.lock
-/test.mjs
+/test.js
