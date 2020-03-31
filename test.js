@@ -38,7 +38,7 @@ test("Calls a suspender with thisArg taken by createSuspender", t => {
   t.is(thisValue, expected)
 })
 
-test("Return a value from a suspender", async t => {
+test("Returns a value from a suspender", async t => {
   const expected = "Rainbow Dash always dresses in style"
 
   const useSuspender = createSuspender(() => expected)
