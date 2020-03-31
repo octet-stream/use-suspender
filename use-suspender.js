@@ -1,4 +1,4 @@
-const eq = require("fast-deep-equal")
+const eq = require("fast-deep-equal/react")
 
 const STATE_INITIAL = "initial"
 const STATE_PENDING = "pending"
