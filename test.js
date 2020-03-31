@@ -75,7 +75,7 @@ test("Calls suspender with given arguments", t => {
   t.deepEqual(actual, expected)
 })
 
-test("Does not call a suspender again on re-render", t => {
+test("Does not call a suspender again on re-render if args are the same", t => {
   const fn = spy()
   const useSuspender = createSuspender(fn)
 
@@ -84,6 +84,21 @@ test("Does not call a suspender again on re-render", t => {
   rerender()
 
   t.false(fn.calledTwice)
+})
+
+test("Calls a suspender when the new arguments taken", t => {
+  const fn = spy()
+  const useSuspender = createSuspender(fn)
+
+  const {rerender} = renderHook(({id}) => useSuspender(id), {
+    initialProps: {
+      id: 1
+    }
+  })
+
+  rerender({id: 2})
+
+  t.true(fn.calledTwice)
 })
 
 test("Calls a suspender when .init() called", t => {

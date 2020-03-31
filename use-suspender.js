@@ -1,3 +1,5 @@
+const eq = require("fast-deep-equal")
+
 const STATE_INITIAL = "initial"
 const STATE_PENDING = "pending"
 const STATE_RESOLVED = "resolved"
@@ -42,13 +44,15 @@ function createSuspender(suspender, ctx) {
     state: STATE_INITIAL, // initial | pending | resolved | rejected
     error: null,
     result: null,
-    suspender: null
+    suspender: null,
+    args: []
   }
 
   /**
    * Resets operation the operation
    */
   function reset() {
+    operation.args = []
     operation.suspender = null
     operation.state = STATE_INITIAL
   }
@@ -59,8 +63,8 @@ function createSuspender(suspender, ctx) {
    *
    * @return {Promise<void>}
    */
-  function call(...args) {
-    operation.suspender = getPromise(...args)
+  function call(fn, args, thisArg) {
+    operation.suspender = getPromise(fn, args, thisArg)
       .then(result => {
         operation.result = result
         operation.state = STATE_RESOLVED
@@ -72,6 +76,7 @@ function createSuspender(suspender, ctx) {
       })
 
     operation.state = STATE_PENDING
+    operation.args = args
 
     return operation.suspender
   }
@@ -92,6 +97,10 @@ function createSuspender(suspender, ctx) {
    * @api public
    */
   function useSuspender(...args) {
+    if (operation.state === STATE_PENDING && eq(args, operation.args)) {
+      throw operation.suspender
+    }
+
     if (operation.state === STATE_REJECTED) {
       operation.suspender = null
 
@@ -102,10 +111,6 @@ function createSuspender(suspender, ctx) {
       reset()
 
       return operation.result
-    }
-
-    if (operation.state === STATE_PENDING) {
-      throw operation.suspender
     }
 
     throw call(suspender, args, ctx)
