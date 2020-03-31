@@ -123,7 +123,7 @@ function createSuspender(suspender, ctx) {
    *
    * @return {void}
    */
-  useSuspender.init = function init(...args) {
+  useSuspender.callEarly = function callEarly(...args) {
     call(suspender, args)
   }
 

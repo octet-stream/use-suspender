@@ -101,12 +101,12 @@ test("Calls a suspender when the new arguments taken", t => {
   t.true(fn.calledTwice)
 })
 
-test("Calls a suspender when .init() called", t => {
+test("Calls a suspender when .callEarly() called", t => {
   const fn = spy()
 
-  const {init} = createSuspender(fn)
+  const {callEarly} = createSuspender(fn)
 
-  init()
+  callEarly()
 
   t.true(fn.called)
 })
