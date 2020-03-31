@@ -1,6 +1,6 @@
 {
   "name": "use-suspender",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Execute asynchronous actions with React.Suspense",
   "keywords": [
     "react-suspense",
@@ -10,7 +10,7 @@
   ],
   "main": "use-suspender",
   "repository": "octet-stream/use-suspender",
-  "author": "octet-stream <io@octetstream.me>",
+  "author": "Nick K. <io@octetstream.me>",
   "license": "MIT",
   "private": false,
   "scripts": {
