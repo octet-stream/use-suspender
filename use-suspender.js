@@ -5,6 +5,14 @@ const STATE_PENDING = "pending"
 const STATE_RESOLVED = "resolved"
 const STATE_REJECTED = "rejected"
 
+const initialOperationState = {
+  state: STATE_INITIAL,
+  error: null,
+  result: null,
+  suspender: null,
+  args: []
+}
+
 /**
  * Calls a function and returns a Promise that resolves a result
  *
@@ -40,21 +48,13 @@ function createSuspender(suspender, ctx) {
     throw new TypeError("Suspender expected to be a function.")
   }
 
-  const operation = {
-    state: STATE_INITIAL, // initial | pending | resolved | rejected
-    error: null,
-    result: null,
-    suspender: null,
-    args: []
-  }
+  let operation = {...initialOperationState}
 
   /**
    * Resets operation the operation
    */
   function reset() {
-    operation.args = []
-    operation.suspender = null
-    operation.state = STATE_INITIAL
+    operation = {...initialOperationState}
   }
 
   /**
@@ -102,15 +102,15 @@ function createSuspender(suspender, ctx) {
     }
 
     if (operation.state === STATE_REJECTED) {
-      operation.suspender = null
-
       throw operation.error
     }
 
     if (operation.state === STATE_RESOLVED) {
+      const {result} = operation
+
       reset()
 
-      return operation.result
+      return result
     }
 
     throw call(suspender, args, ctx)
