@@ -65,12 +65,11 @@ function createSuspender(suspender, ctx) {
    *
    * @param {Function} fn
    * @param {any[]} args
-   * @param {any} thisArg
    *
    * @return {Promise<void>}
    */
-  function call(fn, args, thisArg) {
-    operation.suspender = getPromise(fn, args, thisArg)
+  function call(fn, args) {
+    operation.suspender = getPromise(fn, args, ctx)
       .then(result => {
         operation.result = result
         operation.state = STATE_RESOLVED
@@ -119,7 +118,7 @@ function createSuspender(suspender, ctx) {
       return result
     }
 
-    throw call(suspender, args, ctx)
+    throw call(suspender, args)
   }
 
   /**
