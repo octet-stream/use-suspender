@@ -52,6 +52,8 @@ function createSuspender(suspender, ctx) {
 
   /**
    * Resets operation the operation
+   *
+   * @return {void}
    */
   function reset() {
     operation = {...initialOperationState}
@@ -60,6 +62,10 @@ function createSuspender(suspender, ctx) {
   /**
    * Calls a suspender function and sets its Promise on the operation
    * Takes the same arguments as getPromise function.
+   *
+   * @param {Function} fn
+   * @param {any[]} args
+   * @param {any} thisArg
    *
    * @return {Promise<void>}
    */
