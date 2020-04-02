@@ -38,9 +38,6 @@
     "sinon": "9.0.1",
     "size-limit": "4.4.2"
   },
-  "peerDependencies": {
-    "react": ">= 16.6.x"
-  },
   "dependencies": {
     "fast-deep-equal": "3.1.1"
   }
