@@ -18,6 +18,7 @@ const initialOperationState = {
  *
  * @param {Function} fn
  * @param {any[]} args
+ * @param {any} ctx
  *
  * @return {Promise<any>}
  *
