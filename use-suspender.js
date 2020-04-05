@@ -96,7 +96,7 @@ function createSuspender(suspender, ctx) {
    *
    * @return {any} result
    *
-   * @throws {Promise} if the Promise haven't been fulfilled yet
+   * @throws {Promise<void>} if the Promise haven't been fulfilled yet
    *
    * @throws {Error} if suspender's Promise has been rejected with an error
    *
