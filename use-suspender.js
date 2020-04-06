@@ -91,7 +91,6 @@ function createSuspender(suspender, ctx) {
    * Executes a suspender with given arguments.
    * Will throw a Promise to notify React.Suspense
    *
-   *
    * @param {any[]} [args = []] a list of arguments to execute suspender with
    *
    * @return {any} result
