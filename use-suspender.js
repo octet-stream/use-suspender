@@ -1,10 +1,26 @@
 const eq = require("fast-deep-equal/react")
 
+/**
+ * @typedef {"initial" | "pending" | "resolved" | "rejected"} States
+ */
 const STATE_INITIAL = "initial"
 const STATE_PENDING = "pending"
 const STATE_RESOLVED = "resolved"
 const STATE_REJECTED = "rejected"
 
+/**
+ * @typedef {Object} InitialOperationState
+ * @prop {States} state
+ * @prop {Error} error
+ * @prop {any} result
+ * @prop {Promise<void>} suspender
+ * @prop {any[]} args
+ */
+/**
+ * @type {InitialOperationState}
+ *
+ * @api private
+ */
 const initialOperationState = {
   state: STATE_INITIAL,
   error: null,
@@ -55,6 +71,8 @@ function createSuspender(suspender, ctx) {
    * Resets operation the operation
    *
    * @return {void}
+   *
+   * @api private
    */
   function reset() {
     operation = {...initialOperationState}
@@ -68,6 +86,8 @@ function createSuspender(suspender, ctx) {
    * @param {any[]} args
    *
    * @return {Promise<void>}
+   *
+   * @api private
    */
   function call(fn, args) {
     operation.suspender = getPromise(fn, args, ctx)
@@ -93,7 +113,7 @@ function createSuspender(suspender, ctx) {
    *
    * @param {any[]} ...args a list of arguments to execute suspender with
    *
-   * @return {any} result
+   * @return {any}
    *
    * @throws {Promise<void>} if the Promise haven't been fulfilled yet
    *
@@ -127,6 +147,8 @@ function createSuspender(suspender, ctx) {
    * @param {any[]} [args = []] a list of arguments to execute suspender with
    *
    * @return {void}
+   *
+   * @api public
    */
   useSuspender.callEarly = function callEarly(...args) {
     call(suspender, args)
