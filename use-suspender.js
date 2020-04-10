@@ -53,10 +53,12 @@ function getPromise(fn, args, ctx) {
 /**
  * Creates a new useSuspender hook for given function.
  *
- * @param {(...args: any[]) => any} suspender A function to make a useSuspender hook with
+ * @template T
+ *
+ * @param {(...args: any[]) => T} suspender A function to make a useSuspender hook with
  * @param {any} [ctx = undefined] thisArg value
  *
- * @return {(...args: any[]) => any} useSuspender
+ * @return {(...args: any[]) => T} useSuspender
  *
  * @api public
  */
@@ -113,7 +115,7 @@ function createSuspender(suspender, ctx) {
    *
    * @param {any[]} ...args A list of arguments to execute suspender with
    *
-   * @return {any}
+   * @return {T}
    *
    * @throws {Promise<void>} If the Promise haven't been fulfilled yet
    *
