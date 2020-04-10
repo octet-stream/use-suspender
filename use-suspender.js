@@ -16,7 +16,7 @@ const initialOperationState = {
 /**
  * Calls a function and returns a Promise that resolves a result
  *
- * @param {Function} fn
+ * @param {(...args: any[]) => any} fn
  * @param {any[]} args
  * @param {any} ctx
  *
@@ -37,10 +37,10 @@ function getPromise(fn, args, ctx) {
 /**
  * Creates a new useSuspender hook for given function.
  *
- * @param {Function} suspender
+ * @param {(...args: any[]) => any} suspender
  * @param {any} [ctx = undefined]
  *
- * @return {Function} useSuspender
+ * @return {(...args: any[]) => any} useSuspender
  *
  * @api public
  */
@@ -64,7 +64,7 @@ function createSuspender(suspender, ctx) {
    * Calls a suspender function and sets its Promise on the operation
    * Takes the same arguments as getPromise function.
    *
-   * @param {Function} fn
+   * @param {(...args: any[]) => any} fn
    * @param {any[]} args
    *
    * @return {Promise<void>}
@@ -91,7 +91,7 @@ function createSuspender(suspender, ctx) {
    * Executes a suspender with given arguments.
    * Will throw a Promise to notify React.Suspense
    *
-   * @param {any[]} [args = []] a list of arguments to execute suspender with
+   * @param {any[]} ...args a list of arguments to execute suspender with
    *
    * @return {any} result
    *
