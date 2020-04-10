@@ -8,25 +8,5 @@
  */
 declare function createSuspender<T>(suspender: (...args: any[]) => T, ctx?: any): (...args: any[]) => T
 
-declare namespace createSuspender {
-  /**
-   * Executes a suspender with given arguments.
-   * Will throw a Promise to notify React.Suspense
-   *
-   * @param args A list of arguments to execute suspender with
-   *
-   * @api public
-   */
-  export function useSuspender(...args: any): any
-
-  /**
-   * Calls useSuspense early
-   *
-   * @param args A list of arguments to execute useSuspender with
-   *
-   * @api public
-   */
-  export function callEarly(...args: any[]): void
-}
-
+// TODO: Add a definition for useSuspender properties
 export default createSuspender
