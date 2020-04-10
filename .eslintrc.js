@@ -20,6 +20,10 @@ module.exports = {
   rules: {
     "import/no-unresolved": ["error", {
       "ignore": ["use-suspender", "react", "react-dom", "./api/user"]
+    }],
+    "max-len": ["error", {
+      code: 80,
+      ignoreComments: true
     }]
   }
 }

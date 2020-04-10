@@ -53,8 +53,8 @@ function getPromise(fn, args, ctx) {
 /**
  * Creates a new useSuspender hook for given function.
  *
- * @param {(...args: any[]) => any} suspender
- * @param {any} [ctx = undefined]
+ * @param {(...args: any[]) => any} suspender A function to make a useSuspender hook with
+ * @param {any} [ctx = undefined] thisArg value
  *
  * @return {(...args: any[]) => any} useSuspender
  *
@@ -111,13 +111,13 @@ function createSuspender(suspender, ctx) {
    * Executes a suspender with given arguments.
    * Will throw a Promise to notify React.Suspense
    *
-   * @param {any[]} ...args a list of arguments to execute suspender with
+   * @param {any[]} ...args A list of arguments to execute suspender with
    *
    * @return {any}
    *
-   * @throws {Promise<void>} if the Promise haven't been fulfilled yet
+   * @throws {Promise<void>} If the Promise haven't been fulfilled yet
    *
-   * @throws {Error} if suspender's Promise has been rejected with an error
+   * @throws {Error} If suspender's Promise has been rejected with an error
    *
    * @api public
    */
@@ -144,7 +144,7 @@ function createSuspender(suspender, ctx) {
   /**
    * Calls useSuspense early
    *
-   * @param {any[]} [args = []] a list of arguments to execute suspender with
+   * @param {any[]} [args = []] A list of arguments to execute suspender with
    *
    * @return {void}
    *
@@ -161,3 +161,4 @@ function createSuspender(suspender, ctx) {
 }
 
 module.exports = createSuspender
+module.exports.default = createSuspender
