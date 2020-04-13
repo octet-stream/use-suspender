@@ -38,7 +38,7 @@ and resolve a result from suspender.
 
 - **{any[]}** args – arguments to call the suspender with
 
-### `useSuspender.callEarly([...args]) -> {any}`
+### `useSuspender.callEarly([...args]) -> {void}`
 
 Calls usesSuspense early a silence Promise first throwing needed to notify `React.Suspense`
 
