@@ -55,16 +55,16 @@ function getPromise(fn, args, ctx) {
  *
  * @template T
  *
- * @param {(...args: any[]) => T} suspender A function to make a useSuspender hook with
+ * @param {(...args: any[]) => T} fn A function to create a useSuspender hook with
  * @param {any} [ctx = undefined] thisArg value
  *
  * @return {(...args: any[]) => T} useSuspender
  *
  * @api public
  */
-function createSuspender(suspender, ctx) {
-  if (typeof suspender !== "function") {
-    throw new TypeError("Suspender expected to be a function.")
+function createSuspender(fn, ctx) {
+  if (typeof fn !== "function") {
+    throw new TypeError("First argument expected to be a function.")
   }
 
   let operation = {...initialOperationState}
@@ -84,14 +84,13 @@ function createSuspender(suspender, ctx) {
    * Calls a suspender function and sets its Promise on the operation
    * Takes the same arguments as getPromise function.
    *
-   * @param {(...args: any[]) => any} fn
    * @param {any[]} args
    *
    * @return {Promise<void>}
    *
    * @api private
    */
-  function call(fn, args) {
+  function call(args) {
     operation.suspender = getPromise(fn, args, ctx)
       .then(result => {
         operation.result = result
@@ -140,7 +139,7 @@ function createSuspender(suspender, ctx) {
       return result
     }
 
-    throw call(suspender, args)
+    throw call(args)
   }
 
   /**
@@ -153,7 +152,7 @@ function createSuspender(suspender, ctx) {
    * @api public
    */
   useSuspender.callEarly = function callEarly(...args) {
-    call(suspender, args)
+    call(args)
   }
 
   // For those who want to use object destructing on createSuspender result.

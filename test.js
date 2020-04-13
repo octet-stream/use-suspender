@@ -115,7 +115,7 @@ test("Throws an error when createSuspender called witout an argument", t => {
   const err = t.throws(() => createSuspender())
 
   t.true(err instanceof TypeError)
-  t.is(err.message, "Suspender expected to be a function.")
+  t.is(err.message, "First argument expected to be a function.")
 })
 
 test("Throws an error thrown by suspender", async t => {

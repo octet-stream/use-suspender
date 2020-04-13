@@ -27,7 +27,7 @@ npm i use-suspender
 
 Creates a new useSuspender for given function.
 
-- **{Function}** suspender – a function that will be used for each useSuspender call.
+- **{Function}** fn – a function that will be used for each useSuspender call.
 - **{any}** ctx – thisArg that will be used for each useSuspender call.
 
 ### `useSuspender([...args]) -> {any}`
