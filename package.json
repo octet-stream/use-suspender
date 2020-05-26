@@ -18,6 +18,7 @@
     "staged": "lint-staged",
     "coverage": "nyc ava",
     "test": "ava",
+    "eslint": "eslint use-suspender.js test.js",
     "ci": "nyc npm test && nyc report --reporter=lcov && node_modules/.bin/codecov"
   },
   "devDependencies": {
