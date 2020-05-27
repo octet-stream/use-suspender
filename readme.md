@@ -2,7 +2,8 @@
 
 Execute asynchronous actions with React.Suspense
 
-[![Build Status](https://travis-ci.org/octet-stream/use-suspender.svg?branch=master)](https://travis-ci.org/octet-stream/use-suspender)
+![ESLint](https://github.com/octet-stream/use-suspender/workflows/ESLint/badge.svg)
+![CI](https://github.com/octet-stream/use-suspender/workflows/CI/badge.svg)
 [![Code Coverage](https://codecov.io/github/octet-stream/use-suspender/coverage.svg?branch=master)](https://codecov.io/github/octet-stream/use-suspender?branch=master)
 [![dependencies Status](https://david-dm.org/octet-stream/use-suspender/status.svg)](https://david-dm.org/octet-stream/use-suspender)
 [![devDependencies Status](https://david-dm.org/octet-stream/use-suspender/dev-status.svg)](https://david-dm.org/octet-stream/use-suspender?type=dev)
