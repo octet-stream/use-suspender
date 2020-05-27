@@ -19,15 +19,13 @@
     "coverage": "nyc ava",
     "test": "ava",
     "eslint": "eslint use-suspender.js test.js",
-    "ci": "nyc npm test && nyc report --reporter=lcov && node_modules/.bin/codecov",
-    "ci-new": "nyc npm test && nyc report --reporter=json"
+    "ciw": "nyc npm test && nyc report --reporter=json"
   },
   "devDependencies": {
     "@octetstream/eslint-config": "4.0.0",
     "@size-limit/preset-small-lib": "4.5.0",
     "@testing-library/react-hooks": "3.2.1",
     "ava": "3.8.2",
-    "codecov": "3.7.0",
     "eslint": "7.1.0",
     "eslint-plugin-ava": "10.3.0",
     "eslint-plugin-markdown": "1.0.2",
