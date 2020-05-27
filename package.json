@@ -19,7 +19,7 @@
     "coverage": "nyc ava",
     "test": "ava",
     "eslint": "eslint use-suspender.js test.js",
-    "ciw": "nyc npm test && nyc report --reporter=json"
+    "ci": "nyc npm test && nyc report --reporter=json"
   },
   "devDependencies": {
     "@octetstream/eslint-config": "4.0.0",
