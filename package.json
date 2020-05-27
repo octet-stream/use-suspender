@@ -19,7 +19,8 @@
     "coverage": "nyc ava",
     "test": "ava",
     "eslint": "eslint use-suspender.js test.js",
-    "ci": "nyc npm test && nyc report --reporter=lcov && node_modules/.bin/codecov"
+    "ci": "nyc npm test && nyc report --reporter=lcov && node_modules/.bin/codecov",
+    "ci-new": "nyc npm test && nyc report --reporter=json"
   },
   "devDependencies": {
     "@octetstream/eslint-config": "4.0.0",
