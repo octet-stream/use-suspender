@@ -18,6 +18,6 @@ jobs:
       - run: npm run ci-new
       - uses: codecov/codecov-action@v1
         with:
-          file: ./coverage/coverage.json
+          file: ./coverage/coverage-final.json
           flags: unittests
           fail_ci_if_error: true
