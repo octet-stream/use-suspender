@@ -23,22 +23,22 @@
   },
   "devDependencies": {
     "@octetstream/eslint-config": "4.0.0",
-    "@size-limit/preset-small-lib": "4.5.0",
-    "@testing-library/react-hooks": "3.2.1",
-    "ava": "3.8.2",
-    "eslint": "7.1.0",
-    "eslint-plugin-ava": "10.3.0",
+    "@size-limit/preset-small-lib": "4.5.5",
+    "@testing-library/react-hooks": "3.4.1",
+    "ava": "3.11.0",
+    "eslint": "7.6.0",
+    "eslint-plugin-ava": "10.5.0",
     "eslint-plugin-markdown": "1.0.2",
-    "eslint-plugin-react": "7.20.0",
+    "eslint-plugin-react": "7.20.5",
     "husky": "4.2.5",
-    "lint-staged": "10.2.6",
-    "nyc": "15.0.1",
+    "lint-staged": "10.2.11",
+    "nyc": "15.1.0",
     "react": "16.13.1",
     "react-test-renderer": "16.13.1",
     "sinon": "9.0.2",
-    "size-limit": "4.5.0"
+    "size-limit": "4.5.5"
   },
   "dependencies": {
-    "fast-deep-equal": "3.1.1"
+    "fast-deep-equal": "3.1.3"
   }
 }
