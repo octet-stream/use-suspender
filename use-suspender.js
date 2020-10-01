@@ -1,12 +1,21 @@
 const eq = require("fast-deep-equal/react")
 
-/**
- * @typedef {"initial" | "pending" | "resolved" | "rejected"} States
- */
 const STATE_INITIAL = "initial"
 const STATE_PENDING = "pending"
 const STATE_RESOLVED = "resolved"
 const STATE_REJECTED = "rejected"
+
+/**
+ * @typedef {"initial" | "pending" | "resolved" | "rejected"} States
+ */
+
+/**
+ * @callback SuspenderExecutor
+ *
+ * @param {...any} args
+ *
+ * @return {any}
+ */
 
 /**
  * @typedef {Object} InitialOperationState
@@ -53,12 +62,10 @@ function getPromise(fn, args, ctx) {
 /**
  * Creates a new useSuspender hook for given function.
  *
- * @template T
- *
- * @param {(...args: any[]) => T} fn A function to create a useSuspender hook with
+ * @param {(...args: any[]) => any} fn A function to create a useSuspender hook with
  * @param {any} [ctx = undefined] thisArg value
  *
- * @return {(...args: any[]) => T} useSuspender
+ * @return {(...args: any[]) => any} useSuspender
  *
  * @api public
  */

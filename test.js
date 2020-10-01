@@ -7,6 +7,7 @@ const createSuspender = require(".")
 
 test("Executes a function passed to createSuspender", t => {
   const fn = spy()
+
   const useSuspender = createSuspender(fn)
 
   renderHook(() => useSuspender())
