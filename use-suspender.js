@@ -10,14 +10,6 @@ const STATE_REJECTED = "rejected"
  */
 
 /**
- * @callback SuspenderExecutor
- *
- * @param {...any} args
- *
- * @return {any}
- */
-
-/**
  * @typedef {Object} InitialOperationState
  * @prop {States} state
  * @prop {Error} error
