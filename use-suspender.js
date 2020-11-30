@@ -69,7 +69,7 @@ function createSuspender(fn, ctx) {
   let operation = {...initialOperationState}
 
   /**
-   * Resets operation the operation
+   * Resets the operation
    *
    * @return {void}
    *
@@ -113,7 +113,7 @@ function createSuspender(fn, ctx) {
    *
    * @param {any[]} ...args A list of arguments to execute suspender with
    *
-   * @return {T}
+   * @return {any}
    *
    * @throws {Promise<void>} If the Promise haven't been fulfilled yet
    *
