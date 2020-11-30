@@ -16,8 +16,8 @@
   "scripts": {
     "size": "size-limit",
     "staged": "lint-staged",
-    "coverage": "nyc ava",
-    "test": "ava",
+    "coverage": "nyc ava -s",
+    "test": "ava -s",
     "eslint": "eslint use-suspender.js test.js",
     "ci": "nyc npm test && nyc report --reporter=json"
   },
