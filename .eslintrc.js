@@ -1,6 +1,6 @@
 module.exports = {
-  "env": {
-    "browser": true
+  env: {
+    browser: true
   },
   parserOptions: {
     ecmaFeatures: {
@@ -8,18 +8,18 @@ module.exports = {
       jsx: true
     }
   },
-  "plugins": [
+  plugins: [
     "ava",
     "markdown"
   ],
-  "extends": [
+  extends: [
     "@octetstream",
     "plugin:ava/recommended",
     "plugin:react/recommended"
   ],
   rules: {
     "import/no-unresolved": ["error", {
-      "ignore": ["use-suspender", "react", "react-dom", "./api/user"]
+      ignore: ["use-suspender", "react", "react-dom", "./api/user"]
     }],
     "max-len": ["error", {
       code: 80,
