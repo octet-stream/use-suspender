@@ -3,8 +3,19 @@ name: CI
 on:
   push:
     branches: [master]
+    paths:
+      - useSuspender.js
+      - test.js
+      - package.json
+      - ".github/workflows/ci.yml"
+
   pull_request:
     branches: [master]
+    paths:
+      - useSuspender.js
+      - test.js
+      - package.json
+      - ".github/workflows/ci.yml"
 
 jobs:
   ci:

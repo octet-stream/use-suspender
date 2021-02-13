@@ -1,21 +1,18 @@
-name: ESLint
+name: TypeScript Typings
 
 on:
   push:
     branches: [master]
     paths:
-      - useSuspender.js
-      - test.js
-      - .eslintrc.js
-      - ".github/workflows/eslint.yml"
-
+      - useSuspender.d.ts
+      - useSuspender.test-d.ts
+      - ".github/workflows/types.yml"
   pull_request:
     branches: [master]
     paths:
-      - useSuspender.js
-      - test.js
-      - .eslintrc.js
-      - ".github/workflows/eslint.yml"
+      - useSuspender.d.ts
+      - useSuspender.test-d.ts
+      - ".github/workflows/types.yml"
 
 jobs:
   eslint:
@@ -27,4 +24,4 @@ jobs:
         with:
           node-version: 14
       - run: npm install
-      - run: npm run eslint
+      - run: npm run test:types
