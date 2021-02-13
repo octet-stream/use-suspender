@@ -1,5 +1,5 @@
 /**
- * Executes a suspender with given arguments.
+ * Calls a suspender with given arguments.
  * Will throw a Promise to notify React.Suspense
  */
 export interface SuspenderHook {

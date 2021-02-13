@@ -1,7 +1,7 @@
 {
   "name": "use-suspender",
-  "version": "0.4.2",
-  "description": "Execute asynchronous actions with React.Suspense",
+  "version": "1.0.0",
+  "description": "Wraps asynchronous functions allowing to use them with React.Suspense",
   "keywords": [
     "react-suspense",
     "suspense",
