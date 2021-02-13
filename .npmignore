@@ -1,3 +1,4 @@
+.github
 .DS_Store
 node_modules
 .nyc_output
@@ -16,5 +17,4 @@ coverage
 /ava.config.cjs
 /yarn.lock
 /test.js
-/useSuspender.d.ts
 /useSuspender.test-d.ts
