@@ -20,7 +20,7 @@
     "coverage": "c8 npm test",
     "test": "ava -s",
     "test:types": "tsd",
-    "eslint": "eslint useSuspender.js test.js",
+    "eslint": "eslint useSuspender.js *.test.js",
     "ci": "c8 npm test && c8 report --reporter=json"
   },
   "devDependencies": {
