@@ -162,3 +162,4 @@ function createSuspender(fn, ctx) {
 
 module.exports = createSuspender
 module.exports.default = createSuspender
+module.exports.createSuspender = createSuspender
