@@ -13,8 +13,7 @@ coverage
 /.eslintrc.js
 /.huskyrc.js
 /.lintstagedrc
-/.travis.yml
 /ava.config.cjs
 /yarn.lock
-/test.js
+/*.test.js
 /useSuspender.test-d.ts

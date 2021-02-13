@@ -18,6 +18,9 @@ module.exports = {
     "plugin:react/recommended"
   ],
   rules: {
+    "ava/no-ignored-test-files": ["error", {
+      files: ["*.test.js"]
+    }],
     "import/no-unresolved": ["error", {
       ignore: ["use-suspender", "react", "react-dom", "./api/user"]
     }],
