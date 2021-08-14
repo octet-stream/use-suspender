@@ -4,31 +4,56 @@ on:
   push:
     branches: [master]
     paths:
-      - useSuspender.js
-      - "*.test.js"
-      - package.json
+      - "**.js"
+      - "ava.config.cjs"
+      - "package.json"
+      - "pnpm-lock.yaml"
       - ".github/workflows/ci.yml"
-
   pull_request:
     branches: [master]
     paths:
-      - useSuspender.js
-      - "*.test.js"
-      - package.json
+      - "**.js"
+      - "ava.config.cjs"
+      - "package.json"
+      - "pnpm-lock.yaml"
       - ".github/workflows/ci.yml"
 
 jobs:
   ci:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest]
+        node: [12.x, 14.x, 16.x]
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
+
+      - name: pnpm cache
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-pnpm-store
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node }}-${{ hashFiles('**/.package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-${{ matrix.node }}-
+
       - uses: actions/setup-node@v1
         with:
-          node-version: 14
-      - run: npm install
-      - run: npm run ci
-      - uses: codecov/codecov-action@v1
+          node-version: ${{ matrix.node }}
+
+      - name: pnpm setup
+        uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.2.1
+          run_install: true
+
+      - run: pnpm run ci
+
+      - name: Codecov
+        uses: codecov/codecov-action@v1
+        if: matrix.node == '16.x' && matrix.os == 'ubuntu-latest'
         with:
           file: ./coverage/coverage-final.json
           flags: unittests
-          fail_ci_if_error: true
+          fail_ci_if_error: false

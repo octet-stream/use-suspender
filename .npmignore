@@ -1,12 +1,8 @@
-.github
 .DS_Store
-node_modules
-.nyc_output
-coverage
-yarn-error.log
-
-coverage
 .codecov
+.github
+node_modules
+coverage
 
 /.size-limit.js
 /.editorconfig
@@ -14,6 +10,11 @@ coverage
 /.huskyrc.js
 /.lintstagedrc
 /ava.config.cjs
+/ava.config.mjs
+/ava.config.js
+/yarn-error.log
 /yarn.lock
-/*.test.js
+/pnpm-lock.yaml
+/package-lock.json
 /useSuspender.test-d.ts
+/*.test.js

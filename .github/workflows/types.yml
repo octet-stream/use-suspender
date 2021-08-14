@@ -6,12 +6,14 @@ on:
     paths:
       - useSuspender.d.ts
       - useSuspender.test-d.ts
+      - pnpm-lock.yaml
       - ".github/workflows/types.yml"
   pull_request:
     branches: [master]
     paths:
       - useSuspender.d.ts
       - useSuspender.test-d.ts
+      - pnpm-lock.yaml
       - ".github/workflows/types.yml"
 
 jobs:
