@@ -37,7 +37,7 @@ const initialOperationState = {
  *
  * @param {(...args: any[]) => any} fn
  * @param {any[]} args
- * @param {any} ctx
+ * @param {unknown} ctx
  *
  * @return {Promise<any>}
  *
@@ -57,7 +57,7 @@ function getPromise(fn, args, ctx) {
  * Creates a new useSuspender hook for given function.
  *
  * @param {(...args: any[]) => any} fn A function to create a useSuspender hook with
- * @param {any} [ctx = undefined] thisArg value
+ * @param {unknown} [ctx = undefined] thisArg value
  *
  * @return {(...args: any[]) => any} useSuspender
  *
