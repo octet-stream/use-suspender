@@ -8,14 +8,20 @@ module.exports = {
       jsx: true
     }
   },
+  settings: {
+    react: {
+      version: "18.x"
+    }
+  },
   plugins: [
     "ava",
     "markdown"
   ],
   extends: [
-    "@octetstream",
     "plugin:ava/recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "@octetstream"
   ],
   rules: {
     "ava/no-ignored-test-files": ["error", {
@@ -23,10 +29,6 @@ module.exports = {
     }],
     "import/no-unresolved": ["error", {
       ignore: ["use-suspender", "react", "react-dom", "./api/user"]
-    }],
-    "max-len": ["error", {
-      code: 80,
-      ignoreComments: true
     }]
   }
 }
