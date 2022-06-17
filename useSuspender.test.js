@@ -169,6 +169,7 @@ test("Throws an error rejected by a promise", async t => {
   t.is(getByRole("alert").textContent, expected)
 })
 
+// TODO: This test is WWONG. Find a way to isolate root elements between tests somehow.
 test("Throws an error thrown by suspender implementation", async t => {
   const expected = "Oops, something's wrong!"
   const useSuspender = createSuspender(() => {
