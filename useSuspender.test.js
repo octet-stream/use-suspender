@@ -44,9 +44,6 @@ test.beforeEach(t => {
 
 test.afterEach(t => {
   document.body.removeChild(t.context.element)
-
-  t.context.element = null
-  t.context.baseElement = null
 })
 
 test("Executes a function passed to createSuspender", t => {
