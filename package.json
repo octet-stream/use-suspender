@@ -13,6 +13,7 @@
   "exports": {
     ".": {
       "import": "./useSuspender.js",
+      "require": "./useSuspender.js",
       "types": "./useSuspender.d.ts"
     }
   },
