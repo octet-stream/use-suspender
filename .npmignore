@@ -17,4 +17,5 @@ coverage
 /pnpm-lock.yaml
 /package-lock.json
 /useSuspender.test-d.ts
+/tsconfig.json
 /*.test.js
