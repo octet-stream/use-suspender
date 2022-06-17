@@ -1,6 +1,6 @@
 // @ts-check
 
-const eq = require("fast-deep-equal/react")
+const eq = require("fast-deep-equal/es6/react")
 
 const STATE_INITIAL = "initial"
 const STATE_PENDING = "pending"
