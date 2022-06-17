@@ -4,18 +4,18 @@ type UnwrapPromise<T> = T extends Promise<infer U> ? U : T
  * Calls a suspender with given arguments.
  * Will throw a Promise to notify React.Suspense
  */
-export interface SuspenderHook<TResult, TArsgs extends unknown[]> {
+export interface SuspenderHook<TResult, TArgs extends unknown[]> {
   /**
    * @param args A list of arguments to execute suspender with
    */
-  (...args: TArsgs): TResult
+  (...args: TArgs): TResult
 
   /**
    * Calls useSuspender early
    *
    * @param args A list of arguments to execute suspender with
    */
-  callEarly(...args: TArsgs): void
+  callEarly(...args: TArgs): void
 }
 
 /**
