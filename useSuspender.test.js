@@ -1,7 +1,9 @@
+const assert = require("node:assert")
+
 const test = require("ava")
 
 const {spy} = require("sinon")
-const {renderHook} = require("@testing-library/react-hooks")
+const {renderHook, waitFor} = require("@testing-library/react")
 
 const createSuspender = require("./useSuspender")
 
@@ -43,9 +45,9 @@ test("Returns a value from a suspender", async t => {
 
   const useSuspender = createSuspender(() => expected)
 
-  const {result, waitForNextUpdate} = renderHook(() => useSuspender())
+  const {result} = renderHook(() => useSuspender())
 
-  await waitForNextUpdate()
+  await waitFor(() => assert(result.current))
 
   t.is(result.current, expected)
 })
@@ -55,9 +57,9 @@ test("Returns a value resolved by Promise", async t => {
 
   const useSuspender = createSuspender(async () => expected)
 
-  const {result, waitForNextUpdate} = renderHook(() => useSuspender())
+  const {result} = renderHook(() => useSuspender())
 
-  await waitForNextUpdate()
+  await waitFor(() => assert(result.current))
 
   t.is(result.current, expected)
 })
@@ -116,30 +118,4 @@ test("Throws an error when createSuspender called witout an argument", t => {
 
   t.true(err instanceof TypeError)
   t.is(err.message, "First argument expected to be a function.")
-})
-
-test("Throws an error thrown by suspender", async t => {
-  const useSuspender = createSuspender(() => {
-    throw new Error("Error!")
-  })
-
-  const {result, waitForNextUpdate} = renderHook(() => useSuspender())
-
-  await waitForNextUpdate()
-
-  t.true(result.error instanceof Error)
-  t.is(result.error.message, "Error!")
-})
-
-test("Throws a Promise rejection", async t => {
-  const useSuspender = createSuspender(async () => {
-    throw new Error("Error!")
-  })
-
-  const {result, waitForNextUpdate} = renderHook(() => useSuspender())
-
-  await waitForNextUpdate()
-
-  t.true(result.error instanceof Error)
-  t.is(result.error.message, "Error!")
 })
