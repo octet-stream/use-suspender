@@ -1,3 +1,5 @@
+// @ts-check
+
 const eq = require("fast-deep-equal/react")
 
 const STATE_INITIAL = "initial"
@@ -12,9 +14,9 @@ const STATE_REJECTED = "rejected"
 /**
  * @typedef {Object} InitialOperationState
  * @prop {States} state
- * @prop {Error} error
+ * @prop {Error | null} error
  * @prop {any} result
- * @prop {Promise<void>} suspender
+ * @prop {Promise<void> | null} suspender
  * @prop {any[]} args
  */
 /**
@@ -113,7 +115,7 @@ function createSuspender(fn, ctx) {
    * Calls a suspender with given arguments.
    * Will throw a Promise to notify React.Suspense
    *
-   * @param {any[]} ...args A list of arguments to execute suspender with
+   * @param {any[]} args A list of arguments to execute suspender with
    *
    * @return {any}
    *
@@ -146,7 +148,7 @@ function createSuspender(fn, ctx) {
   /**
    * Calls useSuspense early
    *
-   * @param {any[]} [args = []] A list of arguments to execute suspender with
+   * @param {any[]} args A list of arguments to execute suspender with
    *
    * @return {void}
    *
