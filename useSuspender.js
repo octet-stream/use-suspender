@@ -68,17 +68,29 @@ function createSuspender(fn, ctx) {
     throw new TypeError("First argument expected to be a function.")
   }
 
-  let operation = {...initialOperationState}
+  /** @type {Set<Operation>} */
+  const cache = new Set()
 
   /**
-   * Resets the operation
+   * Creates a new operation
    *
-   * @return {void}
-   *
-   * @api private
+   * @returns {Operation}
    */
-  function reset() {
-    operation = {...initialOperationState}
+  const create = () => ({...initialOperationState})
+
+  /**
+   * @param {any[]} args
+   *
+   * @return {Operation | undefined}
+   */
+  function get(args) {
+    for (const operation of cache) {
+      if (eq(args, operation.args)) {
+        return operation
+      }
+    }
+
+    return undefined
   }
 
   /**
@@ -92,6 +104,8 @@ function createSuspender(fn, ctx) {
    * @api private
    */
   function call(args) {
+    const operation = create()
+
     operation.suspender = getPromise(fn, args, ctx)
       // The return statement is useless for this `.then()` callback
       // eslint-disable-next-line promise/always-return
@@ -107,6 +121,9 @@ function createSuspender(fn, ctx) {
 
     operation.state = STATE_PENDING
     operation.args = args
+
+    // Add operation to cache
+    cache.add(operation)
 
     return operation.suspender
   }
@@ -126,7 +143,13 @@ function createSuspender(fn, ctx) {
    * @api public
    */
   function useSuspender(...args) {
-    if (operation.state === STATE_PENDING && eq(args, operation.args)) {
+    const operation = get(args)
+
+    if (!operation) {
+      throw call(args)
+    }
+
+    if (operation.state === STATE_PENDING) {
       throw operation.suspender
     }
 
@@ -137,7 +160,8 @@ function createSuspender(fn, ctx) {
     if (operation.state === STATE_RESOLVED) {
       const {result} = operation
 
-      reset()
+      // Remove this operation from cache
+      cache.delete(operation)
 
       return result
     }
