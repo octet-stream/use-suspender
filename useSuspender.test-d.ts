@@ -10,11 +10,14 @@ expect<SuspenderImplementation>(() => {})
 
 expect<SuspenderImplementation>((a: number, b: number) => a + b)
 
-// Expect createSuspender to return the SuspenderHook when called with a function as a single argument
-expect<SuspenderHook>(createSuspender(() => {}))
+// SuspenderHook has correct result
+expect<SuspenderHook<number, []>>(createSuspender(() => 0))
+
+// SuspenderHook unwraps promise result
+expect<SuspenderHook<number, []>>(createSuspender(async () => 0))
+
+// SuspenderHook takes arguments from given SuspenderImplementation
+expect<SuspenderHook<void, [number, number]>>(createSuspender((a: number, b: number) => a + b))
 
 // Expect SuspenderHook to have callEarly method
-expect<Function>(createSuspender(() => {}).callEarly)
-
-// Expect the callEarly to return nothing
-expect<void>(createSuspender(() => {}).callEarly())
+expect<() => void>(createSuspender(() => {}).callEarly)

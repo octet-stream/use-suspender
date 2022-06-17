@@ -8,8 +8,14 @@
     "hooks",
     "react-hooks"
   ],
-  "main": "useSuspender.js",
-  "types": "useSuspender.d.ts",
+  "main": "./useSuspender.js",
+  "types": "./useSuspender.d.ts",
+  "exports": {
+    ".": {
+      "import": "./useSuspender.js",
+      "types": "./useSuspender.d.ts"
+    }
+  },
   "repository": "octet-stream/use-suspender",
   "author": "Nick K. <io@octetstream.me>",
   "license": "MIT",
@@ -21,7 +27,7 @@
     "test": "ava",
     "test:types": "tsd",
     "eslint": "eslint useSuspender.js *.test.js",
-    "ci": "c8 npm test && c8 report --reporter=json",
+    "ci": "npm run test:types && c8 npm test && c8 report --reporter=json",
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",
     "postpublish": "pinst --enable"
