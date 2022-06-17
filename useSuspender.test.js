@@ -38,12 +38,11 @@ console.error = () => {}
 test.beforeEach(t => {
   const element = document.createElement("div")
 
-  t.context.element = element
   t.context.baseElement = document.body.appendChild(element)
 })
 
 test.afterEach(t => {
-  document.body.removeChild(t.context.element)
+  document.body.removeChild(t.context.baseElement)
 })
 
 test("Executes a function passed to createSuspender", t => {
