@@ -3,9 +3,37 @@ const assert = require("node:assert")
 const test = require("ava")
 
 const {spy} = require("sinon")
-const {renderHook, waitFor} = require("@testing-library/react")
+const {Component, createElement} = require("react")
+const {renderHook, render, waitFor} = require("@testing-library/react")
 
 const createSuspender = require("./useSuspender")
+
+class ErrorBoundary extends Component {
+  constructor() {
+    super()
+
+    this.state = {error: null}
+  }
+
+  /**
+   * @param {Error} error
+   */
+  static getDerivedStateFromError(error) {
+    return {error}
+  }
+
+  render() {
+    if (this.state.error) {
+      return createElement("div", {role: "alert"}, this.state.error.message)
+    }
+
+    // eslint-disable-next-line react/prop-types
+    return this.props.children
+  }
+}
+
+// Suppress errors from React.
+console.error = () => {}
 
 test("Executes a function passed to createSuspender", t => {
   const fn = spy()
@@ -118,4 +146,46 @@ test("Throws an error when createSuspender called witout an argument", t => {
 
   t.true(err instanceof TypeError)
   t.is(err.message, "First argument expected to be a function.")
+})
+
+test("Throws an error rejected by a promise", async t => {
+  const expected = "Oops, something's wrong!"
+  const useSuspender = createSuspender(
+    () => Promise.reject(new Error(expected))
+  )
+
+  const NoopComponent = () => {
+    useSuspender()
+
+    return null
+  }
+
+  const {getByRole} = render(
+    createElement(ErrorBoundary, {}, createElement(NoopComponent))
+  )
+
+  await waitFor(() => getByRole("alert"))
+
+  t.is(getByRole("alert").textContent, expected)
+})
+
+test("Throws an error thrown by suspender implementation", async t => {
+  const expected = "Oops, something's wrong!"
+  const useSuspender = createSuspender(() => {
+    throw new Error(expected)
+  })
+
+  const NoopComponent = () => {
+    useSuspender()
+
+    return null
+  }
+
+  const {getByRole} = render(
+    createElement(ErrorBoundary, {}, createElement(NoopComponent))
+  )
+
+  await waitFor(() => getByRole("alert"))
+
+  t.is(getByRole("alert").textContent, expected)
 })
