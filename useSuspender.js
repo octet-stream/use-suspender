@@ -12,7 +12,7 @@ const STATE_REJECTED = "rejected"
  */
 
 /**
- * @typedef {Object} InitialOperationState
+ * @typedef {Object} Operation
  * @prop {States} state
  * @prop {Error | null} error
  * @prop {any} result
@@ -20,7 +20,7 @@ const STATE_REJECTED = "rejected"
  * @prop {any[]} args
  */
 /**
- * @type {InitialOperationState}
+ * @type {Operation}
  *
  * @api private
  */
