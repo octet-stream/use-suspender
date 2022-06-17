@@ -93,7 +93,7 @@ function createSuspender(fn, ctx) {
    */
   function call(args) {
     operation.suspender = getPromise(fn, args, ctx)
-      // The returns statement is useless for this `.then()` callback
+      // The return statement is useless for this `.then()` callback
       // eslint-disable-next-line promise/always-return
       .then(result => {
         operation.result = result
