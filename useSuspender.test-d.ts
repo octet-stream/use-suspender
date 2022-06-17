@@ -1,14 +1,10 @@
 import {expectType as expect} from "tsd"
 
-import {createSuspender, SuspenderImplementation, SuspenderHook} from "."
+import type {SuspenderHook} from "."
+import {createSuspender} from "."
 
 // Expect createSuspender to be a function
 expect<Function>(createSuspender)
-
-// Expect SuspenderImplementation to match any function
-expect<SuspenderImplementation>(() => {})
-
-expect<SuspenderImplementation>((a: number, b: number) => a + b)
 
 // SuspenderHook has correct result
 expect<SuspenderHook<number, []>>(createSuspender(() => 0))
