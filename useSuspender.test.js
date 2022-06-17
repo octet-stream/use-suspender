@@ -35,6 +35,20 @@ class ErrorBoundary extends Component {
 // Suppress errors from React.
 console.error = () => {}
 
+test.beforeEach(t => {
+  const element = document.createElement("div")
+
+  t.context.element = element
+  t.context.baseElement = document.body.appendChild(element)
+})
+
+test.afterEach(t => {
+  document.body.removeChild(t.context.element)
+
+  t.context.element = null
+  t.context.baseElement = null
+})
+
 test("Executes a function passed to createSuspender", t => {
   const fn = spy()
   const useSuspender = createSuspender(fn)
@@ -123,7 +137,7 @@ test("Calls a suspender when the new arguments taken", t => {
   const {rerender} = renderHook(({id}) => useSuspender(id), {
     initialProps: {
       id: 1
-    }
+    },
   })
 
   rerender({id: 2})
@@ -149,7 +163,7 @@ test("Throws an error when createSuspender called witout an argument", t => {
 })
 
 test("Throws an error rejected by a promise", async t => {
-  const expected = "Oops, something's wrong!"
+  const expected = "This error is thrown by asynchronous implementation"
   const useSuspender = createSuspender(
     () => Promise.reject(new Error(expected))
   )
@@ -161,7 +175,11 @@ test("Throws an error rejected by a promise", async t => {
   }
 
   const {getByRole} = render(
-    createElement(ErrorBoundary, {}, createElement(NoopComponent))
+    createElement(ErrorBoundary, {}, createElement(NoopComponent)),
+
+    {
+      baseElement: t.context.baseElement
+    }
   )
 
   await waitFor(() => getByRole("alert"))
@@ -169,9 +187,8 @@ test("Throws an error rejected by a promise", async t => {
   t.is(getByRole("alert").textContent, expected)
 })
 
-// TODO: This test is WWONG. Find a way to isolate root elements between tests somehow.
 test("Throws an error thrown by suspender implementation", async t => {
-  const expected = "Oops, something's wrong!"
+  const expected = "This error is thrown by synchronous implementation"
   const useSuspender = createSuspender(() => {
     throw new Error(expected)
   })
@@ -183,7 +200,11 @@ test("Throws an error thrown by suspender implementation", async t => {
   }
 
   const {getByRole} = render(
-    createElement(ErrorBoundary, {}, createElement(NoopComponent))
+    createElement(ErrorBoundary, {}, createElement(NoopComponent)),
+
+    {
+      baseElement: t.context.baseElement
+    }
   )
 
   await waitFor(() => getByRole("alert"))
