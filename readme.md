@@ -54,7 +54,7 @@ interface User {
 }
 
 async function getUserFromSomewhereById(userId: string): Promise<User> {
-  const response = await fetch(`https://some-api.com/api/json/users/${userId}`)
+  const response = await fetch(`https://example.com/api/v1/json/users/${userId}`)
 
   return response.json()
 }
