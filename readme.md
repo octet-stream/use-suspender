@@ -54,10 +54,9 @@ Calls usesSuspense early a silence Promise first throwing needed to notify `Reac
 Minimal example:
 
 ```js
-import React, {Suspense} from "react"
-import {render} from "react-dom"
-
-import createSuspender from "use-suspender"
+import {createSuspender} from "use-suspender"
+import {createRoot} from "react-dom/client"
+import {Suspense} from "react"
 
 const useGetUser = createSuspender(() => (
   fetch("https://randomuser.me/api")
@@ -89,7 +88,7 @@ const App = () => (
 
 const root = document.querySelector("#root")
 
-render(<App />, root)
+createRoot(root).render(<App />)
 ```
 
 The `useSuspender` hook can take arguments to use in each suspender function call.
@@ -97,9 +96,7 @@ Imagine you have some API method, called `getUserByLogin`. It takes a user login
 as the only argument. Here's an example of how you can apply this argument to the method:
 
 ```js
-import createSuspender from "use-suspender"
-import React from "react"
-
+import {createSuspender} from "use-suspender"
 import {useParams} from "react-router-dom"
 
 import {getUserByLogin} from "./api/user"
