@@ -28,14 +28,14 @@ pnpm add use-suspender
 
 ## API
 
-### `createSuspender(suspender[, ctx]) -> {Function}`
+### `createSuspender(suspender[, ctx]): Function`
 
 Creates a new useSuspender for given function.
 
 - **{Function}** fn – a function that will be used for each useSuspender call.
 - **{any}** ctx – thisArg that will be used for each useSuspender call.
 
-### `useSuspender([...args]) -> {any}`
+### `useSuspender([...args]): any`
 
 Executes asynchronous action with given arguments.
 This function will throw a Promise to notify `React.Suspense`
@@ -43,7 +43,7 @@ and resolve a result from suspender.
 
 - **{any[]}** args – arguments to call the suspender with
 
-### `useSuspender.callEarly([...args]) -> {void}`
+### `useSuspender.callEarly([...args]): void`
 
 Calls usesSuspense early a silence Promise first throwing needed to notify `React.Suspense`
 
