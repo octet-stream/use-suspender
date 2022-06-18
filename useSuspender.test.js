@@ -1,5 +1,6 @@
 const assert = require("node:assert")
 
+// eslint-disable-next-line import/no-unresolved
 const test = require("ava")
 
 const {spy} = require("sinon")
