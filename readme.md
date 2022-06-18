@@ -28,26 +28,78 @@ pnpm add use-suspender
 
 ## API
 
-### `createSuspender(suspender[, ctx]): Function`
+### `createSuspender<T extends SuspenderImplementation>(fn: T, ctx?: unknown): SuspenderHook`
 
-Creates a new useSuspender for given function.
+Creates a new `useSuspender` hook for given function.
 
-- **{Function}** fn – a function that will be used for each useSuspender call.
-- **{any}** ctx – thisArg that will be used for each useSuspender call.
+- fn – a function that will be used for each `useSuspender` call.
+- ctx – thisArg that will be used for each `useSuspender` call.
 
-### `useSuspender([...args]): any`
+
+### `interface SuspenderImplementation`
+
+This interface implements arbitary function type. For TypeScript users this will help to narrow types for implementation result and its arguments.
+
+So that if you create a function that returns a `User` type by their ID, the `SuspenderHook` will expect the same exact arguments your function is taking and return the same type of the result:
+
+```tsx
+import {createSuspender} from "use-suspender"
+import type {FC} from "react"
+
+interface User {
+  id: string
+  fullName: string
+  role: string
+  age: number
+}
+
+async function getUserFromSomewhereById(userId: string): Promise<User> {
+  const response = await fetch(`https://some-api.com/api/json/users/${userId}`)
+
+  return response.json()
+}
+
+// This will create a function that implements SuspenderHook<TResult, TArgs> interface.
+const useSuspender = createSuspender(getUserFromSomewhereById)
+// => SuspenderHook<User, [userId: string]>
+
+const Profile: FC = () => {
+  // This function will expect the same arguments with the same types as getUserFromSomewhereById
+  // In this example, if you call it with just a number - you will get an error from TypeScript.
+  const user = useSuspender("42")
+
+  return (
+    <div>
+      {/* It will also return the same type as getUserFromSomewhereById, so you'll have autocompletions */}
+      Welcome, {user.fullName}!
+    </div>
+  )
+}
+
+export default Profile
+```
+
+### `interface SuspenderHook<TResult, TArgs extends unknown[]>`
+
+This interface implements `useSuspender` hook, returned by `createSuspender` function. This function should be called inside of your React component.
+
+#### `useSuspender(...args: TArgs): TResult`
 
 Executes asynchronous action with given arguments.
 This function will throw a Promise to notify `React.Suspense`
 and resolve a result from suspender.
 
-- **{any[]}** args – arguments to call the suspender with
+- args – arguments to call the suspender with
 
-### `useSuspender.callEarly([...args]): void`
+#### `useSuspender.useSuspender(...args: TArgs): TResult`
+
+A self-reference for `useSuspender` function.
+
+#### `useSuspender.callEarly(...args: TArgs): void`
 
 Calls usesSuspense early a silence Promise first throwing needed to notify `React.Suspense`
 
-- **{any[]}** args – arguments to call the suspender with
+- args – arguments to call the suspender with
 
 ## Usage
 
