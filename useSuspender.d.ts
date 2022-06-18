@@ -17,6 +17,8 @@ export interface SuspenderHook<TResult, TArgs extends unknown[]> {
    */
   (...args: TArgs): TResult
 
+  useSuspender(...args: TArgs): TResult
+
   /**
    * Calls useSuspender early
    *

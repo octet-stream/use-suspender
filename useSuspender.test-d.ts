@@ -17,3 +17,6 @@ expect<SuspenderHook<void, [number, number]>>(createSuspender((a: number, b: num
 
 // Expect SuspenderHook to have callEarly method
 expect<() => void>(createSuspender(() => {}).callEarly)
+
+// SuspenderHook has useSuspender method
+expect<() => number>(createSuspender(() => 0).useSuspender)
