@@ -3,6 +3,8 @@
 .github
 node_modules
 coverage
+.husky
+.eslintignore
 
 /.size-limit.js
 /.editorconfig

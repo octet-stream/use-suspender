@@ -1,6 +1,5 @@
 /* eslint-disable ava/use-test */
 // @ts-check
-
 import assert from "node:assert"
 
 // eslint-disable-next-line import/no-unresolved

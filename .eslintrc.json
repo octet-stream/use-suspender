@@ -14,8 +14,7 @@
     }
   },
   "plugins": [
-    "ava",
-    "markdown"
+    "ava"
   ],
   "extends": [
     "plugin:ava/recommended",
@@ -26,9 +25,6 @@
   "rules": {
     "ava/no-ignored-test-files": ["error", {
       "files": ["*.test.js"]
-    }],
-    "import/no-unresolved": ["error", {
-      "ignore": ["use-suspender", "react", "react-dom", "./api/user"]
     }]
   }
 }

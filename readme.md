@@ -5,8 +5,6 @@ Wraps asynchronous functions allowing to use them with React.Suspense
 ![ESLint](https://github.com/octet-stream/use-suspender/workflows/ESLint/badge.svg)
 ![CI](https://github.com/octet-stream/use-suspender/workflows/CI/badge.svg)
 [![Code Coverage](https://codecov.io/github/octet-stream/use-suspender/coverage.svg?branch=master)](https://codecov.io/github/octet-stream/use-suspender?branch=master)
-[![dependencies Status](https://david-dm.org/octet-stream/use-suspender/status.svg)](https://david-dm.org/octet-stream/use-suspender)
-[![devDependencies Status](https://david-dm.org/octet-stream/use-suspender/dev-status.svg)](https://david-dm.org/octet-stream/use-suspender?type=dev)
 
 ## Installation
 
@@ -16,10 +14,16 @@ You can take this package both from Yarn:
 yarn add use-suspender
 ```
 
-And NPM:
+Or npm:
 
 ```sh
 npm i use-suspender
+```
+
+Or pnpm
+
+```sh
+pnpm add use-suspender
 ```
 
 ## API
