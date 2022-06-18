@@ -14,10 +14,16 @@ You can take this package both from Yarn:
 yarn add use-suspender
 ```
 
-And NPM:
+Or npm:
 
 ```sh
 npm i use-suspender
+```
+
+Or pnpm
+
+```sh
+pnpm add use-suspender
 ```
 
 ## API
