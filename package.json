@@ -48,7 +48,6 @@
     "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-ava": "13.2.0",
     "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-markdown": "2.2.1",
     "eslint-plugin-react": "7.30.0",
     "global-jsdom": "^8.4.0",
     "htm": "^3.1.1",
