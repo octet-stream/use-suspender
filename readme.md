@@ -38,7 +38,7 @@ Creates a new `useSuspender` hook for given function.
 
 ### `interface SuspenderImplementation`
 
-This interface implements arbitary function type. For TypeScript users this will help to narrow types for implementation result and its arguments.
+Implements arbitary function. For TypeScript users this will help to narrow types for implementation's result and its arguments.
 
 So that if you create a function that returns a `User` type by their ID, the `SuspenderHook` will expect the same exact arguments your function is taking and return the same type of the result:
 
@@ -81,7 +81,7 @@ export default Profile
 
 ### `interface SuspenderHook<TResult, TArgs extends unknown[]>`
 
-This interface implements `useSuspender` hook, returned by `createSuspender` function. This function should be called inside of your React component.
+Implements `useSuspender` hook, returned by `createSuspender` function. This function should be called inside of your React component.
 
 #### `useSuspender(...args: TArgs): TResult`
 
