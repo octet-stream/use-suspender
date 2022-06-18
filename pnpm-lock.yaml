@@ -4,6 +4,7 @@ specifiers:
   '@octetstream/eslint-config': 6.2.2
   '@size-limit/preset-small-lib': 7.0.8
   '@testing-library/react': ^13.3.0
+  '@types/node': ^18.0.0
   '@types/react': ^18.0.14
   '@types/sinon': ^10.0.11
   '@typescript-eslint/eslint-plugin': ^5.28.0
@@ -38,6 +39,7 @@ devDependencies:
   '@octetstream/eslint-config': 6.2.2_zhzbtzumivs5qokgdclld2dzei
   '@size-limit/preset-small-lib': 7.0.8_size-limit@7.0.8
   '@testing-library/react': 13.3.0_biqbaboplfbrettd7655fr4n2y
+  '@types/node': 18.0.0
   '@types/react': 18.0.14
   '@types/sinon': 10.0.11
   '@typescript-eslint/eslint-plugin': 5.28.0_7yumg2qjgbp7maccqlfhx2vudu
@@ -324,6 +326,10 @@ packages:
 
   /@types/minimist/1.2.2:
     resolution: {integrity: sha512-jhuKLIRrhvCPLqwPcx6INqmKeiA5EWrsCOPhrlFSrbrmU4ZMPjj5Ul/oLCMDO98XRUIwVm78xICz4EPCektzeQ==}
+    dev: true
+
+  /@types/node/18.0.0:
+    resolution: {integrity: sha512-cHlGmko4gWLVI27cGJntjs/Sj8th9aYwplmZFwmmgYQQvL5NUsgVJG7OddLvNfLqYS31KFN0s3qlaD9qCaxACA==}
     dev: true
 
   /@types/normalize-package-data/2.4.1:

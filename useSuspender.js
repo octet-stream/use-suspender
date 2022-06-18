@@ -1,6 +1,6 @@
 // @ts-check
 
-const eq = require("fast-deep-equal/es6/react")
+import eq from "fast-deep-equal/es6/react.js"
 
 const STATE_INITIAL = "initial"
 const STATE_PENDING = "pending"
@@ -63,7 +63,7 @@ function getPromise(fn, args, ctx) {
  *
  * @api public
  */
-function createSuspender(fn, ctx) {
+export function createSuspender(fn, ctx) {
   if (typeof fn !== "function") {
     throw new TypeError("First argument expected to be a function.")
   }
@@ -188,6 +188,4 @@ function createSuspender(fn, ctx) {
   return useSuspender
 }
 
-module.exports = createSuspender
-module.exports.default = createSuspender
-module.exports.createSuspender = createSuspender
+export default createSuspender

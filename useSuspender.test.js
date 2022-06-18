@@ -1,12 +1,31 @@
-const assert = require("node:assert")
+/* eslint-disable ava/use-test */
+// @ts-check
 
-const test = require("ava")
+import assert from "node:assert"
 
-const {spy} = require("sinon")
-const {Component, createElement} = require("react")
-const {renderHook, render, waitFor} = require("@testing-library/react")
+// eslint-disable-next-line import/no-unresolved
+import anyTest from "ava"
 
-const createSuspender = require("./useSuspender")
+import {spy} from "sinon"
+import {Component, createElement} from "react"
+import {renderHook, render, waitFor} from "@testing-library/react"
+
+import {createSuspender} from "./useSuspender.js"
+
+/**
+ * @typedef {Object} Context
+ *
+ * @prop {HTMLDivElement} baseElement
+ */
+
+/**
+ * @typedef {import("ava").TestFn<Context>} TestFn
+ */
+
+/**
+ * @type {TestFn}
+ */
+const test = anyTest
 
 class ErrorBoundary extends Component {
   constructor() {
@@ -152,6 +171,7 @@ test("Calls a suspender when .callEarly() called", t => {
 })
 
 test("Throws an error when createSuspender called witout an argument", t => {
+  // @ts-expect-error
   const err = t.throws(() => createSuspender())
 
   t.true(err instanceof TypeError)
