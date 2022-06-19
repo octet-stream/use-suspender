@@ -55,6 +55,8 @@ export function createSuspender(fn, ctx) {
     throw new TypeError("First argument expected to be a function.")
   }
 
+  // TODO: I think the cache in its current state might cause potential memory leaks in some scenarios.
+  // TODO: I need to find a way to invalidate cache automatically. Not sure which strategy to choose.
   /** @type {Set<Operation>} */
   const cache = new Set()
 
