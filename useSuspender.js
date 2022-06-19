@@ -2,9 +2,9 @@
 
 import eq from "fast-deep-equal/es6/react.js"
 
-const STATE_PENDING = "pending"
-const STATE_RESOLVED = "resolved"
-const STATE_REJECTED = "rejected"
+const STATE_PENDING = 0
+const STATE_RESOLVED = 1
+const STATE_REJECTED = 2
 
 /**
  * @typedef {STATE_PENDING | STATE_RESOLVED | STATE_REJECTED} State
