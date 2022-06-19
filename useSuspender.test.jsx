@@ -6,7 +6,7 @@ import assert from "node:assert"
 import anyTest from "ava"
 
 import {spy} from "sinon"
-import {Component, createElement} from "react"
+import {Component} from "react"
 import {renderHook, render, waitFor} from "@testing-library/react"
 
 import {createSuspender} from "./useSuspender.js"
@@ -42,7 +42,11 @@ class ErrorBoundary extends Component {
 
   render() {
     if (this.state.error) {
-      return createElement("div", {role: "alert"}, this.state.error.message)
+      return (
+        <div role="alert">
+          {this.state.error.message}
+        </div>
+      )
     }
 
     // eslint-disable-next-line react/prop-types
@@ -190,7 +194,9 @@ test("Throws an error rejected by a promise", async t => {
   }
 
   const {getByRole} = render(
-    createElement(ErrorBoundary, {}, createElement(NoopComponent)),
+    <ErrorBoundary>
+      <NoopComponent />
+    </ErrorBoundary>,
 
     {
       baseElement: t.context.baseElement
@@ -215,7 +221,9 @@ test("Throws an error thrown by suspender implementation", async t => {
   }
 
   const {getByRole} = render(
-    createElement(ErrorBoundary, {}, createElement(NoopComponent)),
+    <ErrorBoundary>
+      <NoopComponent />
+    </ErrorBoundary>,
 
     {
       baseElement: t.context.baseElement
