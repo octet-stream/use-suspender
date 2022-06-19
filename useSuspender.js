@@ -2,38 +2,25 @@
 
 import eq from "fast-deep-equal/es6/react.js"
 
-const STATE_INITIAL = "initial"
 const STATE_PENDING = "pending"
 const STATE_RESOLVED = "resolved"
 const STATE_REJECTED = "rejected"
 
 /**
- * @typedef {"initial" | "pending" | "resolved" | "rejected"} States
+ * @typedef {STATE_PENDING | STATE_RESOLVED | STATE_REJECTED} State
  */
 
 /**
  * @typedef {Object} Operation
- * @prop {States} state
+ * @prop {State} state
  * @prop {Error | null} error
  * @prop {any} result
  * @prop {Promise<void> | null} suspender
  * @prop {any[]} args
  */
-/**
- * @type {Operation}
- *
- * @api private
- */
-const initialOperationState = {
-  state: STATE_INITIAL,
-  error: null,
-  result: null,
-  suspender: null,
-  args: []
-}
 
 /**
- * Calls a function and returns a Promise that resolves a result
+ * Calls a function and returns a Promise that resolves with its result
  *
  * @param {(...args: any[]) => any} fn
  * @param {any[]} args
@@ -72,13 +59,6 @@ export function createSuspender(fn, ctx) {
   const cache = new Set()
 
   /**
-   * Creates a new operation
-   *
-   * @returns {Operation}
-   */
-  const create = () => ({...initialOperationState})
-
-  /**
    * @param {any[]} args
    *
    * @return {Operation | undefined}
@@ -104,23 +84,28 @@ export function createSuspender(fn, ctx) {
    * @api private
    */
   function call(args) {
-    const operation = create()
-
-    operation.suspender = getPromise(fn, args, ctx)
-      // The return statement is useless for this `.then()` callback
-      // eslint-disable-next-line promise/always-return
-      .then(result => {
-        operation.result = result
-        operation.state = STATE_RESOLVED
-      })
-
-      .catch(error => {
-        operation.error = error
-        operation.state = STATE_REJECTED
-      })
-
-    operation.state = STATE_PENDING
-    operation.args = args
+    /**
+     * @type {Operation}
+     *
+     * @api private
+     */
+    const operation = {
+      args,
+      error: null,
+      result: null,
+      state: STATE_PENDING,
+      suspender: getPromise(fn, args, ctx)
+        // The return statement is useless for this `.then()` callback
+        // eslint-disable-next-line promise/always-return
+        .then(result => {
+          operation.result = result
+          operation.state = STATE_RESOLVED
+        })
+        .catch(error => {
+          operation.error = error
+          operation.state = STATE_REJECTED
+        })
+    }
 
     // Add operation to cache
     cache.add(operation)
@@ -143,29 +128,33 @@ export function createSuspender(fn, ctx) {
    * @api public
    */
   function useSuspender(...args) {
+    // Find an operation that matches given arguments
     const operation = get(args)
 
-    if (!operation) {
-      throw call(args)
+    // If the operation exists, check out its state
+    if (operation) {
+      // If the operation is still pending, re-throw the Promise
+      if (operation.state === STATE_PENDING) {
+        throw operation.suspender
+      }
+
+      // If the operation is failed, throw its error
+      if (operation.state === STATE_REJECTED) {
+        throw operation.error
+      }
+
+      // If the operation is resolved, return its result, delete operation from cache and stop.
+      if (operation.state === STATE_RESOLVED) {
+        const {result} = operation
+
+        // Remove this operation from cache
+        cache.delete(operation)
+
+        return result
+      }
     }
 
-    if (operation.state === STATE_PENDING) {
-      throw operation.suspender
-    }
-
-    if (operation.state === STATE_REJECTED) {
-      throw operation.error
-    }
-
-    if (operation.state === STATE_RESOLVED) {
-      const {result} = operation
-
-      // Remove this operation from cache
-      cache.delete(operation)
-
-      return result
-    }
-
+    // If the operation is not exists, create a new one
     throw call(args)
   }
 
