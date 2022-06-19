@@ -147,7 +147,7 @@ export function createSuspender(fn, ctx) {
       if (operation.state === STATE_RESOLVED) {
         const {result} = operation
 
-        // Remove this operation from cache
+        // Remove the operation from cache
         cache.delete(operation)
 
         return result
