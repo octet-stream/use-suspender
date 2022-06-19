@@ -34,7 +34,8 @@ export interface SuspenderHook<TResult, TArgs extends unknown[]> {
  * @param ctx thisArg value
  */
 export function createSuspender<T extends SuspenderImplementation>(
-  fn: T, ctx?: unknown
+  fn: T,
+  ctx?: unknown
 ): SuspenderHook<UnwrapPromise<ReturnType<T>>, Parameters<T>>
 
 export default createSuspender
