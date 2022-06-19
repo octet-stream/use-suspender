@@ -18,11 +18,7 @@ import {createSuspender} from "./useSuspender.js"
  */
 
 /**
- * @typedef {import("ava").TestFn<Context>} TestFn
- */
-
-/**
- * @type {TestFn}
+ * @type {import("ava").TestFn<Context>}
  */
 const test = anyTest
 
