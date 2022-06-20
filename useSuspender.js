@@ -12,11 +12,26 @@ const STATE_REJECTED = 2
 
 /**
  * @typedef {Object} Operation
+ *
  * @prop {State} state
  * @prop {Error | null} error
  * @prop {any} result
  * @prop {Promise<void> | null} suspender
  * @prop {any[]} args
+ */
+
+/**
+ * @typedef {Object} Cache
+ *
+ * @prop {number} size
+ * @prop {() => void} clear
+ */
+
+/**
+ * @typedef {Object} SuspenderHook
+ *
+ * @prop {(...args: any[]) => any} useSuspender
+ * @prop {(...args: any[]) => void} callEarly
  */
 
 /**
@@ -46,7 +61,7 @@ function getPromise(fn, args, ctx) {
  * @param {(...args: any[]) => any} fn A function to create a useSuspender hook with
  * @param {unknown} [ctx = undefined] thisArg value
  *
- * @return {(...args: any[]) => any} useSuspender
+ * @return {((...args: any[]) => any) & SuspenderHook}
  *
  * @api public
  */
@@ -85,7 +100,7 @@ export function createSuspender(fn, ctx) {
    *
    * @api private
    */
-  function call(args) {
+  function createOperation(args) {
     /**
      * @type {Operation}
      *
@@ -157,7 +172,7 @@ export function createSuspender(fn, ctx) {
     }
 
     // If the operation is not exists, create a new one
-    throw call(args)
+    throw createOperation(args)
   }
 
   /**
@@ -169,12 +184,27 @@ export function createSuspender(fn, ctx) {
    *
    * @api public
    */
-  useSuspender.callEarly = function callEarly(...args) {
-    call(args)
+  function callEarly(...args) {
+    createOperation(args)
   }
 
-  // For those who want to use object destructing on createSuspender result.
+  useSuspender.callEarly = callEarly
   useSuspender.useSuspender = useSuspender
+  useSuspender.cache = {
+    /**
+     * Clears cache
+     */
+    clear() {
+      return cache.clear()
+    },
+
+    /**
+     * Returns cache size
+     */
+    get size() {
+      return cache.size
+    }
+  }
 
   return useSuspender
 }

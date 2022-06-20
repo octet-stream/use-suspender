@@ -7,6 +7,18 @@ type UnwrapPromise<T> = T extends Promise<infer U> ? U : T
   (...args: any[]): any
 }
 
+interface Cache {
+  /**
+   * Clears cache
+   */
+  size: number,
+
+  /**
+   * Returns cache size
+   */
+  clear(): void
+}
+
 /**
  * Calls a suspender with given arguments.
  * Will throw a Promise to notify React.Suspense
@@ -14,9 +26,17 @@ type UnwrapPromise<T> = T extends Promise<infer U> ? U : T
 export interface SuspenderHook<TResult, TArgs extends unknown[]> {
   /**
    * @param args A list of arguments to execute suspender with
+   *
+   * @deprecated Use SuspenderHook.useSuspender
    */
   (...args: TArgs): TResult
 
+  /**
+   * Calls a suspender with given arguments.
+   * Will throw a Promise to notify React.Suspense
+   *
+   * @param args A list of arguments to execute suspender with
+   */
   useSuspender(...args: TArgs): TResult
 
   /**
@@ -25,6 +45,11 @@ export interface SuspenderHook<TResult, TArgs extends unknown[]> {
    * @param args A list of arguments to execute suspender with
    */
   callEarly(...args: TArgs): void
+
+  /**
+   * Internal cache
+   */
+  cache: Cache
 }
 
 /**

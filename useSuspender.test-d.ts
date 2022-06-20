@@ -3,6 +3,11 @@ import {expectType as expect} from "tsd"
 import type {SuspenderHook} from "."
 import {createSuspender} from "."
 
+interface Cache {
+  size: number
+  clear(): void
+}
+
 // Expect createSuspender to be a function
 expect<Function>(createSuspender)
 
@@ -20,3 +25,6 @@ expect<() => void>(createSuspender(() => {}).callEarly)
 
 // SuspenderHook has useSuspender method
 expect<() => number>(createSuspender(() => 0).useSuspender)
+
+// SuspenderHook has cache property
+expect<Cache>(createSuspender(() => {}).cache)
