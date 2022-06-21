@@ -2,6 +2,10 @@ import eq from "fast-deep-equal/es6/react.js"
 
 type UnwrapPromise<T> = T extends Promise<infer U> ? U : T
 
+interface SuspenderImplementation {
+  (...args: any[]): any
+}
+
 enum State {
   PENDING,
   RESOLVED,
@@ -14,10 +18,6 @@ interface Operation<TResult, TArgs extends unknown[]> {
   result: TResult | null
   suspender: Promise<void>
   args: TArgs
-}
-
-interface SuspenderImplementation {
-  (...args: any[]): any
 }
 
 interface SuspenderPublicCache {
@@ -56,6 +56,9 @@ export interface SuspenderHook<TResult, TArgs extends unknown[]> {
    */
   callEarly(...args: TArgs): void
 
+  /**
+   * Returns public cache methods
+   */
   cache: SuspenderPublicCache
 }
 
