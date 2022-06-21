@@ -97,14 +97,14 @@ function getPromise<T extends SuspenderImplementation>(
  * import {createSuspender} from "use-suspender"
  * import type {FC} from "react"
  *
- * const {useSuspender: useGetUser} = createSuspender(async (login: string) => {
- *   const response = await fetch(`https://example.com/api/v1/json/users/${login}`)
+ * const {useSuspender: useGetUser} = createSuspender(async (userId: string) => {
+ *   const response = await fetch(`https://example.com/api/v1/json/users/${userId}`)
  *
  *   return response.json()
  * })
  *
  * const Profile: FC = () => {
- *   const user = useGetUser("john-doe")
+ *   const user = useGetUser("42")
  *
  *   return <div>Welcome, {user.name}!</div>
  * }

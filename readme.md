@@ -60,13 +60,13 @@ async function getUserFromSomewhereById(userId: string): Promise<User> {
 }
 
 // This will create a function that implements SuspenderHook<TResult, TArgs> interface.
-const useSuspender = createSuspender(getUserFromSomewhereById)
+const {useSuspender: useGetUser} = createSuspender(getUserFromSomewhereById)
 // => SuspenderHook<User, [userId: string]>
 
 const Profile: FC = () => {
   // This function will expect the same arguments with the same types as getUserFromSomewhereById
   // In this example, if you call it with just a number - you will get an error from TypeScript.
-  const user = useSuspender("42")
+  const user = useGetUser("42")
 
   return (
     <div>
@@ -110,7 +110,7 @@ import {createSuspender} from "use-suspender"
 import {createRoot} from "react-dom/client"
 import {Suspense} from "react"
 
-const useGetUser = createSuspender(() => (
+const {useSuspender: useGetUser} = createSuspender(() => (
   fetch("https://randomuser.me/api")
     .then(response => response.json())
     .then(([result]) => result)
@@ -153,7 +153,7 @@ import {useParams} from "react-router-dom"
 
 import {getUserByLogin} from "./api/user"
 
-const useGetUserByLogin = createSuspender(getUserByLogin)
+const {useSuspender: useGetUserByLogin} = createSuspender(getUserByLogin)
 
 function User() {
   const {login} = useParams()
