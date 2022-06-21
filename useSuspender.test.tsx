@@ -1,5 +1,3 @@
-/* eslint-disable ava/use-test */
-// @ts-check
 import assert from "node:assert"
 
 // eslint-disable-next-line import/no-unresolved
@@ -7,32 +5,22 @@ import anyTest from "ava"
 
 import {spy} from "sinon"
 import {Component} from "react"
+import type {TestFn} from "ava"
+import type {ReactNode} from "react"
 import {renderHook, render, waitFor} from "@testing-library/react"
 
 import {createSuspender} from "./useSuspender.js"
 
-/**
- * @typedef {Object} Context
- *
- * @prop {HTMLDivElement} baseElement
- */
+interface Context {
+  baseElement: HTMLDivElement
+}
 
-/**
- * @type {import("ava").TestFn<Context>}
- */
-const test = anyTest
+const test = anyTest as TestFn<Context>
 
-class ErrorBoundary extends Component {
-  constructor() {
-    super()
+class ErrorBoundary extends Component<{children?: ReactNode}> {
+  state: {error: Error | null} = {error: null}
 
-    this.state = {error: null}
-  }
-
-  /**
-   * @param {Error} error
-   */
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError(error: Error) {
     return {error}
   }
 
@@ -177,10 +165,10 @@ test("Calls a suspender when .callEarly() called", t => {
 
 test("Throws an error when createSuspender called witout an argument", t => {
   // @ts-expect-error
-  const err = t.throws(() => createSuspender())
-
-  t.true(err instanceof TypeError)
-  t.is(err.message, "Suspender implementation must be a function.")
+  t.throws(() => createSuspender(), {
+    instanceOf: TypeError,
+    message: "Suspender implementation must be a function."
+  })
 })
 
 test("Throws an error rejected by a promise", async t => {

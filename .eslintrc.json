@@ -11,6 +11,9 @@
   "settings": {
     "react": {
       "version": "18.x"
+    },
+    "import/resolver": {
+      "typescript": {}
     }
   },
   "plugins": [
@@ -20,11 +23,11 @@
     "plugin:ava/recommended",
     "plugin:react/recommended",
     "plugin:react/jsx-runtime",
-    "@octetstream/eslint-config/esm"
+    "@octetstream/eslint-config/esm/typescript"
   ],
   "rules": {
     "ava/no-ignored-test-files": ["error", {
-      "files": ["*.test.js"]
+      "files": ["*.test.{ts,tsx}"]
     }]
   }
 }

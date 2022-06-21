@@ -1,15 +1,15 @@
 {
-  "include": ["./*.js", "./*.jsx"],
+  "include": ["./*.ts"],
   "exclude": ["node_modules", "ava.config.js"],
   "compilerOptions": {
-    "noEmit": true,
-    "allowJs": true,
-    "checkJs": true,
+    "outDir": ".",
+    "strict": true,
     "skipLibCheck": true,
+    "jsx": "react-jsx",
     "target": "es2020",
     "module": "es2020",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "jsx": "react-jsx"
+    "removeComments": true,
   }
 }

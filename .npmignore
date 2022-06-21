@@ -18,6 +18,6 @@ coverage
 /yarn.lock
 /pnpm-lock.yaml
 /package-lock.json
-/useSuspender.test-d.ts
 /tsconfig.json
-/*.test.js
+/*.ts
+/*.test.ts

@@ -4,9 +4,10 @@ export default {
     "--loader=ts-node/esm/transpile-only"
   ],
   extensions: {
-    jsx: "module"
+    ts: "module",
+    tsx: "module"
   },
   files: [
-    "*.test.{js,jsx}"
+    "*.test.{ts,tsx}"
   ]
 }

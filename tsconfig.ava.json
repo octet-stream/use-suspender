@@ -1,0 +1,10 @@
+{
+  "include": ["./*.ts", "./*.tsx"],
+  "compilerOptions": {
+    "noEmit": true,
+    "jsx": "react-jsx",
+  },
+  "ts-node": {
+    "preferTsExts": true
+  }
+}
