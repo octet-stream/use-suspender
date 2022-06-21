@@ -1,6 +1,5 @@
 import assert from "node:assert"
 
-// eslint-disable-next-line import/no-unresolved
 import anyTest from "ava"
 
 import {spy} from "sinon"

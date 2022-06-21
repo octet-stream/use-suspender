@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-throw-literal */
 import eq from "fast-deep-equal/es6/react.js"
 
 type UnwrapPromise<T> = T extends Promise<infer U> ? U : T
@@ -6,6 +7,7 @@ interface SuspenderImplementation {
   (...args: any[]): any
 }
 
+// eslint-disable-next-line no-shadow
 enum State {
   PENDING,
   RESOLVED,
@@ -95,14 +97,14 @@ function getPromise<T extends SuspenderImplementation>(
  * import {createSuspender} from "use-suspender"
  * import type {FC} from "react"
  *
- * const {useSuspender} = createSuspender(async (name: string) => {
- *   const response = await fetch(`https://example.com/api/v1/json/users/${name}`)
+ * const {useSuspender: useGetUser} = createSuspender(async (login: string) => {
+ *   const response = await fetch(`https://example.com/api/v1/json/users/${login}`)
  *
  *   return response.json()
  * })
  *
  * const Profile: FC = () => {
- *   const user = useSuspender("John Doe")
+ *   const user = useGetUser("john-doe")
  *
  *   return <div>Welcome, {user.name}!</div>
  * }
@@ -139,7 +141,7 @@ export function createSuspender<T extends SuspenderImplementation>(
    *
    * @api private
    */
-  function createOperation(args: TArgs) {
+  function createOperation(args: TArgs): Promise<void> {
     const operation: Operation<TResult, TArgs> = {
       args,
       error: null,

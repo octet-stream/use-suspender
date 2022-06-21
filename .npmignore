@@ -19,5 +19,8 @@ coverage
 /pnpm-lock.yaml
 /package-lock.json
 /tsconfig.json
+/tsconfig.d.ts.json
+/tsconfig.eslint.json
+/tsconfig.ava.json
 /*.ts
 /*.test.ts

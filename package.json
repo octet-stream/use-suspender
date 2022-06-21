@@ -27,7 +27,7 @@
     "coverage": "c8 npm test",
     "test": "ava",
     "test:types": "tsc --noEmit",
-    "eslint": "eslint --ext=ts useSuspender.ts useSuspender.test.tsx",
+    "eslint": "eslint useSuspender.ts useSuspender.test.tsx",
     "ci": "npm run test:types && c8 npm test && c8 report --reporter=json",
     "postinstall": "husky install",
     "prepublishOnly": "pinst --disable",

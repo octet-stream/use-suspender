@@ -2,9 +2,6 @@
   "extends": "./tsconfig.json",
   "include": ["./*.ts", "./*.tsx"],
   "compilerOptions": {
-    "noEmit": true,
-  },
-  "ts-node": {
-    "preferTsExts": true
+    "noEmit": true
   }
 }

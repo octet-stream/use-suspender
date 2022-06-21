@@ -6,7 +6,8 @@
     "ecmaFeatures": {
       "modules": true,
       "jsx": true
-    }
+    },
+    "project": "./tsconfig.eslint.json"
   },
   "settings": {
     "react": {
