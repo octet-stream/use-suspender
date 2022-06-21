@@ -67,7 +67,7 @@ function getPromise(fn, args, ctx) {
  */
 export function createSuspender(fn, ctx) {
   if (typeof fn !== "function") {
-    throw new TypeError("First argument expected to be a function.")
+    throw new TypeError("Suspender implementation must be a function.")
   }
 
   // TODO: I think the cache in its current state might cause potential memory leaks in some scenarios.

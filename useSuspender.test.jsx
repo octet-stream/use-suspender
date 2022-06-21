@@ -180,15 +180,15 @@ test("Throws an error when createSuspender called witout an argument", t => {
   const err = t.throws(() => createSuspender())
 
   t.true(err instanceof TypeError)
-  t.is(err.message, "First argument expected to be a function.")
+  t.is(err.message, "Suspender implementation must be a function.")
 })
 
 test("Throws an error rejected by a promise", async t => {
   const expected = "This error is thrown by asynchronous implementation"
 
-  const {useSuspender} = createSuspender(
-    () => Promise.reject(new Error(expected))
-  )
+  const {useSuspender} = createSuspender(async () => {
+    throw new Error(expected)
+  })
 
   const NoopComponent = () => {
     useSuspender()
