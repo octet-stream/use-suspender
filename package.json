@@ -54,7 +54,6 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react": "7.30.0",
     "global-jsdom": "^8.4.0",
-    "htm": "^3.1.1",
     "husky": "8.0.1",
     "jsdom": "^19.0.0",
     "lint-staged": "13.0.2",
