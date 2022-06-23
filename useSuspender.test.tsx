@@ -201,9 +201,9 @@ test("Throws an error rejected by a promise", async t => {
     }
   )
 
-  await waitFor(() => getByRole("alert"))
+  const actual = await waitFor(() => getByRole("alert"))
 
-  t.is(getByRole("alert").textContent, expected)
+  t.is(actual.textContent, expected)
 })
 
 test("Throws an error thrown by suspender implementation", async t => {
@@ -229,7 +229,7 @@ test("Throws an error thrown by suspender implementation", async t => {
     }
   )
 
-  await waitFor(() => getByRole("alert"))
+  const actual = await waitFor(() => getByRole("alert"))
 
-  t.is(getByRole("alert").textContent, expected)
+  t.is(actual.textContent, expected)
 })
