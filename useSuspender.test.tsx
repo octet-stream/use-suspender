@@ -5,7 +5,7 @@ import anyTest from "ava"
 import {spy} from "sinon"
 import {Component} from "react"
 import type {TestFn} from "ava"
-import type {ReactNode} from "react"
+import type {ReactNode, FC} from "react"
 import {renderHook, render, waitFor} from "@testing-library/react"
 
 import {createSuspender} from "./useSuspender.js"
@@ -205,7 +205,7 @@ test("Throws an error thrown by suspender implementation", async t => {
     throw new Error(expected)
   })
 
-  const NoopComponent = () => {
+  const NoopComponent: FC = () => {
     useSuspender()
 
     return null
