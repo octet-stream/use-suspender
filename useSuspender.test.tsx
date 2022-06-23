@@ -177,7 +177,7 @@ test("Throws an error rejected by a promise", async t => {
     throw new Error(expected)
   })
 
-  const NoopComponent = () => {
+  const NoopComponent: FC = () => {
     useSuspender()
 
     return null
