@@ -27,7 +27,7 @@ interface ErrorBoundaryState {
 class ErrorBoundary extends Component<ErrorBoundaryProps> {
   state: ErrorBoundaryState = {error: null}
 
-  static getDerivedStateFromError(error: Error) {
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState | null {
     return {error}
   }
 
