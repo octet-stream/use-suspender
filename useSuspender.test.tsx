@@ -16,8 +16,16 @@ interface Context {
 
 const test = anyTest as TestFn<Context>
 
-class ErrorBoundary extends Component<{children?: ReactNode}> {
-  state: {error: Error | null} = {error: null}
+interface ErrorBoundaryProps {
+  children: ReactNode
+}
+
+interface ErrorBoundaryState {
+  error: Error | null
+}
+
+class ErrorBoundary extends Component<ErrorBoundaryProps> {
+  state: ErrorBoundaryState = {error: null}
 
   static getDerivedStateFromError(error: Error) {
     return {error}
