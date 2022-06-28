@@ -81,23 +81,25 @@ export default Profile
 
 ### `interface SuspenderHook<TResult, TArgs extends unknown[]>`
 
-Implements `useSuspender` hook, returned by `createSuspender` function. This function should be called inside of your React component.
+Implements suspender hook, returned by `createSuspender` function.
 
-#### `useSuspender(...args: TArgs): TResult`
+#### `hook.useSuspender(...args: TArgs): TResult`
 
 Executes asynchronous action with given arguments.
 This function will throw a Promise to notify `React.Suspense`
 and resolve a result from suspender.
 
+This function should be called inside of your React function component.
+
 - args – arguments to call the suspender with
 
-#### `useSuspender.useSuspender(...args: TArgs): TResult`
+#### `hook.useSuspender(...args: TArgs): TResult`
 
 A self-reference for `useSuspender` function.
 
-#### `useSuspender.callEarly(...args: TArgs): void`
+#### `hook.callEarly(...args: TArgs): void`
 
-Calls usesSuspense early a silence Promise first throwing needed to notify `React.Suspense`
+Calls useSuspense early without throwing a Promise needed to notify `React.Suspense`.
 
 - args – arguments to call the suspender with
 
