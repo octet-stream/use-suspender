@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */
+/* eslint-disable no-shadow */
 import eq from "fast-deep-equal/es6/react.js"
 
 type UnwrapPromise<T> = T extends Promise<infer R> ? R : T
@@ -7,8 +8,8 @@ interface SuspenderImplementation<TResult, TArgs extends unknown[]> {
   (...args: TArgs): TResult
 }
 
-// eslint-disable-next-line no-shadow
-enum State {
+// Note: const emum will inline State values as it used. It will be fine while it's private. If this type is ever going to be public - remove the `const` keyword.
+const enum State {
   PENDING,
   RESOLVED,
   REJECTED
