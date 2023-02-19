@@ -4,7 +4,7 @@ import eq from "fast-deep-equal/es6/react.js"
 
 type UnwrapPromise<T> = T extends Promise<infer R> ? R : T
 
-interface SuspenderImplementation<TResult, TArgs extends unknown[]> {
+interface SuspenderImplementation<TResult, TArgs extends readonly unknown[]> {
   (...args: TArgs): TResult
 }
 
@@ -16,7 +16,7 @@ const enum State {
   REJECTED
 }
 
-interface Operation<TResult, TArgs extends unknown[]> {
+interface Operation<TResult, TArgs extends readonly unknown[]> {
   state: State
   error: Error | null
   result: TResult | null
@@ -36,7 +36,10 @@ interface SuspenderPublicCache {
   clear(): void
 }
 
-export interface CreateSuspenderResult<TResult, TArgs extends unknown[]> {
+export interface CreateSuspenderResult<
+  TResult,
+  TArgs extends readonly unknown[]
+> {
   /**
    * Calls a suspender with given arguments.
    * Will throw a Promise to notify React.Suspense
@@ -71,11 +74,11 @@ export interface CreateSuspenderResult<TResult, TArgs extends unknown[]> {
  *
  * @api private
  */
-const getPromise = async <TResult, TArgs extends unknown[]>(
+const getPromise = async <TResult, TArgs extends readonly unknown[]>(
   implementation: SuspenderImplementation<TResult, TArgs>,
   args: TArgs,
   ctx?: unknown
-): Promise<TResult> => implementation.apply(ctx, args)
+): Promise<TResult> => implementation.call(ctx, ...args)
 
 /**
  * Creates a new useSuspender hook for given function.
@@ -104,7 +107,7 @@ const getPromise = async <TResult, TArgs extends unknown[]>(
  * }
  * ```
  */
-export function createSuspender<TResult, TArgs extends unknown[]>(
+export function createSuspender<TResult, TArgs extends readonly unknown[]>(
   fn: SuspenderImplementation<TResult, TArgs>,
   ctx?: unknown
 ): CreateSuspenderResult<TResult, TArgs> {
