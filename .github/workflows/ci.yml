@@ -49,7 +49,7 @@ jobs:
         uses: pnpm/action-setup@v2
         with:
           version: 7
-          run_install:
+          run_install: |
             args: [--frozen-lockfile]
 
       - run: pnpm run ci
