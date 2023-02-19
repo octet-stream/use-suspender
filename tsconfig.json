@@ -10,6 +10,6 @@
     "module": "esnext",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "removeComments": true,
+    "declaration": true
   }
 }
