@@ -8,7 +8,7 @@ interface SuspenderImplementation<TResult, TArgs extends unknown[]> {
   (...args: TArgs): TResult
 }
 
-// Note: const emum will inline State values as it used. It will be fine while it's private. If this type is ever going to be public - remove the `const` keyword.
+// Note: const emum will inline State values as it used. It will be fine while it's private. If this type is ever going to be public - remove the `const` keyword as it might get hazardous.
 // See: https://youtu.be/jjMbPt_H3RQ
 const enum State {
   PENDING,
