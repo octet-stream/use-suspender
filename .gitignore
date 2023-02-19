@@ -4,7 +4,9 @@ node_modules
 coverage
 yarn-error.log
 
-/test.mjs
+/*.cjs
+/*.mjs
 /*.js
 /*.jsx
 /*.d.ts
+/*.map

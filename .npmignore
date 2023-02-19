@@ -24,3 +24,4 @@ coverage
 /tsconfig.ava.json
 /*.ts
 /*.test.ts
+/*.test.tsx

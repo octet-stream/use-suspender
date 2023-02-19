@@ -9,13 +9,15 @@
     "hooks",
     "react-hooks"
   ],
+  "source": "./useSuspender.ts",
   "main": "./useSuspender.js",
+  "umd:main": "./useSuspender.umd.js",
   "types": "./useSuspender.d.ts",
   "exports": {
-    ".": {
-      "import": "./useSuspender.js",
-      "types": "./useSuspender.d.ts"
-    }
+    "import": "./useSuspender.mjs",
+    "require": "./useSuspender.cjs",
+    "types": "./useSuspender.d.ts",
+    "default": "./useSuspender.js"
   },
   "repository": "octet-stream/use-suspender",
   "author": "Nick K. <io@octetstream.me>",
@@ -23,7 +25,7 @@
   "private": false,
   "scripts": {
     "cleanup": "del-cli useSuspender.js useSuspender.d.ts",
-    "build": "tsc && tsc --project tsconfig.d.ts.json",
+    "build": "microbundle",
     "size-limit": "size-limit",
     "staged": "lint-staged",
     "coverage": "c8 npm test",
@@ -57,6 +59,7 @@
     "husky": "8.0.3",
     "jsdom": "^21.1.0",
     "lint-staged": "13.1.2",
+    "microbundle": "^0.15.1",
     "pinst": "^3.0.0",
     "react": "18.2.0",
     "react-dom": "^18.2.0",
