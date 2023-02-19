@@ -6,6 +6,7 @@ import React, {Component} from "react"
 
 import {spy} from "sinon"
 import type {TestFn} from "ava"
+import {nanoid} from "nanoid/async"
 import type {ReactNode, FC} from "react"
 import {renderHook, render, waitFor} from "@testing-library/react"
 
@@ -49,8 +50,10 @@ class ErrorBoundary extends Component<ErrorBoundaryProps> {
 // Suppress errors from React.
 console.error = () => {}
 
-test.beforeEach(t => {
+test.beforeEach(async t => {
   const element = document.createElement("div")
+
+  element.id = `container-${await nanoid()}`
 
   t.context.baseElement = document.body.appendChild(element)
 })
@@ -120,9 +123,9 @@ test("Returns a value resolved by Promise", async t => {
 })
 
 test("Calls suspender with given arguments", t => {
-  const expected = ["an argument", 42]
+  const expected = ["an argument", 42] as const
 
-  const fn = spy()
+  const fn = spy((...args: typeof expected) => void args)
 
   const {useSuspender} = createSuspender(fn)
 

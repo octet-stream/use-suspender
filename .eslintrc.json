@@ -26,6 +26,10 @@
     "@octetstream/eslint-config/esm/typescript"
   ],
   "rules": {
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": ["**/*.test.tsx"]
+    }],
+
     "ava/no-ignored-test-files": ["error", {
       "files": ["*.test.{ts,tsx}"]
     }]
