@@ -35,7 +35,7 @@
     "eslint": "eslint useSuspender.ts useSuspender.test.tsx",
     "ci": "npm run test:types && c8 npm test && c8 report --reporter=json",
     "postinstall": "husky install",
-    "prepublishOnly": "pinst --disable",
+    "prepublishOnly": "npm run build && pinst --disable",
     "postpublish": "pinst --enable"
   },
   "devDependencies": {
