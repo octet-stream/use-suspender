@@ -2,5 +2,17 @@
   {
     "path": "useSuspender.cjs",
     "limit": "1.5 KB"
+  },
+  {
+    "path": "useSuspender.mjs",
+    "limit": "1.5 KB"
+  },
+  {
+    "path": "useSuspender.legacy.mjs",
+    "limit": "2 KB"
+  },
+  {
+    "path": "useSuspender.umd.js",
+    "limit": "1.5 KB"
   }
 ]
