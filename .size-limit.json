@@ -1,6 +1,6 @@
 [
   {
-    "path": "useSuspender.js",
+    "path": "useSuspender.cjs",
     "limit": "1.5 KB"
   }
 ]
