@@ -4,16 +4,18 @@ on:
   push:
     branches: [master]
     paths:
-      - "**.js"
-      - "ava.config.cjs"
+      - "**.ts"
+      - "**.tsx"
+      - "ava.config.js"
       - "package.json"
       - "pnpm-lock.yaml"
       - ".github/workflows/ci.yml"
   pull_request:
     branches: [master]
     paths:
-      - "**.js"
-      - "ava.config.cjs"
+      - "**.ts"
+      - "**.tsx"
+      - "ava.config.js"
       - "package.json"
       - "pnpm-lock.yaml"
       - ".github/workflows/ci.yml"
@@ -42,11 +44,13 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
+      # TODO: Rewrite pnpm setup & cache according to the documentation
       - name: pnpm setup
-        uses: pnpm/action-setup@v2.0.1
+        uses: pnpm/action-setup@v2
         with:
-          version: 6.2.1
-          run_install: true
+          version: 7
+          run_install:
+            args: [--frozen-lockfile]
 
       - run: pnpm run ci
 
