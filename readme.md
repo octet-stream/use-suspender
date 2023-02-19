@@ -28,15 +28,14 @@ pnpm add use-suspender
 
 ## API
 
-### `createSuspender<T extends SuspenderImplementation>(fn: T, ctx?: unknown): SuspenderHook`
+### `createSuspender<TResult, TArgs extends unknown[]>(fn: SuspenderImplementation<TResult, TArgs>, ctx?: unknown): SuspenderHook<TResult, TArgs>`
 
 Creates a new `useSuspender` hook for given function.
 
 - fn – a function that will be used for each `useSuspender` call.
 - ctx – thisArg that will be used for each `useSuspender` call.
 
-
-### `interface SuspenderImplementation`
+### `interface SuspenderImplementation<TResult, TArgs extends unknown[]>`
 
 Implements arbitary function. For TypeScript users this will help to narrow types for implementation's result and its arguments.
 
