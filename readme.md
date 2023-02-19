@@ -82,7 +82,7 @@ export default Profile
 
 Implements suspender hook, returned by `createSuspender` function.
 
-#### `hook.useSuspender(...args: TArgs): TResult`
+#### `SuspenderHook.useSuspender(...args: TArgs): TResult`
 
 Executes asynchronous action with given arguments.
 This function will throw a Promise to notify `React.Suspense`
@@ -92,11 +92,7 @@ This function should be called inside of your React function component.
 
 - args – arguments to call the suspender with
 
-#### `hook.useSuspender(...args: TArgs): TResult`
-
-A self-reference for `useSuspender` function.
-
-#### `hook.callEarly(...args: TArgs): void`
+#### `SuspenderHook.callEarly(...args: TArgs): void`
 
 Calls useSuspense early without throwing a Promise needed to notify `React.Suspense`.
 
