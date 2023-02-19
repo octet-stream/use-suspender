@@ -10,21 +10,21 @@
     "react-hooks"
   ],
   "source": "./useSuspender.ts",
-  "main": "./useSuspender.js",
+  "main": "./useSuspender.cjs",
   "umd:main": "./useSuspender.umd.js",
   "types": "./useSuspender.d.ts",
   "exports": {
     "import": "./useSuspender.mjs",
     "require": "./useSuspender.cjs",
     "types": "./useSuspender.d.ts",
-    "default": "./useSuspender.js"
+    "default": "./useSuspender.esm.js"
   },
   "repository": "octet-stream/use-suspender",
   "author": "Nick K. <io@octetstream.me>",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "cleanup": "del-cli useSuspender.js useSuspender.d.ts",
+    "cleanup": "del-cli useSuspender.cjs useSuspender.cjs.map useSuspender.esm.js useSuspender.esm.js.map useSuspender.mjs useSuspender.mjs.map useSuspender.umd.js useSuspender.umd.js.map useSuspender.d.ts",
     "build": "microbundle",
     "size-limit": "size-limit",
     "staged": "lint-staged",
