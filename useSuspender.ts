@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */
 import eq from "fast-deep-equal/es6/react.js"
 
-type UnwrapPromise<T> = T extends Promise<infer U> ? U : T
+type UnwrapPromise<T> = T extends Promise<infer R> ? R : T
 
-interface SuspenderImplementation {
-  (...args: any[]): any
+interface SuspenderImplementation<TResult, TArgs extends unknown[]> {
+  (...args: TArgs): TResult
 }
 
 // eslint-disable-next-line no-shadow
@@ -34,7 +34,7 @@ interface SuspenderPublicCache {
   clear(): void
 }
 
-export interface SuspenderHook<TResult, TArgs extends unknown[]> {
+export interface CreateSuspenderResult<TResult, TArgs extends unknown[]> {
   /**
    * Calls a suspender with given arguments.
    * Will throw a Promise to notify React.Suspense
@@ -47,7 +47,7 @@ export interface SuspenderHook<TResult, TArgs extends unknown[]> {
    *
    * @api public
    */
-  useSuspender(...args: TArgs): TResult
+  useSuspender(...args: TArgs): UnwrapPromise<TResult>
 
   /**
    * Calls useSuspense early
@@ -69,19 +69,11 @@ export interface SuspenderHook<TResult, TArgs extends unknown[]> {
  *
  * @api private
  */
-function getPromise<T extends SuspenderImplementation>(
-  implementation: T,
-  args: Parameters<T>,
+const getPromise = async <TResult, TArgs extends unknown[]>(
+  implementation: SuspenderImplementation<TResult, TArgs>,
+  args: TArgs,
   ctx?: unknown
-): Promise<ReturnType<T>> {
-  try {
-    const result = implementation.apply(ctx, args)
-
-    return result instanceof Promise ? result : Promise.resolve(result)
-  } catch (error) {
-    return Promise.reject(error)
-  }
-}
+): Promise<TResult> => implementation.apply(ctx, args)
 
 /**
  * Creates a new useSuspender hook for given function.
@@ -110,16 +102,13 @@ function getPromise<T extends SuspenderImplementation>(
  * }
  * ```
  */
-export function createSuspender<T extends SuspenderImplementation>(
-  implementation: T,
+export function createSuspender<TResult, TArgs extends unknown[]>(
+  implementation: SuspenderImplementation<TResult, TArgs>,
   ctx?: unknown
-): SuspenderHook<UnwrapPromise<ReturnType<T>>, Parameters<T>> {
+): CreateSuspenderResult<TResult, TArgs> {
   if (typeof implementation !== "function") {
     throw new TypeError("Suspender implementation must be a function.")
   }
-
-  type TResult = ReturnType<T>
-  type TArgs = Parameters<T>
 
   const cache = new Set<Operation<TResult, TArgs>>()
 

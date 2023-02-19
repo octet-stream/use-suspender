@@ -2,8 +2,9 @@ import assert from "node:assert"
 
 import anyTest from "ava"
 
+import React, {Component} from "react"
+
 import {spy} from "sinon"
-import {Component} from "react"
 import type {TestFn} from "ava"
 import type {ReactNode, FC} from "react"
 import {renderHook, render, waitFor} from "@testing-library/react"
