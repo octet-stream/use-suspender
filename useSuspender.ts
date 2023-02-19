@@ -103,10 +103,10 @@ const getPromise = async <TResult, TArgs extends unknown[]>(
  * ```
  */
 export function createSuspender<TResult, TArgs extends unknown[]>(
-  implementation: SuspenderImplementation<TResult, TArgs>,
+  fn: SuspenderImplementation<TResult, TArgs>,
   ctx?: unknown
 ): CreateSuspenderResult<TResult, TArgs> {
-  if (typeof implementation !== "function") {
+  if (typeof fn !== "function") {
     throw new TypeError("Suspender implementation must be a function.")
   }
 
@@ -136,7 +136,7 @@ export function createSuspender<TResult, TArgs extends unknown[]>(
       error: null,
       result: null,
       state: State.PENDING,
-      suspender: getPromise(implementation, args, ctx)
+      suspender: getPromise(fn, args, ctx)
         // The return statement is useless for this `.then()` callback
         // eslint-disable-next-line promise/always-return
         .then(result => {

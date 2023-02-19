@@ -28,7 +28,7 @@ pnpm add use-suspender
 
 ## API
 
-### `createSuspender<TResult, TArgs extends unknown[]>(fn: SuspenderImplementation<TResult, TArgs>, ctx?: unknown): SuspenderHook<TResult, TArgs>`
+### `createSuspender(fn: SuspenderImplementation, ctx?: unknown): SuspenderHook`
 
 Creates a new `useSuspender` hook for given function.
 
