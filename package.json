@@ -10,7 +10,7 @@
     "react-hooks"
   ],
   "source": "./useSuspender.ts",
-  "main": "./useSuspender.umd.cjs",
+  "main": "./useSuspender.umd.js",
   "umd:main": "./useSuspender.umd.js",
   "module": "./useSuspender.legacy.mjs",
   "types": "./useSuspender.d.ts",
