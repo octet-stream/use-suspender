@@ -58,7 +58,7 @@ async function getUserFromSomewhereById(userId: string): Promise<User> {
   return response.json()
 }
 
-// This will create a function that implements SuspenderHook<TResult, TArgs> interface.
+// This will create an object that implements SuspenderHook<TResult, TArgs> interface.
 const {useSuspender: useGetUser} = createSuspender(getUserFromSomewhereById)
 // => SuspenderHook<User, [userId: string]>
 
