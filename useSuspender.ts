@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */
 /* eslint-disable no-shadow */
+
 import eq from "fast-deep-equal/es6/react.js"
 
-type UnwrapPromise<T> = T extends Promise<infer R> ? R : T
-
-interface SuspenderImplementation<TResult, TArgs extends readonly unknown[]> {
-  (...args: TArgs): TResult
-}
+type SuspenderImplementation<
+  TResult extends unknown,
+  TArgs extends readonly unknown[]
+> = (...args: TArgs) => TResult
 
 // Note: const emum will inline State values as it used. It will be fine while it's private. If this type is ever going to be public - remove the `const` keyword as it might get hazardous.
 // See: https://youtu.be/jjMbPt_H3RQ
@@ -16,9 +16,9 @@ const enum State {
   REJECTED
 }
 
-interface Operation<TResult, TArgs extends readonly unknown[]> {
+interface Operation<TResult extends unknown, TArgs extends readonly unknown[]> {
   state: State
-  error: Error | null
+  error: unknown
   result: TResult | null
   suspender: Promise<void>
   args: TArgs
@@ -28,7 +28,7 @@ interface SuspenderPublicCache {
   /**
    * Returns cache size
    */
-  size: number
+  readonly size: number
 
   /**
    * Clears cache
@@ -37,7 +37,7 @@ interface SuspenderPublicCache {
 }
 
 export interface CreateSuspenderResult<
-  TResult,
+  TResult extends unknown,
   TArgs extends readonly unknown[]
 > {
   /**
@@ -52,7 +52,21 @@ export interface CreateSuspenderResult<
    *
    * @api public
    */
-  useSuspender(...args: TArgs): UnwrapPromise<TResult>
+  (...args: TArgs): Awaited<TResult>
+
+  /**
+   * Calls a suspender with given arguments.
+   * Will throw a Promise to notify React.Suspense
+   *
+   * @param args A list of arguments to execute suspender with
+   *
+   * @throws {Promise<void>} If the Promise haven't been fulfilled yet
+   *
+   * @throws {Error} If suspender's Promise has been rejected with an error
+   *
+   * @api public
+   */
+  useSuspender(...args: TArgs): Awaited<TResult>
 
   /**
    * Calls useSuspense early
@@ -64,7 +78,9 @@ export interface CreateSuspenderResult<
   callEarly(...args: TArgs): void
 
   /**
-   * Returns public cache methods
+   * Returns public cache methods for manual cache control.
+   *
+   * This object expose only two properties: `size` to check on the cache's size, and `clear` to clear the whole data cache.
    */
   cache: SuspenderPublicCache
 }
@@ -74,7 +90,10 @@ export interface CreateSuspenderResult<
  *
  * @api private
  */
-const getPromise = async <TResult, TArgs extends readonly unknown[]>(
+const getPromise = async <
+  TResult extends unknown,
+  TArgs extends readonly unknown[]
+>(
   implementation: SuspenderImplementation<TResult, TArgs>,
   args: TArgs,
   ctx?: unknown
@@ -107,11 +126,14 @@ const getPromise = async <TResult, TArgs extends readonly unknown[]>(
  * }
  * ```
  */
-export function createSuspender<TResult, TArgs extends readonly unknown[]>(
-  fn: SuspenderImplementation<TResult, TArgs>,
+export function createSuspender<
+  TResult extends unknown,
+  TArgs extends readonly unknown[]
+>(
+  implementation: SuspenderImplementation<TResult, TArgs>,
   ctx?: unknown
 ): CreateSuspenderResult<TResult, TArgs> {
-  if (typeof fn !== "function") {
+  if (typeof implementation !== "function") {
     throw new TypeError("Suspender implementation must be a function.")
   }
 
@@ -141,7 +163,7 @@ export function createSuspender<TResult, TArgs extends readonly unknown[]>(
       error: null,
       result: null,
       state: State.PENDING,
-      suspender: getPromise(fn, args, ctx)
+      suspender: getPromise(implementation, args, ctx)
         // The return statement is useless for this `.then()` callback
         // eslint-disable-next-line promise/always-return
         .then(result => {
@@ -160,7 +182,7 @@ export function createSuspender<TResult, TArgs extends readonly unknown[]>(
     return operation.suspender
   }
 
-  function useSuspender(...args: TArgs): UnwrapPromise<TResult> {
+  const useSuspender: CreateSuspenderResult<TResult, TArgs> = (...args) => {
     // Find an operation that matches given arguments
     const operation = get(args)
 
@@ -176,14 +198,16 @@ export function createSuspender<TResult, TArgs extends readonly unknown[]>(
         throw operation.error
       }
 
-      // If the operation is resolved, return its result, delete operation from cache and stop.
+      // If operation is resolved, return its result, delete operation from cache and stop.
       if (operation.state === State.RESOLVED) {
+        // Borrow result, so we can remove operation from cache
         const {result} = operation
 
-        // Remove the operation from cache
+        // Remove operation from cache
         cache.delete(operation)
 
-        return result as UnwrapPromise<TResult>
+        // We don't care about the result - it could be anything, so just cast to `Awaited<TResult>` to satisfy tsc
+        return result as Awaited<TResult>
       }
     }
 
@@ -191,11 +215,11 @@ export function createSuspender<TResult, TArgs extends readonly unknown[]>(
     throw createOperation(args)
   }
 
-  function callEarly(...args: TArgs): void {
+  useSuspender.callEarly = (...args: TArgs): void => {
     createOperation(args)
   }
 
-  const publicCache: SuspenderPublicCache = {
+  useSuspender.cache = {
     get size() {
       return cache.size
     },
@@ -205,5 +229,7 @@ export function createSuspender<TResult, TArgs extends readonly unknown[]>(
     }
   }
 
-  return {useSuspender, callEarly, cache: publicCache}
+  useSuspender.useSuspender = useSuspender
+
+  return useSuspender
 }
