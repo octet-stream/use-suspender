@@ -1,10 +1,10 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["./*.ts", "./*.tsx"],
   "compilerOptions": {
     "noEmit": true,
   },
   "ts-node": {
+    "transpileOnly": true,
     "preferTsExts": true
   }
 }
