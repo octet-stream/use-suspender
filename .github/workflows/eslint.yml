@@ -2,7 +2,7 @@ name: ESLint
 
 on:
   push:
-    branches: [master]
+    branches: [main]
     paths:
       - "**.ts"
       - "**.tsx"
@@ -11,7 +11,7 @@ on:
       - ".github/workflows/eslint.yml"
 
   pull_request:
-    branches: [master]
+    branches: [main]
     paths:
       - "**.ts"
       - "**.tsx"
