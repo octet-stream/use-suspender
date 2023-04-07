@@ -20,9 +20,7 @@
     "ava"
   ],
   "extends": [
-    "plugin:ava/recommended",
-    "plugin:react/recommended",
-    "@octetstream/eslint-config/esm/typescript"
+    "@octetstream/eslint-config/esm/typescript/react"
   ],
   "rules": {
     "import/no-extraneous-dependencies": ["error", {

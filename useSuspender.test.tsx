@@ -34,16 +34,18 @@ class ErrorBoundary extends Component<ErrorBoundaryProps> {
   }
 
   render() {
-    if (this.state.error) {
+    const {error} = this.state
+    const {children} = this.props
+
+    if (error) {
       return (
         <div role="alert">
-          {this.state.error.message}
+          {error.message}
         </div>
       )
     }
 
-    // eslint-disable-next-line react/prop-types
-    return this.props.children
+    return children
   }
 }
 

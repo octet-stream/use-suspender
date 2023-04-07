@@ -39,7 +39,7 @@
     "postpublish": "pinst --enable"
   },
   "devDependencies": {
-    "@octetstream/eslint-config": "6.2.2",
+    "@octetstream/eslint-config": "7.0.2",
     "@size-limit/preset-small-lib": "8.2.4",
     "@testing-library/react": "14.0.0",
     "@types/node": "18.15.11",
@@ -59,7 +59,7 @@
     "global-jsdom": "8.8.0",
     "husky": "8.0.3",
     "jsdom": "21.1.1",
-    "lint-staged": "13.2.0",
+    "lint-staged": "13.2.1",
     "microbundle": "0.15.1",
     "nanoid": "4.0.2",
     "pinst": "3.0.0",
@@ -68,7 +68,7 @@
     "sinon": "15.0.3",
     "size-limit": "8.2.4",
     "ts-node": "10.9.1",
-    "typescript": "5.0.3"
+    "typescript": "5.0.4"
   },
   "peerDependencies": {
     "react": "^18.2.0"
