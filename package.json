@@ -9,24 +9,24 @@
     "hooks",
     "react-hooks"
   ],
-  "source": "./useSuspender.ts",
-  "main": "./useSuspender.mjs",
-  "umd:main": "./useSuspender.umd.js",
-  "module": "./useSuspender.legacy.mjs",
-  "types": "./useSuspender.d.ts",
+  "source": "./src/useSuspender.ts",
+  "main": "./lib/useSuspender.mjs",
+  "umd:main": "./lib/useSuspender.umd.js",
+  "module": "./lib/useSuspender.legacy.mjs",
+  "types": "./lib/useSuspender.d.ts",
   "exports": {
-    "import": "./useSuspender.mjs",
-    "require": "./useSuspender.cjs",
-    "types": "./useSuspender.d.ts",
-    "default": "./useSuspender.mjs"
+    "import": "./lib/useSuspender.mjs",
+    "require": "./lib/useSuspender.cjs",
+    "types": "./lib/useSuspender.d.ts",
+    "default": "./lib/useSuspender.mjs"
   },
   "repository": "octet-stream/use-suspender",
   "author": "Nick K. <io@octetstream.me>",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "cleanup": "del-cli useSuspender.cjs useSuspender.cjs.map useSuspender.esm.js useSuspender.esm.js.map useSuspender.mjs useSuspender.mjs.map useSuspender.legacy.mjs useSuspender.legacy.mjs.map useSuspender.umd.js useSuspender.umd.js.map useSuspender.d.ts",
-    "build": "microbundle",
+    "cleanup": "del-cli lib",
+    "build": "microbundle --tsconfig tsconfig.build.json --jsx React.createElement --jsxFragment React.Fragment --jsxImportSource react --globals react/jsx-runtime=jsx",
     "size-limit": "size-limit",
     "staged": "lint-staged",
     "coverage": "c8 npm test",
@@ -39,7 +39,7 @@
     "postpublish": "pinst --enable"
   },
   "devDependencies": {
-    "@octetstream/eslint-config": "7.0.2",
+    "@octetstream/eslint-config": "7.1.0",
     "@size-limit/preset-small-lib": "8.2.4",
     "@testing-library/react": "14.0.0",
     "@types/node": "18.15.11",
@@ -50,7 +50,7 @@
     "ava": "5.2.0",
     "c8": "7.13.0",
     "del-cli": "5.0.0",
-    "eslint": "8.37.0",
+    "eslint": "8.38.0",
     "eslint-config-airbnb-typescript": "17.0.0",
     "eslint-import-resolver-typescript": "3.5.5",
     "eslint-plugin-ava": "14.0.0",

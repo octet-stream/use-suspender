@@ -1,34 +1,9 @@
 {
   "root": true,
-  "env": {
-    "browser": true,
-    "node": true
-  },
   "parserOptions": {
     "project": "./tsconfig.eslint.json"
   },
-  "settings": {
-    "react": {
-      "version": "18.x"
-    },
-    "import/resolver": {
-      "typescript": {}
-    }
-  },
-  "plugins": [
-    "@typescript-eslint",
-    "ava"
-  ],
   "extends": [
     "@octetstream/eslint-config/esm/typescript/react"
-  ],
-  "rules": {
-    "import/no-extraneous-dependencies": ["error", {
-      "devDependencies": ["**/*.test.tsx"]
-    }],
-
-    "ava/no-ignored-test-files": ["error", {
-      "files": ["*.test.{ts,tsx}"]
-    }]
-  }
+  ]
 }

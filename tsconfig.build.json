@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": [
+    "node_modules",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/**/__macro__/**/*.ts",
+    "src/**/__macro__/**/*.tsx",
+    "src/**/__helper__/**/*.ts",
+    "src/**/__helper__/**/*.tsx",
+    "src/**/__fixture__/**/*.ts",
+    "src/**/__fixture__/**/*.tsx"
+  ]
+}

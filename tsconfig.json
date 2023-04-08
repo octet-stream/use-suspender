@@ -1,15 +1,16 @@
 {
-  "include": ["./*.ts"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "ava.config.js"],
   "compilerOptions": {
-    "outDir": ".",
-    "strict": true,
-    "skipLibCheck": true,
-    "jsx": "react",
+    "baseUrl": "src",
     "target": "esnext",
     "module": "esnext",
+    "jsx": "react-jsx",
     "moduleResolution": "nodenext",
     "allowSyntheticDefaultImports": true,
-    "declaration": true
+    "noImplicitAny": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "strict": true
   }
 }

@@ -2,7 +2,7 @@ import assert from "node:assert"
 
 import anyTest from "ava"
 
-import React, {Component} from "react"
+import {Component} from "react"
 
 import {spy} from "sinon"
 import type {TestFn} from "ava"
