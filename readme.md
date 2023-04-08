@@ -8,7 +8,13 @@ Wraps asynchronous functions allowing to use them with React.Suspense
 
 ## Installation
 
-You can take this package both from Yarn:
+Using pnpm:
+
+```sh
+pnpm add use-suspender
+```
+
+or yarn:
 
 ```sh
 yarn add use-suspender
@@ -20,26 +26,33 @@ Or npm:
 npm i use-suspender
 ```
 
-Or pnpm
-
-```sh
-pnpm add use-suspender
-```
-
 ## API
 
-### `createSuspender(fn: SuspenderImplementation, ctx?: unknown): SuspenderHook`
+### `createSuspender(fn[, ctx])`
 
 Creates a new `useSuspender` hook for given function.
 
-- fn – a function that will be used for each `useSuspender` call.
-- ctx – thisArg that will be used for each `useSuspender` call.
+Takes following argmuents:
+
+| Name           | Type                                      | Required | Default     | Description                                         |
+|----------------|:-----------------------------------------:|:--------:|:-----------:|-----------------------------------------------------|
+| implementation | `SuspenderImplementation<TResult, TArgs>` | Yes      | –           | A function to create `useSuspender` hook for        |
+| ctx            | `unknown`                                 | No       | `undefined` | `thisArg` to use with each `useSuspender` hook call |
+
+Returns a function implementing `SuspenderHook<TResult, TArgs>` interface.
 
 ### `interface SuspenderImplementation<TResult, TArgs extends unknown[]>`
 
 Implements arbitary function. For TypeScript users this will help to narrow types for implementation's result and its arguments.
 
-So that if you create a function that returns a `User` type by their ID, the `SuspenderHook` will expect the same exact arguments your function is taking and return the same type of the result:
+Takes following type parameters:
+
+| Name    | Extends              | Required | Default  | Description                                       |
+|---------|:--------------------:|:--------:|:--------:|---------------------------------------------------|
+| TResult | –                    | Yes      | –        | The result returned by *suspender implementation* |
+| TArgs   | `readonly unknown[]` | Yes      | –        | A list of implementation's arguments              |
+
+So that if you create a function that returns a `User` type by their ID, the `UseSuspenderHook` will expect the same exact arguments your function is taking and return the same type of the result:
 
 ```tsx
 import {createSuspender} from "use-suspender"
@@ -58,9 +71,9 @@ async function getUserFromSomewhereById(userId: string): Promise<User> {
   return response.json()
 }
 
-// This will create an object that implements SuspenderHook<TResult, TArgs> interface.
-const {useSuspender: useGetUser} = createSuspender(getUserFromSomewhereById)
-// => SuspenderHook<User, [userId: string]>
+// This will create a function implementing UseSuspenderHook<TResult, TArgs> interface.
+const useGetUser = createSuspender(getUserFromSomewhereById)
+// => UseSuspenderHook<User, [userId: string]>
 
 const Profile: FC = () => {
   // This function will expect the same arguments with the same types as getUserFromSomewhereById
@@ -78,21 +91,38 @@ const Profile: FC = () => {
 export default Profile
 ```
 
-### `interface SuspenderHook<TResult, TArgs extends unknown[]>`
+### `interface UseSuspenderHook<TResult, TArgs extends unknown[]>`
 
 Implements suspender hook, returned by `createSuspender` function.
 
-#### `SuspenderHook.useSuspender(...args: TArgs): TResult`
+This interface is a *function* with additional properties.
 
-Executes asynchronous action with given arguments.
+When called, it executes *suspender implementation* with given arguments.
 This function will throw a Promise to notify `React.Suspense`
 and resolve a result from suspender.
+
+When called with the same argments, it will find *pending* operation by comparing cached arguments using [`fast-deep-equal`](https://npmjs.com/package/fast-deep-equal) and re-throw a promise to notify `React.Suspense` if matched any.
+
+Takes following type parameters:
+
+| Name    | Extends              | Required | Default  | Description                                       |
+|---------|:--------------------:|:--------:|:--------:|---------------------------------------------------|
+| TResult | –                    | Yes      | –        | The result returned by *suspender implementation* |
+| TArgs   | `readonly unknown[]` | Yes      | –        | A list of implementation's arguments              |
+
+#### `UseSuspenderHook.useSuspender(...args: TArgs): TResult`
+
+Executes *suspender implementation* with given arguments.
+This function will throw a Promise to notify `React.Suspense`
+and resolve a result from suspender.
+
+When called with the same argments, it will find *pending* operation by comparing cached arguments using [`fast-deep-equal`](https://npmjs.com/package/fast-deep-equal) and re-throw a promise to notify `React.Suspense` if matched any.
 
 This function should be called inside of your React function component.
 
 - args – arguments to call the suspender with
 
-#### `SuspenderHook.callEarly(...args: TArgs): void`
+#### `UseSuspenderHook.callEarly(...args: TArgs): void`
 
 Calls useSuspense early without throwing a Promise needed to notify `React.Suspense`.
 
@@ -107,14 +137,36 @@ import {createSuspender} from "use-suspender"
 import {createRoot} from "react-dom/client"
 import {Suspense} from "react"
 
-const {useSuspender: useGetUser} = createSuspender(() => (
-  fetch("https://randomuser.me/api")
+type Nationalities =
+  | "br"
+  | "ca"
+  | "ch"
+  | "de"
+  | "dk"
+  | "es"
+  | "fi"
+  | "fr"
+  | "gb"
+  | "ie"
+  | "in"
+  | "ir"
+  | "mx"
+  | "nl"
+  | "no"
+  | "nz"
+  | "rs"
+  | "tr"
+  | "ua"
+  | "us"
+
+const useGetRandomUser = createSuspender((nationality: Nationalities) => (
+  fetch(`https://randomuser.me/api?results=1&nat=${nationality}`)
     .then(response => response.json())
     .then(([result]) => result)
 ))
 
 function User() {
-  const user = useGetUser()
+  const user = useGetRandomUser("ua")
 
   return (
     <div>
@@ -150,6 +202,7 @@ import {useParams} from "react-router-dom"
 
 import {getUserByLogin} from "./api/user"
 
+// Alternative way to get useSuspender hook
 const {useSuspender: useGetUserByLogin} = createSuspender(getUserByLogin)
 
 function User() {

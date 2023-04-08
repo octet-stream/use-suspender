@@ -36,7 +36,7 @@ interface SuspenderPublicCache {
   clear(): void
 }
 
-export interface CreateSuspenderResult<
+export interface UseSuspenderHook<
   TResult extends unknown,
   TArgs extends readonly unknown[]
 > {
@@ -132,7 +132,7 @@ export function createSuspender<
 >(
   implementation: SuspenderImplementation<TResult, TArgs>,
   ctx?: unknown
-): CreateSuspenderResult<TResult, TArgs> {
+): UseSuspenderHook<TResult, TArgs> {
   if (typeof implementation !== "function") {
     throw new TypeError("Suspender implementation must be a function.")
   }
@@ -182,7 +182,7 @@ export function createSuspender<
     return operation.suspender
   }
 
-  const useSuspender: CreateSuspenderResult<TResult, TArgs> = (...args) => {
+  const useSuspender: UseSuspenderHook<TResult, TArgs> = (...args) => {
     // Find an operation that matches given arguments
     const operation = get(args)
 
