@@ -34,12 +34,12 @@ Creates a new `useSuspender` hook for given function.
 
 Takes following argmuents:
 
-| Name           | Type                      | Required | Default     | Description                                         |
-|----------------|:-------------------------:|:--------:|:-----------:|-----------------------------------------------------|
-| implementation | `SuspenderImplementation` | Yes      | –           | A function to create `useSuspender` hook for        |
-| ctx            | `unknown`                 | No       | `undefined` | `thisArg` to use with each `useSuspender` hook call |
+| Name           | Type                                                                         | Required | Default     | Description                                         |
+|----------------|:----------------------------------------------------------------------------:|:--------:|:-----------:|-----------------------------------------------------|
+| implementation | [`SuspenderImplementation`](#interface-suspenderimplementationtresult-targs) | Yes      | –           | A function to create `useSuspender` hook for        |
+| ctx            | `unknown`                                                                    | No       | `undefined` | `thisArg` to use with each `useSuspender` hook call |
 
-Returns a function implementing `SuspenderHook<TResult, TArgs>` interface.
+Returns a function implementing [`SuspenderHook<TResult, TArgs>`](#interface-usesuspenderhooktresult-targs) interface.
 
 ### `interface SuspenderImplementation<TResult, TArgs>`
 
@@ -52,7 +52,7 @@ Takes following type parameters:
 | TResult | –                    | Yes      | –        | The result returned by *suspender implementation* |
 | TArgs   | `readonly unknown[]` | Yes      | –        | A list of implementation's arguments              |
 
-So that if you create a function that returns a `User` type by their ID, the `UseSuspenderHook` will expect the same exact arguments your function is taking and return the same type of the result:
+For example, if you create a function that returns a `User` type, the `useSuspender` hook will expect the same exact arguments your function is taking and return the same type of the result:
 
 ```tsx
 import {createSuspender} from "use-suspender"
@@ -132,7 +132,7 @@ Calls useSuspense early without throwing a Promise needed to notify `React.Suspe
 
 Minimal example:
 
-```js
+```tsx
 import {createSuspender} from "use-suspender"
 import {createRoot} from "react-dom/client"
 import {Suspense} from "react"
