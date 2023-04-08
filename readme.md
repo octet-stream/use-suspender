@@ -1,6 +1,6 @@
 # use-suspender
 
-Wraps asynchronous functions allowing to use them with React.Suspense
+Wraps asynchronous function allowing to use it with [`React.Suspense`](https://react.dev/reference/react/Suspense).
 
 ![ESLint](https://github.com/octet-stream/use-suspender/workflows/ESLint/badge.svg)
 ![CI](https://github.com/octet-stream/use-suspender/workflows/CI/badge.svg)
