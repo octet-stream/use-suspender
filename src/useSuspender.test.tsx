@@ -67,7 +67,7 @@ test.afterEach(t => {
 test("Executes a function passed to createSuspender", t => {
   const fn = spy()
 
-  const {useSuspender} = createSuspender(fn)
+  const useSuspender = createSuspender(fn)
 
   renderHook(() => useSuspender())
 
@@ -77,7 +77,21 @@ test("Executes a function passed to createSuspender", t => {
 test("Calls a suspender with undefined as thisArg by default", t => {
   const fn = spy()
 
+  const useSuspender = createSuspender(fn)
+
+  renderHook(() => useSuspender())
+
+  const {thisValue} = fn.firstCall
+
+  t.is(thisValue, undefined)
+})
+
+test("Exposes useSuspender member from returned value", t => {
+  const fn = spy()
+
   const {useSuspender} = createSuspender(fn)
+
+  t.is(typeof useSuspender, "function")
 
   renderHook(() => useSuspender())
 
@@ -91,7 +105,7 @@ test("Calls a suspender with thisArg taken by createSuspender", t => {
 
   const fn = spy(() => {})
 
-  const {useSuspender} = createSuspender(fn, expected)
+  const useSuspender = createSuspender(fn, expected)
 
   renderHook(() => useSuspender())
 
@@ -103,7 +117,7 @@ test("Calls a suspender with thisArg taken by createSuspender", t => {
 test("Returns a value from a suspender", async t => {
   const expected = "Rainbow Dash always dresses in style"
 
-  const {useSuspender} = createSuspender(() => expected)
+  const useSuspender = createSuspender(() => expected)
 
   const {result} = renderHook(() => useSuspender())
 
@@ -115,7 +129,7 @@ test("Returns a value from a suspender", async t => {
 test("Returns a value resolved by Promise", async t => {
   const expected = "On Societ Moon, landscape see binoculars through YOU."
 
-  const {useSuspender} = createSuspender(async () => expected)
+  const useSuspender = createSuspender(async () => expected)
 
   const {result} = renderHook(() => useSuspender())
 
@@ -129,7 +143,7 @@ test("Calls suspender with given arguments", t => {
 
   const fn = spy((...args: typeof expected) => void args)
 
-  const {useSuspender} = createSuspender(fn)
+  const useSuspender = createSuspender(fn)
 
   renderHook(() => useSuspender(...expected))
 
@@ -141,7 +155,7 @@ test("Calls suspender with given arguments", t => {
 test("Does not call a suspender again on re-render if args are the same", t => {
   const fn = spy()
 
-  const {useSuspender} = createSuspender(fn)
+  const useSuspender = createSuspender(fn)
 
   const {rerender} = renderHook(() => useSuspender())
 
@@ -153,7 +167,7 @@ test("Does not call a suspender again on re-render if args are the same", t => {
 test("Calls a suspender when the new arguments taken", t => {
   const fn = spy()
 
-  const {useSuspender} = createSuspender(fn)
+  const useSuspender = createSuspender(fn)
 
   const {rerender} = renderHook(({id}) => useSuspender(id), {
     initialProps: {
@@ -187,7 +201,7 @@ test("Throws an error when createSuspender called witout an argument", t => {
 test("Throws an error rejected by a promise", async t => {
   const expected = "This error is thrown by asynchronous implementation"
 
-  const {useSuspender} = createSuspender(async () => {
+  const useSuspender = createSuspender(async () => {
     throw new Error(expected)
   })
 
@@ -215,7 +229,7 @@ test("Throws an error rejected by a promise", async t => {
 test("Throws an error thrown by suspender implementation", async t => {
   const expected = "This error is thrown by synchronous implementation"
 
-  const {useSuspender} = createSuspender(() => {
+  const useSuspender = createSuspender(() => {
     throw new Error(expected)
   })
 
