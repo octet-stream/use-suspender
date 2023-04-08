@@ -28,7 +28,7 @@ npm i use-suspender
 
 ## API
 
-### `createSuspender(fn[, ctx])`
+### `createSuspender(implementation[, ctx])`
 
 Creates a new `useSuspender` hook for given function.
 
