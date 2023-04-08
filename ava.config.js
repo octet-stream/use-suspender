@@ -12,6 +12,6 @@ export default {
     tsx: "module"
   },
   files: [
-    "*.test.{ts,tsx}"
+    "src/**/*.test.{ts,tsx}"
   ]
 }
