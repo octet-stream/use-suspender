@@ -113,7 +113,7 @@ const getPromise = async <
  * import {createSuspender} from "use-suspender"
  * import type {FC} from "react"
  *
- * const {useSuspender: useGetUser} = createSuspender(async (userId: string) => {
+ * const useGetUser = createSuspender(async (userId: string) => {
  *   const response = await fetch(`https://example.com/api/v1/json/users/${userId}`)
  *
  *   return response.json()

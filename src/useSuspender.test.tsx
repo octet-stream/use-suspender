@@ -6,17 +6,15 @@ import {Component} from "react"
 
 import {spy} from "sinon"
 import type {TestFn} from "ava"
-import {nanoid} from "nanoid/async"
 import type {ReactNode, FC} from "react"
-import {renderHook, render, waitFor} from "@testing-library/react"
+import {waitFor} from "@testing-library/react"
+
+import type {WithRenderContext} from "./__macro__/withRender.js"
+import {withRender} from "./__macro__/withRender.js"
 
 import {createSuspender} from "./useSuspender.js"
 
-interface Context {
-  baseElement: HTMLDivElement
-}
-
-const test = anyTest as TestFn<Context>
+const test = anyTest as TestFn<WithRenderContext>
 
 interface ErrorBoundaryProps {
   children: ReactNode
@@ -49,72 +47,94 @@ class ErrorBoundary extends Component<ErrorBoundaryProps> {
   }
 }
 
-// Suppress errors from React.
+// Suppress error logs from React.
 console.error = () => {}
 
-test.beforeEach(async t => {
-  const element = document.createElement("div")
+test(
+  "Executes a function passed to createSuspender",
 
-  element.id = `container-${await nanoid()}`
+  withRender,
 
-  t.context.baseElement = document.body.appendChild(element)
-})
+  async t => {
+    const {renderHook} = t.context
 
-test.afterEach(t => {
-  document.body.removeChild(t.context.baseElement)
-})
+    const fn = spy()
 
-test("Executes a function passed to createSuspender", t => {
-  const fn = spy()
+    const useSuspender = createSuspender(fn)
 
-  const useSuspender = createSuspender(fn)
+    renderHook(() => useSuspender())
 
-  renderHook(() => useSuspender())
+    t.true(fn.called)
+  }
+)
 
-  t.true(fn.called)
-})
+test(
+  "Calls a suspender with undefined as thisArg by default",
 
-test("Calls a suspender with undefined as thisArg by default", t => {
-  const fn = spy()
+  withRender,
 
-  const useSuspender = createSuspender(fn)
+  async t => {
+    const {renderHook} = t.context
 
-  renderHook(() => useSuspender())
+    const fn = spy()
 
-  const {thisValue} = fn.firstCall
+    const useSuspender = createSuspender(fn)
 
-  t.is(thisValue, undefined)
-})
+    renderHook(() => useSuspender())
 
-test("Exposes useSuspender member from returned value", t => {
-  const fn = spy()
+    const {thisValue} = fn.firstCall
 
-  const {useSuspender} = createSuspender(fn)
+    t.is(thisValue, undefined)
+  }
+)
 
-  t.is(typeof useSuspender, "function")
+test(
+  "Exposes useSuspender member from returned value",
 
-  renderHook(() => useSuspender())
+  withRender,
 
-  const {thisValue} = fn.firstCall
+  async t => {
+    const {renderHook} = t.context
 
-  t.is(thisValue, undefined)
-})
+    const fn = spy()
 
-test("Calls a suspender with thisArg taken by createSuspender", t => {
-  const expected = new Map()
+    const {useSuspender} = createSuspender(fn)
 
-  const fn = spy(() => {})
+    t.is(typeof useSuspender, "function")
 
-  const useSuspender = createSuspender(fn, expected)
+    renderHook(() => useSuspender())
 
-  renderHook(() => useSuspender())
+    const {thisValue} = fn.firstCall
 
-  const {thisValue} = fn.firstCall
+    t.is(thisValue, undefined)
+  }
+)
 
-  t.is(thisValue, expected)
-})
+test(
+  "Calls a suspender with thisArg taken by createSuspender",
 
-test("Returns a value from a suspender", async t => {
+  withRender,
+
+  async t => {
+    const {renderHook} = t.context
+
+    const expected = new Map()
+
+    const fn = spy(() => {})
+
+    const useSuspender = createSuspender(fn, expected)
+
+    renderHook(() => useSuspender())
+
+    const {thisValue} = fn.firstCall
+
+    t.is(thisValue, expected)
+  }
+)
+
+test("Returns a value from a suspender", withRender, async t => {
+  const {renderHook} = t.context
+
   const expected = "Rainbow Dash always dresses in style"
 
   const useSuspender = createSuspender(() => expected)
@@ -126,7 +146,9 @@ test("Returns a value from a suspender", async t => {
   t.is(result.current, expected)
 })
 
-test("Returns a value resolved by Promise", async t => {
+test("Returns a value resolved by Promise", withRender, async t => {
+  const {renderHook} = t.context
+
   const expected = "On Societ Moon, landscape see binoculars through YOU."
 
   const useSuspender = createSuspender(async () => expected)
@@ -138,7 +160,9 @@ test("Returns a value resolved by Promise", async t => {
   t.is(result.current, expected)
 })
 
-test("Calls suspender with given arguments", t => {
+test("Calls suspender with given arguments", withRender, async t => {
+  const {renderHook} = t.context
+
   const expected = ["an argument", 42] as const
 
   const fn = spy((...args: typeof expected) => void args)
@@ -152,19 +176,29 @@ test("Calls suspender with given arguments", t => {
   t.deepEqual(actual, expected)
 })
 
-test("Does not call a suspender again on re-render if args are the same", t => {
-  const fn = spy()
+test(
+  "Does not call a suspender again on re-render if args are the same",
 
-  const useSuspender = createSuspender(fn)
+  withRender,
 
-  const {rerender} = renderHook(() => useSuspender())
+  async t => {
+    const {renderHook} = t.context
 
-  rerender()
+    const fn = spy()
 
-  t.false(fn.calledTwice)
-})
+    const useSuspender = createSuspender(fn)
 
-test("Calls a suspender when the new arguments taken", t => {
+    const {rerender} = renderHook(() => useSuspender())
+
+    rerender()
+
+    t.false(fn.calledTwice)
+  }
+)
+
+test("Calls a suspender when the new arguments taken", withRender, async t => {
+  const {renderHook} = t.context
+
   const fn = spy()
 
   const useSuspender = createSuspender(fn)
@@ -180,7 +214,7 @@ test("Calls a suspender when the new arguments taken", t => {
   t.true(fn.calledTwice)
 })
 
-test("Calls a suspender when .callEarly() called", t => {
+test("Calls a suspender when .callEarly() called", async t => {
   const fn = spy()
 
   const {callEarly} = createSuspender(fn)
@@ -198,7 +232,9 @@ test("Throws an error when createSuspender called witout an argument", t => {
   })
 })
 
-test("Throws an error rejected by a promise", async t => {
+test("Throws an error rejected by a promise", withRender, async t => {
+  const {render} = t.context
+
   const expected = "This error is thrown by asynchronous implementation"
 
   const useSuspender = createSuspender(async () => {
@@ -214,11 +250,7 @@ test("Throws an error rejected by a promise", async t => {
   const {getByRole} = render(
     <ErrorBoundary>
       <NoopComponent />
-    </ErrorBoundary>,
-
-    {
-      baseElement: t.context.baseElement
-    }
+    </ErrorBoundary>
   )
 
   const actual = await waitFor(() => getByRole("alert"))
@@ -226,30 +258,34 @@ test("Throws an error rejected by a promise", async t => {
   t.is(actual.textContent, expected)
 })
 
-test("Throws an error thrown by suspender implementation", async t => {
-  const expected = "This error is thrown by synchronous implementation"
+test(
+  "Throws an error thrown by suspender implementation",
 
-  const useSuspender = createSuspender(() => {
-    throw new Error(expected)
-  })
+  withRender,
 
-  const NoopComponent: FC = () => {
-    useSuspender()
+  async t => {
+    const {render} = t.context
 
-    return null
+    const expected = "This error is thrown by synchronous implementation"
+
+    const useSuspender = createSuspender(() => {
+      throw new Error(expected)
+    })
+
+    const NoopComponent: FC = () => {
+      useSuspender()
+
+      return null
+    }
+
+    const {getByRole} = render(
+      <ErrorBoundary>
+        <NoopComponent />
+      </ErrorBoundary>
+    )
+
+    const actual = await waitFor(() => getByRole("alert"))
+
+    t.is(actual.textContent, expected)
   }
-
-  const {getByRole} = render(
-    <ErrorBoundary>
-      <NoopComponent />
-    </ErrorBoundary>,
-
-    {
-      baseElement: t.context.baseElement
-    }
-  )
-
-  const actual = await waitFor(() => getByRole("alert"))
-
-  t.is(actual.textContent, expected)
-})
+)
