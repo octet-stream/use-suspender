@@ -34,10 +34,10 @@ Creates a new `useSuspender` hook for given function.
 
 Takes following argmuents:
 
-| Name           | Type                                      | Required | Default     | Description                                         |
-|----------------|:-----------------------------------------:|:--------:|:-----------:|-----------------------------------------------------|
-| implementation | `SuspenderImplementation<TResult, TArgs>` | Yes      | –           | A function to create `useSuspender` hook for        |
-| ctx            | `unknown`                                 | No       | `undefined` | `thisArg` to use with each `useSuspender` hook call |
+| Name           | Type                      | Required | Default     | Description                                         |
+|----------------|:-------------------------:|:--------:|:-----------:|-----------------------------------------------------|
+| implementation | `SuspenderImplementation` | Yes      | –           | A function to create `useSuspender` hook for        |
+| ctx            | `unknown`                 | No       | `undefined` | `thisArg` to use with each `useSuspender` hook call |
 
 Returns a function implementing `SuspenderHook<TResult, TArgs>` interface.
 
