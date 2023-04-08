@@ -1,1 +1,4 @@
-npm run lint:types && npm run coverage && npm run size-limit
+npm run coverage
+npm run cleanup
+npm run build
+npm run size-limit

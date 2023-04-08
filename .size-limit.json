@@ -1,18 +1,18 @@
 [
   {
-    "path": "useSuspender.cjs",
+    "path": "lib/useSuspender.cjs",
     "limit": "1.5 KB"
   },
   {
-    "path": "useSuspender.mjs",
+    "path": "lib/useSuspender.mjs",
     "limit": "1.5 KB"
   },
   {
-    "path": "useSuspender.legacy.mjs",
+    "path": "lib/useSuspender.legacy.mjs",
     "limit": "2 KB"
   },
   {
-    "path": "useSuspender.umd.js",
+    "path": "lib/useSuspender.umd.js",
     "limit": "1.5 KB"
   }
 ]
