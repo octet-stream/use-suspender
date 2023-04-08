@@ -1,4 +1,4 @@
-npm run coverage
-npm run cleanup
-npm run build
-npm run size-limit
+pnpm coverage
+pnpm cleanup
+pnpm build
+pnpm size-limit

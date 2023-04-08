@@ -1,4 +1,3 @@
 {
-  "useSuspender.ts": "eslint --fix",
-  "*.test.{ts,tsx}": "eslint --fix"
+  "src/**/*.test.{ts,tsx}": "eslint --fix"
 }
