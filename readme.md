@@ -41,7 +41,7 @@ Takes following argmuents:
 
 Returns a function implementing `SuspenderHook<TResult, TArgs>` interface.
 
-### `interface SuspenderImplementation<TResult, TArgs extends unknown[]>`
+### `interface SuspenderImplementation<TResult, TArgs>`
 
 Implements arbitary function. For TypeScript users this will help to narrow types for implementation's result and its arguments.
 
@@ -91,7 +91,7 @@ const Profile: FC = () => {
 export default Profile
 ```
 
-### `interface UseSuspenderHook<TResult, TArgs extends unknown[]>`
+### `interface UseSuspenderHook<TResult, TArgs>`
 
 Implements suspender hook, returned by `createSuspender` function.
 
