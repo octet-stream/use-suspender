@@ -36,7 +36,7 @@
     "eslint": "eslint src/**/*.ts src/**/*.tsx",
     "ci": "c8 npm test && c8 report --reporter=json",
     "postinstall": "husky install",
-    "prepublishOnly": "pnpm lint:types pnpm cleanup && pnpm build && pinst --disable",
+    "prepublishOnly": "pnpm lint:types && pnpm cleanup && pnpm build && pinst --disable",
     "postpublish": "pinst --enable"
   },
   "devDependencies": {
