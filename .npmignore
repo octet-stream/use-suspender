@@ -6,10 +6,10 @@ coverage
 .husky
 .eslintignore
 
-/.size-limit.js
+/.c8rc.json
+/.size-limit.json
 /.editorconfig
-/.eslintrc.js
-/.huskyrc.js
+/.eslintrc.json
 /.lintstagedrc
 /ava.config.cjs
 /ava.config.mjs
@@ -22,4 +22,5 @@ coverage
 /tsconfig.d.ts.json
 /tsconfig.eslint.json
 /tsconfig.ava.json
+/tsconfig.build.json
 /src
