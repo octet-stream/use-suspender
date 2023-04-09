@@ -46,9 +46,9 @@ export interface UseSuspenderHook<
    *
    * @param args A list of arguments to execute suspender with
    *
-   * @throws {Promise<void>} If the Promise haven't been fulfilled yet
+   * @throws `Promise<void>` If the Promise haven't been fulfilled yet
    *
-   * @throws {Error} If suspender's Promise has been rejected with an error
+   * @throws `Error` If suspender's Promise has been rejected with an error
    *
    * @api public
    */
@@ -60,9 +60,9 @@ export interface UseSuspenderHook<
    *
    * @param args A list of arguments to execute suspender with
    *
-   * @throws {Promise<void>} If the Promise haven't been fulfilled yet
+   * @throws `Promise<void>` If the Promise haven't been fulfilled yet
    *
-   * @throws {Error} If suspender's Promise has been rejected with an error
+   * @throws `Error` If suspender's Promise has been rejected with an error
    *
    * @api public
    */
