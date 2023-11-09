@@ -10,16 +10,21 @@
     "react-hooks"
   ],
   "packageManager": "pnpm@8.10.2",
-  "source": "./src/useSuspender.ts",
-  "main": "./lib/useSuspender.mjs",
-  "umd:main": "./lib/useSuspender.umd.js",
-  "module": "./lib/useSuspender.legacy.mjs",
+  "main": "./lib/useSuspender.js",
   "types": "./lib/useSuspender.d.ts",
   "exports": {
-    "import": "./lib/useSuspender.mjs",
-    "require": "./lib/useSuspender.cjs",
-    "types": "./lib/useSuspender.d.ts",
-    "default": "./lib/useSuspender.mjs"
+    "import": {
+      "types": "./lib/useSuspender.d.ts",
+      "default": "./lib/useSuspender.js"
+    },
+    "require": {
+      "types": "./lib/useSuspender.d.cts",
+      "default": "./lib/useSuspender.cjs"
+    },
+    "default": {
+      "types": "./lib/useSuspender.d.ts",
+      "default": "./lib/useSuspender.js"
+    }
   },
   "repository": "octet-stream/use-suspender",
   "author": "Nick K. <io@octetstream.me>",
@@ -27,7 +32,7 @@
   "private": false,
   "scripts": {
     "cleanup": "del-cli lib",
-    "build": "microbundle --tsconfig tsconfig.build.json --jsx React.createElement --jsxFragment React.Fragment --jsxImportSource react --globals react/jsx-runtime=jsx",
+    "build": "del-cli lib && tsup",
     "size-limit": "size-limit",
     "staged": "lint-staged",
     "coverage": "c8 npm test",
@@ -70,6 +75,7 @@
     "sinon": "17.0.1",
     "size-limit": "8.2.4",
     "ts-node": "10.9.1",
+    "tsup": "^7.2.0",
     "typescript": "5.2.2"
   },
   "peerDependencies": {

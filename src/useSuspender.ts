@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-throw-literal */
-/* eslint-disable no-shadow */
+/* eslint-disable @typescript-eslint/no-throw-literal */ // Disable to supress errors on `throw new Promise`
+/* eslint-disable no-shadow */ // Disabled because State exists only on type-level and we don't rely on the thing we override
 
 import eq from "fast-deep-equal/es6/react.js"
 
