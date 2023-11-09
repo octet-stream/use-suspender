@@ -4,13 +4,14 @@
   "compilerOptions": {
     "baseUrl": "src",
     "target": "esnext",
-    "module": "esnext",
+    "module": "node16",
     "jsx": "react-jsx",
-    "moduleResolution": "nodenext",
+    "moduleResolution": "node16",
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": true,
     "skipLibCheck": true,
     "declaration": true,
-    "strict": true
+    "strict": true,
+    "noUncheckedIndexedAccess": true
   }
 }
