@@ -1,3 +1,4 @@
+/* eslint-disable no-redeclare */ // Disabled to allow function overload, TypeScript will handle this rule instead
 /* eslint-disable @typescript-eslint/no-throw-literal */ // Disable to supress errors on `throw new Promise`
 /* eslint-disable no-shadow */ // Disabled because State exists only on type-level and we don't rely on the thing we override
 
@@ -17,16 +18,100 @@ const enum State {
 /**
  * @api private
  */
-interface Operation<TResult extends unknown, TArgs extends readonly unknown[]> {
-  state: State
-  error: unknown
-  result: TResult | null
+interface BaseOperation<
+  TState extends State,
+  TArgs extends readonly unknown[]
+> {
+  state: TState
   suspender: Promise<void>
   args: TArgs
 }
 
+/**
+ * @api private
+ */
+type PendingOperation<
+  TArgs extends readonly unknown[]
+> = BaseOperation<State.PENDING, TArgs>
+
+/**
+ * @api private
+ */
+type RejectedOperation<
+  TArgs extends readonly unknown[]
+> = BaseOperation<State.REJECTED, TArgs> & {error: Error}
+
+/**
+ * @api private
+ */
+type ResolvedOperation<
+  TResult,
+  TArgs extends readonly unknown[]
+> = BaseOperation<State.RESOLVED, TArgs> & {result: TResult}
+
+/**
+ * @api private
+ */
+type Operation<TResult, TArgs extends readonly unknown[]> =
+  | PendingOperation<TArgs>
+  | RejectedOperation<TArgs>
+  | ResolvedOperation<TResult, TArgs>
+
+/**
+ * @api private
+ */
+interface UpdateOperationInputBase<TState extends State> {
+  state: TState
+}
+
+/**
+ * @api private
+ */
+type UpdateOperationRejectedInput =
+  & UpdateOperationInputBase<State.REJECTED>
+  & {error: Error}
+
+/**
+ * @api private
+ */
+type UpdateOperationResolvedInput<TResult> =
+  & UpdateOperationInputBase<State.RESOLVED>
+  & {result: TResult}
+
+/**
+ * @api private
+ */
+type UpdateOperationInput<TResult> =
+  | UpdateOperationRejectedInput
+  | UpdateOperationResolvedInput<TResult>
+
+/**
+ * Updates `uperation` taken as the first argument with the new fields from `input`
+ *
+ * @api private
+ */
+function update<TArgs extends readonly unknown[]>(
+  operation: PendingOperation<TArgs>,
+  input: UpdateOperationRejectedInput
+): void
+function update<
+  TResult,
+  TArgs extends readonly unknown[]
+>(
+  operation: PendingOperation<TArgs>,
+  input: UpdateOperationResolvedInput<TResult>
+): void
+function update<
+  TResult, TArgs extends readonly unknown[]
+>(
+  operation: PendingOperation<TArgs>,
+  input: UpdateOperationInput<TResult>
+): void {
+  Object.assign(operation, input)
+}
+
 export type UseSuspenderImplementation<
-  TResult extends unknown,
+  TResult,
   TArgs extends readonly unknown[]
 > = (...args: TArgs) => TResult
 
@@ -43,7 +128,7 @@ export interface UseSuspenderPublicCache {
 }
 
 export interface UseSuspenderHook<
-  TResult extends unknown,
+  TResult,
   TArgs extends readonly unknown[]
 > {
   /**
@@ -97,7 +182,7 @@ export interface UseSuspenderHook<
  * @api private
  */
 const getPromise = async <
-  TResult extends unknown,
+  TResult,
   TArgs extends readonly unknown[]
 >(
   implementation: UseSuspenderImplementation<TResult, TArgs>,
@@ -133,7 +218,7 @@ const getPromise = async <
  * ```
  */
 export function createSuspender<
-  TResult extends unknown,
+  TResult,
   TArgs extends readonly unknown[]
 >(
   implementation: UseSuspenderImplementation<TResult, TArgs>,
@@ -164,22 +249,12 @@ export function createSuspender<
    * @api private
    */
   function createOperation(args: TArgs): Promise<void> {
-    const operation: Operation<TResult, TArgs> = {
+    const operation: PendingOperation<TArgs> = {
       args,
-      error: null,
-      result: null,
       state: State.PENDING,
       suspender: getPromise(implementation, args, ctx)
-        // The return statement is useless for this `.then()` callback
-        // eslint-disable-next-line promise/always-return
-        .then(result => {
-          operation.result = result
-          operation.state = State.RESOLVED
-        })
-        .catch(error => {
-          operation.error = error
-          operation.state = State.REJECTED
-        })
+        .then(result => update(operation, {state: State.RESOLVED, result}))
+        .catch(error => update(operation, {state: State.REJECTED, error}))
     }
 
     // Add operation to cache
