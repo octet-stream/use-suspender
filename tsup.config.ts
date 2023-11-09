@@ -9,5 +9,5 @@ export default defineConfig(() => ({
   outDir: "lib",
   dts: true,
   splitting: false,
-  external: ["formdata-node", "busboy"]
+  external: ["react-fast-compare"]
 }))

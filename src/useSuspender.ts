@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-throw-literal */ // Disable to supress errors on `throw new Promise`
 /* eslint-disable no-shadow */ // Disabled because State exists only on type-level and we don't rely on the thing we override
 
-import eq from "fast-deep-equal/es6/react.js"
+import isEqual from "react-fast-compare"
 
 // Note: const emum will inline State values as it used. It will be fine while it's private. If this type is ever going to be public - remove the `const` keyword as it might get hazardous.
 // See: https://youtu.be/jjMbPt_H3RQ
@@ -150,7 +150,7 @@ export function createSuspender<
    */
   function get(args: TArgs): Operation<TResult, TArgs> | undefined {
     for (const operation of cache) {
-      if (eq(args, operation.args)) {
+      if (isEqual(args, operation.args)) {
         return operation
       }
     }
