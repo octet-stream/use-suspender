@@ -3,19 +3,20 @@
 
 import eq from "fast-deep-equal/es6/react.js"
 
-type SuspenderImplementation<
-  TResult extends unknown,
-  TArgs extends readonly unknown[]
-> = (...args: TArgs) => TResult
-
 // Note: const emum will inline State values as it used. It will be fine while it's private. If this type is ever going to be public - remove the `const` keyword as it might get hazardous.
 // See: https://youtu.be/jjMbPt_H3RQ
+/**
+ * @api private
+ */
 const enum State {
   PENDING,
   RESOLVED,
   REJECTED
 }
 
+/**
+ * @api private
+ */
 interface Operation<TResult extends unknown, TArgs extends readonly unknown[]> {
   state: State
   error: unknown
@@ -24,7 +25,12 @@ interface Operation<TResult extends unknown, TArgs extends readonly unknown[]> {
   args: TArgs
 }
 
-interface SuspenderPublicCache {
+export type UseSuspenderImplementation<
+  TResult extends unknown,
+  TArgs extends readonly unknown[]
+> = (...args: TArgs) => TResult
+
+export interface UseSuspenderPublicCache {
   /**
    * Returns cache size
    */
@@ -82,7 +88,7 @@ export interface UseSuspenderHook<
    *
    * This object expose only two properties: `size` to check on the cache's size, and `clear` to clear the whole data cache.
    */
-  cache: SuspenderPublicCache
+  cache: UseSuspenderPublicCache
 }
 
 /**
@@ -94,7 +100,7 @@ const getPromise = async <
   TResult extends unknown,
   TArgs extends readonly unknown[]
 >(
-  implementation: SuspenderImplementation<TResult, TArgs>,
+  implementation: UseSuspenderImplementation<TResult, TArgs>,
   args: TArgs,
   ctx?: unknown
 ): Promise<TResult> => implementation.call(ctx, ...args)
@@ -130,7 +136,7 @@ export function createSuspender<
   TResult extends unknown,
   TArgs extends readonly unknown[]
 >(
-  implementation: SuspenderImplementation<TResult, TArgs>,
+  implementation: UseSuspenderImplementation<TResult, TArgs>,
   ctx?: unknown
 ): UseSuspenderHook<TResult, TArgs> {
   if (typeof implementation !== "function") {
