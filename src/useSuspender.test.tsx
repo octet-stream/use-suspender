@@ -47,8 +47,16 @@ class ErrorBoundary extends Component<ErrorBoundaryProps> {
   }
 }
 
-// Suppress error logs from React.
-console.error = () => {}
+// Suppress error logs from React in before and after hooks.
+const originalConsoleError = console.error
+
+test.before(() => {
+  console.error = () => {}
+})
+
+test.after.always(() => {
+  console.error = originalConsoleError
+})
 
 test(
   "Executes a function passed to createSuspender",
