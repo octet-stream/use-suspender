@@ -300,7 +300,7 @@ export function createSuspender<
     createOperation(args)
   }
 
-  useSuspender.cache = {
+  useSuspender.cache = Object.freeze({
     get size() {
       return cache.size
     },
@@ -308,7 +308,7 @@ export function createSuspender<
     clear() {
       return cache.clear()
     }
-  }
+  })
 
   useSuspender.useSuspender = useSuspender
 
