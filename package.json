@@ -40,9 +40,7 @@
     "lint:types": "tsc --noEmit",
     "eslint": "eslint src/**/*.ts src/**/*.tsx",
     "ci": "c8 npm test && c8 report --reporter=json",
-    "postinstall": "husky install",
-    "prepublishOnly": "pnpm lint:types && pnpm cleanup && pnpm build && pinst --disable",
-    "postpublish": "pinst --enable"
+    "prepare": "npx is-in-ci || husky install"
   },
   "devDependencies": {
     "@octetstream/eslint-config": "7.2.1",
