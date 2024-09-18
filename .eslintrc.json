@@ -1,9 +1,0 @@
-{
-  "root": true,
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
-  "extends": [
-    "@octetstream/eslint-config/esm/typescript/react"
-  ]
-}

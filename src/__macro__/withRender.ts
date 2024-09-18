@@ -2,7 +2,7 @@ import anyTest from "ava"
 
 import type {ReactElement} from "react"
 import type {TestFn, ExecutionContext} from "ava"
-import {renderHook, render, queries} from "@testing-library/react"
+import {renderHook, render, type queries} from "@testing-library/react"
 import type {
   Queries,
   RenderHookOptions,
@@ -18,7 +18,7 @@ type OmitContainer<T> = Omit<T, "container">
 type IsolatedRenderHook = <
   TResult,
   TProps,
-  TQueries extends Queries = typeof queries,
+  TQueries extends Queries = typeof queries
 >(
   fn: (initialProps: TProps) => TResult,
   options?: OmitContainer<RenderHookOptions<TProps, TQueries, HTMLDivElement>>
@@ -45,20 +45,24 @@ type Implementation = (t: ExecutionContext<WithRenderContext>) => Promise<void>
 export const withRender = test.macro(async (t, impl: Implementation) => {
   const {createContainer, cleanupContainers} = createContainerFactory()
 
-  const isolatedRenderHook: IsolatedRenderHook = (fn, options) => renderHook(
-    fn,
+  const isolatedRenderHook: IsolatedRenderHook = (fn, options) =>
+    renderHook(
+      fn,
 
-    {
-      ...options, container: createContainer()
-    }
-  )
+      {
+        ...options,
+        container: createContainer()
+      }
+    )
 
   const isolatedRender = (
     ui: ReactElement,
     options: OmitContainer<RenderOptions> = {}
-  ) => render(ui, {
-    ...options, container: createContainer()
-  })
+  ) =>
+    render(ui, {
+      ...options,
+      container: createContainer()
+    })
 
   t.context.renderHook = isolatedRenderHook
   t.context.render = isolatedRender

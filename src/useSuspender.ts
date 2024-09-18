@@ -9,10 +9,10 @@ import isEqual from "react-fast-compare"
 /**
  * @api private
  */
-const enum State {
-  PENDING,
-  RESOLVED,
-  REJECTED
+enum State {
+  PENDING = 0,
+  RESOLVED = 1,
+  REJECTED = 2
 }
 
 /**
@@ -30,16 +30,18 @@ interface BaseOperation<
 /**
  * @api private
  */
-type PendingOperation<
-  TArgs extends readonly unknown[]
-> = BaseOperation<State.PENDING, TArgs>
+type PendingOperation<TArgs extends readonly unknown[]> = BaseOperation<
+  State.PENDING,
+  TArgs
+>
 
 /**
  * @api private
  */
-type RejectedOperation<
-  TArgs extends readonly unknown[]
-> = BaseOperation<State.REJECTED, TArgs> & {error: Error}
+type RejectedOperation<TArgs extends readonly unknown[]> = BaseOperation<
+  State.REJECTED,
+  TArgs
+> & {error: Error}
 
 /**
  * @api private
@@ -67,16 +69,15 @@ interface UpdateOperationInputBase<TState extends State> {
 /**
  * @api private
  */
-type UpdateOperationRejectedInput =
-  & UpdateOperationInputBase<State.REJECTED>
-  & {error: Error}
+type UpdateOperationRejectedInput = UpdateOperationInputBase<State.REJECTED> & {
+  error: Error
+}
 
 /**
  * @api private
  */
 type UpdateOperationResolvedInput<TResult> =
-  & UpdateOperationInputBase<State.RESOLVED>
-  & {result: TResult}
+  UpdateOperationInputBase<State.RESOLVED> & {result: TResult}
 
 /**
  * @api private
@@ -94,16 +95,11 @@ function update<TArgs extends readonly unknown[]>(
   operation: PendingOperation<TArgs>,
   input: UpdateOperationRejectedInput
 ): void
-function update<
-  TResult,
-  TArgs extends readonly unknown[]
->(
+function update<TResult, TArgs extends readonly unknown[]>(
   operation: PendingOperation<TArgs>,
   input: UpdateOperationResolvedInput<TResult>
 ): void
-function update<
-  TResult, TArgs extends readonly unknown[]
->(
+function update<TResult, TArgs extends readonly unknown[]>(
   operation: PendingOperation<TArgs>,
   input: UpdateOperationInput<TResult>
 ): void {
@@ -127,10 +123,7 @@ export interface UseSuspenderPublicCache {
   clear(): void
 }
 
-export interface UseSuspenderHook<
-  TResult,
-  TArgs extends readonly unknown[]
-> {
+export interface UseSuspenderHook<TResult, TArgs extends readonly unknown[]> {
   /**
    * Calls a suspender with given arguments.
    * Will throw a Promise to notify React.Suspense
@@ -181,10 +174,7 @@ export interface UseSuspenderHook<
  *
  * @api private
  */
-const getPromise = async <
-  TResult,
-  TArgs extends readonly unknown[]
->(
+const getPromise = async <TResult, TArgs extends readonly unknown[]>(
   implementation: UseSuspenderImplementation<TResult, TArgs>,
   args: TArgs,
   ctx?: unknown
@@ -217,10 +207,7 @@ const getPromise = async <
  * }
  * ```
  */
-export function createSuspender<
-  TResult,
-  TArgs extends readonly unknown[]
->(
+export function createSuspender<TResult, TArgs extends readonly unknown[]>(
   implementation: UseSuspenderImplementation<TResult, TArgs>,
   ctx?: unknown
 ): UseSuspenderHook<TResult, TArgs> {
@@ -253,8 +240,8 @@ export function createSuspender<
       args,
       state: State.PENDING,
       suspender: getPromise(implementation, args, ctx)
-        .then(result => update(operation, {state: State.RESOLVED, result}))
-        .catch(error => update(operation, {state: State.REJECTED, error}))
+        .then((result) => update(operation, {state: State.RESOLVED, result}))
+        .catch((error) => update(operation, {state: State.REJECTED, error}))
     }
 
     // Add operation to cache

@@ -1,4 +1,9 @@
 {
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["src/__helper__", "src/__macro__", "src/**/*.test.ts", "src/**/*.test.tsx"]
+  "exclude": [
+    "src/__helper__",
+    "src/__macro__",
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx"
+  ]
 }

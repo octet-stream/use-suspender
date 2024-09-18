@@ -36,18 +36,15 @@ class ErrorBoundary extends Component<ErrorBoundaryProps> {
     const {children} = this.props
 
     if (error) {
-      return (
-        <div role="alert">
-          {error.message}
-        </div>
-      )
+      // biome-ignore lint/a11y/useSemanticElements: This will be fixes later
+      return <div role="alert">{error.message}</div>
     }
 
     return children
   }
 }
 
-// Suppress error logs from React in before and after hooks.
+// Suppress error logs from React in `before` and `after` hooks.
 const originalConsoleError = console.error
 
 test.before(() => {
@@ -63,7 +60,7 @@ test(
 
   withRender,
 
-  async t => {
+  async (t) => {
     const {renderHook} = t.context
 
     const fn = spy()
@@ -81,7 +78,7 @@ test(
 
   withRender,
 
-  async t => {
+  async (t) => {
     const {renderHook} = t.context
 
     const fn = spy()
@@ -101,7 +98,7 @@ test(
 
   withRender,
 
-  async t => {
+  async (t) => {
     const {renderHook} = t.context
 
     const fn = spy()
@@ -123,7 +120,7 @@ test(
 
   withRender,
 
-  async t => {
+  async (t) => {
     const {renderHook} = t.context
 
     const expected = new Map()
@@ -140,7 +137,7 @@ test(
   }
 )
 
-test("Returns a value from a suspender", withRender, async t => {
+test("Returns a value from a suspender", withRender, async (t) => {
   const {renderHook} = t.context
 
   const expected = "Rainbow Dash always dresses in style"
@@ -154,7 +151,7 @@ test("Returns a value from a suspender", withRender, async t => {
   t.is(result.current, expected)
 })
 
-test("Returns a value resolved by Promise", withRender, async t => {
+test("Returns a value resolved by Promise", withRender, async (t) => {
   const {renderHook} = t.context
 
   const expected = "On Societ Moon, landscape see binoculars through YOU."
@@ -168,7 +165,7 @@ test("Returns a value resolved by Promise", withRender, async t => {
   t.is(result.current, expected)
 })
 
-test("Calls suspender with given arguments", withRender, async t => {
+test("Calls suspender with given arguments", withRender, async (t) => {
   const {renderHook} = t.context
 
   const expected = ["an argument", 42] as const
@@ -189,7 +186,7 @@ test(
 
   withRender,
 
-  async t => {
+  async (t) => {
     const {renderHook} = t.context
 
     const fn = spy()
@@ -204,25 +201,29 @@ test(
   }
 )
 
-test("Calls a suspender when the new arguments taken", withRender, async t => {
-  const {renderHook} = t.context
+test(
+  "Calls a suspender when the new arguments taken",
+  withRender,
+  async (t) => {
+    const {renderHook} = t.context
 
-  const fn = spy()
+    const fn = spy()
 
-  const useSuspender = createSuspender(fn)
+    const useSuspender = createSuspender(fn)
 
-  const {rerender} = renderHook(({id}) => useSuspender(id), {
-    initialProps: {
-      id: 1
-    },
-  })
+    const {rerender} = renderHook(({id}) => useSuspender(id), {
+      initialProps: {
+        id: 1
+      }
+    })
 
-  rerender({id: 2})
+    rerender({id: 2})
 
-  t.true(fn.calledTwice)
-})
+    t.true(fn.calledTwice)
+  }
+)
 
-test("Calls a suspender when .callEarly() called", async t => {
+test("Calls a suspender when .callEarly() called", async (t) => {
   const fn = spy()
 
   const {callEarly} = createSuspender(fn)
@@ -232,7 +233,7 @@ test("Calls a suspender when .callEarly() called", async t => {
   t.true(fn.called)
 })
 
-test("Throws an error when createSuspender called witout an argument", t => {
+test("Throws an error when createSuspender called witout an argument", (t) => {
   // @ts-expect-error
   t.throws(() => createSuspender(), {
     instanceOf: TypeError,
@@ -240,7 +241,7 @@ test("Throws an error when createSuspender called witout an argument", t => {
   })
 })
 
-test("Throws an error rejected by a promise", withRender, async t => {
+test("Throws an error rejected by a promise", withRender, async (t) => {
   const {render} = t.context
 
   const expected = "This error is thrown by asynchronous implementation"
@@ -271,7 +272,7 @@ test(
 
   withRender,
 
-  async t => {
+  async (t) => {
     const {render} = t.context
 
     const expected = "This error is thrown by synchronous implementation"
